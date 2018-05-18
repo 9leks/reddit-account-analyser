@@ -1,28 +1,26 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  div.container
+    HomeView
+    AnalyticsView
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HomeView from './components/HomeView'
+import AnalyticsView from './components/AnalyticsView'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
-  }
+    HomeView,
+    AnalyticsView,
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+.container 
+  display: flex
+  justify-content: center
+  padding: 1rem
+
 </style>
