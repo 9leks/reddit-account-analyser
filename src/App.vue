@@ -1,7 +1,8 @@
-<template lang="pug">
-  div.container
-    HomeView
-    AnalyticsView
+<template>
+  <div>
+    <HomeView />
+    <AnalyticsView />
+  </div>
 </template>
 
 <script>
@@ -17,10 +18,6 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.container 
-  display: flex
-  justify-content: center
-  padding: 1rem
-
+<style lang="scss">
+@import './grid.scss';
 </style>

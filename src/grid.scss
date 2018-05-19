@@ -1,0 +1,114 @@
+$breakpoint-sm: 576;
+$breakpoint-md: 768;
+$breakpoint-lg: 992;
+$breakpoint-xl: 1200;
+$columns: 12;
+
+$breakpoints: (
+  '': 0,
+  '-sm': 0,
+  '-md': $breakpoint-md,
+  '-lg': $breakpoint-lg,
+  '-xl': $breakpoint-xl
+);
+
+@mixin create-media-query($breakpoint, $min-or-max) {
+  @if ($breakpoint == 0) {
+    @content;
+  } @else {
+    @media screen and (#{$min-or-max}-width: $breakpoint * 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin hide-columns($size, $columns, $breakpoint) {
+  @each $size, $breakpoint in $breakpoints {
+    @include create-media-query($breakpoint - 1, 'max') {
+      .col-hidden#{$size}-down {
+        display: none !important;
+      }
+    }
+    @include create-media-query($breakpoint, 'min') {
+      .col-hidden#{$size}-up {
+        display: none !important;
+      }
+    }
+  }
+}
+
+@mixin create-columns($size, $columns, $breakpoint) {
+  @include create-media-query($breakpoint, 'min') {
+    .col#{$size}-offset-0 {
+      margin-left: 0;
+    }
+
+    @for $i from 1 through $columns {
+      .col#{$size}-#{$i} {
+        flex-basis: (100 * ($i / $columns)) * 1%;
+      }
+
+      .col#{$size}-offset-#{$i} {
+        margin-left: (100 * ($i / $columns)) * 1%;
+      }
+    }
+  }
+}
+
+.container {
+  padding: 1em;
+  max-width: $breakpoint-md * 1px;
+
+  &.center {
+    margin: 0 auto;
+  }
+
+  &.fluid {
+    max-width: 100%;
+  }
+
+  &.vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.break {
+    width: 100%;
+  }
+
+  @each $size, $breakpoint in $breakpoints {
+    @include create-columns($size, $columns, $breakpoint);
+    @include hide-columns($size, $columns, $breakpoint);
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.pull-right {
+      justify-content: flex-end;
+    }
+
+    &.pull-left {
+      justify-content: flex-start;
+    }
+
+    &.space-evenly {
+      justify-content: space-evenly;
+    }
+
+    &.space-around {
+      justify-content: space-around;
+    }
+
+    &.space-between {
+      justify-content: space-between;
+    }
+  }
+}
