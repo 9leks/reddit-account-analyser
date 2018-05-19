@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300');
+
 $breakpoint-sm: 576;
 $breakpoint-md: 768;
 $breakpoint-lg: 992;
@@ -11,6 +14,11 @@ $breakpoints: (
   '-lg': $breakpoint-lg,
   '-xl': $breakpoint-xl
 );
+
+* {
+  color: rgb(245, 245, 245);
+  font-family: 'Slabo 27px', serif;
+}
 
 @mixin create-media-query($breakpoint, $min-or-max) {
   @if ($breakpoint == 0) {
@@ -26,12 +34,12 @@ $breakpoints: (
   @each $size, $breakpoint in $breakpoints {
     @include create-media-query($breakpoint - 1, 'max') {
       .col-hidden#{$size}-down {
-        display: none !important;
+        display: none;
       }
     }
     @include create-media-query($breakpoint, 'min') {
       .col-hidden#{$size}-up {
-        display: none !important;
+        display: none;
       }
     }
   }
@@ -67,11 +75,6 @@ $breakpoints: (
     max-width: 100%;
   }
 
-  &.vertical {
-    display: flex;
-    flex-direction: column;
-  }
-
   &.break {
     width: 100%;
   }
@@ -86,6 +89,14 @@ $breakpoints: (
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+
+    &.vertical {
+      flex-direction: column;
+
+      &.center {
+        align-items: center;
+      }
+    }
 
     &.center {
       justify-content: center;

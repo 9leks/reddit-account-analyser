@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="search-form">
     <SearchFormDecoration />
     <SearchFormInputField />
     <SearchFormButton />
@@ -20,3 +20,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.search-form {
+  display: flex;
+}
+</style>
+
