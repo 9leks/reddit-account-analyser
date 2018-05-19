@@ -1,10 +1,18 @@
 <template>
-  <button class="button">ANALYSE</button>
+  <button class="button"
+          @click="setUser">
+    <i class="fas fa-search" />
+  </button>
 </template>
 
 <script>
 export default {
   name: 'SearchFormButton',
+  methods: {
+    setUser() {
+      
+    }
+  }
 }
 </script>
 
@@ -16,19 +24,23 @@ export default {
   border-radius: 5px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  background: #363636a2;
-  color: rgb(87, 255, 233);
+  background: #050a385e;
+  color: rgb(235, 90, 23);
+  font-weight: 700;
   font-size: 1.3em;
   font-family: 'Source Sans Pro';
   cursor: pointer;
   transition: color, background, 0.2s ease-in-out;
+
+  .fa-search {
+    padding: 0 1em;
+  }
 
   &:focus {
     outline: none;
   }
 
   &:hover {
-    outline: 2px solid rgba(24, 143, 172, 0.384);
     background: #2a2c2cef;
     color: #f0f0f0ef;
   }

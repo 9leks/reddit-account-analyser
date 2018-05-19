@@ -3,7 +3,7 @@
     <div class="container fluid">
 
       <div class="row center">
-        <div class="logo">
+        <div class="logo-item">
           <img src="@/assets/img/snoo.png"
                height="150"
                width="150">
@@ -11,9 +11,7 @@
       </div>
 
       <div class="row center">
-        <div class="header">
-          <h2>Analyse a reddit account</h2>
-        </div>
+        <h2 class="header">Analyse a reddit account</h2>
       </div>
 
       <div class="row center">
@@ -32,24 +30,27 @@ import SearchForm from './HomeView/SearchForm'
 export default {
   name: 'HomeView',
   components: { SearchForm },
+  methods: {
+    console() {
+      console.log('hi')
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .home {
+  background: white;
+  font-family: 'Slabo 27px', serif;
   background: linear-gradient(
-      120deg,
-      rgba(14, 137, 153, 0.8) 10%,
-      rgba(12, 28, 119, 0.486) 80%
-    ),
-    linear-gradient(
-      330deg,
-      rgba(53, 29, 85, 0.603) 50%,
-      rgba(23, 23, 97, 0.699) 90%
-    );
+    135deg,
+    rgb(11, 114, 155) 10%,
+    rgb(14, 178, 184) 90%
+  );
 }
 
-.logo {
+.logo-item {
+  display: inline-block;
   margin-bottom: 0.2em;
   filter: drop-shadow(0 0 10px rgba(49, 49, 49, 0.459));
   transition: transform 0.3s ease-in-out;
@@ -60,13 +61,13 @@ export default {
 }
 
 .header {
-  font-size: 2em;
-  filter: drop-shadow(-10px -10px 30px rgba(41, 41, 41, 0.658));
+  color: rgb(219, 219, 219);
+  font-size: 3em;
+  text-shadow: 0 0 10px rgba(41, 41, 41, 0.61);
 }
 
 .search-form {
   margin-bottom: 1.5em;
-  filter: drop-shadow(0 0 50px rgba(25, 130, 172, 0.288));
 }
 </style>
 

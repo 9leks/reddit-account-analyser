@@ -1,5 +1,5 @@
 <template>
-  <button class="button"
+  <button class="decoration"
           disabled>/u/</button>
 </template>
 
@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.button {
+.decoration {
   padding: 0 1em;
   border: 1px solid rgba(22, 22, 22, 0.507);
   border-right: 0;
@@ -19,11 +19,12 @@ export default {
   border-bottom-right-radius: 0;
   background: radial-gradient(
     circle at right,
-    #e21cc1 10%,
-    rgba(203, 28, 226, 0.589) 90%
+    rgba(255, 67, 0, 1) 10%,
+    rgba(255, 68, 0, 0.781) 90%
   );
   color: rgb(235, 240, 240);
   font-size: 1.3em;
+  font-weight: 700;
   font-family: 'Source Sans Pro';
 }
 </style>

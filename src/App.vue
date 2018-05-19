@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <HomeView />
     <AnalyticsView />
   </div>
@@ -20,4 +20,5 @@ export default {
 
 <style lang="scss">
 @import './grid.scss';
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px|Source+Sans+Pro:300');
 </style>

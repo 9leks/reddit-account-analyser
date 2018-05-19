@@ -21,6 +21,7 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
 .search-form {
   display: flex;

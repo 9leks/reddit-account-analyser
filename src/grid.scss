@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300');
-
 $breakpoint-sm: 576;
 $breakpoint-md: 768;
 $breakpoint-lg: 992;
@@ -15,10 +12,6 @@ $breakpoints: (
   '-xl': $breakpoint-xl
 );
 
-* {
-  color: rgb(245, 245, 245);
-  font-family: 'Slabo 27px', serif;
-}
 
 @mixin create-media-query($breakpoint, $min-or-max) {
   @if ($breakpoint == 0) {

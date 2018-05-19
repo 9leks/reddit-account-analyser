@@ -1,12 +1,27 @@
 <template>
-  <input class="input"
+  <input v-model="input"
          type="text"
-         autocomplete="off">
+         class="input"
+         autocomplete="off"
+         @keypress.enter="setUser">
 </template>
 
 <script>
+import { createHelpers } from 'vuex-map-fields'
+
+const { mapFields } = createHelpers({
+  getterType: 'getInput',
+  mutationType: 'setInput',
+})
+
 export default {
   name: 'SearchFormInputField',
+  computed: mapFields(['input']),
+  methods: {
+    setUser() {
+      this.$store.dispatch('setUser', this.$store.state.input)
+    },
+  },
 }
 </script>
 
@@ -18,7 +33,7 @@ export default {
   border-right: 0;
   border-left: 0;
   border-radius: 0;
-  background: #363636a2;
+  background: #050a385e;
   color: rgb(243, 243, 243);
   font-size: 1.8em;
   font-family: 'Source Sans Pro';
