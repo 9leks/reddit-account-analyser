@@ -30,23 +30,19 @@ import SearchForm from './HomeView/SearchForm'
 export default {
   name: 'HomeView',
   components: { SearchForm },
-  methods: {
-    console() {
-      console.log('hi')
-    },
-  },
 }
 </script>
 
 <style lang="scss" scoped>
 .home {
   background: white;
-  font-family: 'Slabo 27px', serif;
   background: linear-gradient(
     135deg,
     rgb(11, 114, 155) 10%,
     rgb(14, 178, 184) 90%
   );
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.562);
+  font-family: 'Slabo 27px', serif;
 }
 
 .logo-item {
@@ -62,8 +58,8 @@ export default {
 
 .header {
   color: rgb(219, 219, 219);
-  font-size: 3em;
   text-shadow: 0 0 10px rgba(41, 41, 41, 0.61);
+  font-size: 3em;
 }
 
 .search-form {

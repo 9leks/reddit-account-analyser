@@ -27,8 +27,9 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  padding: 0.5em 0.8em;
+  padding: 0.1em 0.9em;
   width: 30em;
+  height: 2em;
   border: 1px solid rgba(22, 22, 22, 0.507);
   border-right: 0;
   border-left: 0;

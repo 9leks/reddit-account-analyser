@@ -8,8 +8,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     input: '',
-    name: '',
-    created: '',
+    error: '',
+    user: {
+      name: '',
+      created: '',
+      comments: 0,
+      submissions: 0,
+      karma: {
+        link: 0,
+        comment: 0,
+      },
+    },
   },
   getters: {
     getInput: state => getField(state),
@@ -18,17 +27,17 @@ export default new Vuex.Store({
     setInput: (state, input) => updateField(state, input),
     setUser: (state, payload) => {
       try {
-        state.name = payload.about.name
-        state.created = payload.about.created
+        state.user = payload.metadata
+        state.error = ''
       } catch (error) {
-        throw error
+        state.error = error
       }
     },
   },
   actions: {
     setUser: async ({ commit }, user) => {
-      const about = await reddit.about(user)
-      const payload = { about }
+      const metadata = await reddit.metadata(user)
+      const payload = { metadata }
       commit('setUser', payload)
     },
   },

@@ -28,7 +28,6 @@ export default {
   color: rgb(235, 90, 23);
   font-weight: 700;
   font-size: 1.3em;
-  font-family: 'Source Sans Pro';
   cursor: pointer;
   transition: color, background, 0.2s ease-in-out;
 

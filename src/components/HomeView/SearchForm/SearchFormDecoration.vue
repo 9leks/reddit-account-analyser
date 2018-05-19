@@ -25,6 +25,5 @@ export default {
   color: rgb(235, 240, 240);
   font-size: 1.3em;
   font-weight: 700;
-  font-family: 'Source Sans Pro';
 }
 </style>
