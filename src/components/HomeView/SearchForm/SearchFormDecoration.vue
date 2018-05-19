@@ -13,7 +13,6 @@ export default {
 .decoration {
   padding: 0 1em;
   border: 1px solid rgba(22, 22, 22, 0.507);
-  border-right: 0;
   border-radius: 5px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

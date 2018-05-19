@@ -1,23 +1,19 @@
 <template>
   <div class="home">
-    <div class="container fluid">
+    <div class="container vertical center fluid">
 
-      <div class="row center">
-        <div class="logo-item">
-          <img src="@/assets/img/snoo.png"
-               height="150"
-               width="150">
-        </div>
+      <div class="logo-item">
+        <img src="@/assets/img/snoo.png"
+             height="150"
+             width="150">
       </div>
 
-      <div class="row center">
-        <h2 class="header">Analyse a reddit account</h2>
+      <div class="header">
+        <h2>Analyse a reddit account</h2>
       </div>
 
-      <div class="row center">
-        <div class="search-form">
-          <SearchForm />
-        </div>
+      <div class="search-form">
+        <SearchForm />
       </div>
 
     </div>
@@ -35,6 +31,8 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  margin-bottom: -3em;
+  height: 50vh;
   background: white;
   background: linear-gradient(
     135deg,
@@ -59,7 +57,7 @@ export default {
 .header {
   color: rgb(219, 219, 219);
   text-shadow: 0 0 10px rgba(41, 41, 41, 0.61);
-  font-size: 3em;
+  font-size: 2.5em;
 }
 
 .search-form {

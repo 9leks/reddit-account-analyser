@@ -12,7 +12,6 @@ $breakpoints: (
   '-xl': $breakpoint-xl
 );
 
-
 @mixin create-media-query($breakpoint, $min-or-max) {
   @if ($breakpoint == 0) {
     @content;
@@ -46,6 +45,7 @@ $breakpoints: (
 
     @for $i from 1 through $columns {
       .col#{$size}-#{$i} {
+        display: flex;
         flex-basis: (100 * ($i / $columns)) * 1%;
       }
 
@@ -57,62 +57,87 @@ $breakpoints: (
 }
 
 .container {
+  display: flex;
   padding: 1em;
   max-width: $breakpoint-md * 1px;
+}
+
+.vertical {
+  flex-direction: column;
 
   &.center {
-    margin: 0 auto;
+    align-items: center !important;
+  }
+}
+
+.fluid {
+  max-width: 100%;
+}
+
+@each $size, $breakpoint in $breakpoints {
+  @include create-columns($size, $columns, $breakpoint);
+  @include hide-columns($size, $columns, $breakpoint);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  justify-content: center;
+}
+
+.pull-right {
+  justify-content: flex-end;
+}
+
+.pull-left {
+  justify-content: flex-start;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.vertical {
+  flex-direction: column;
+
+  &.center {
+    align-items: center;
   }
 
-  &.fluid {
-    max-width: 100%;
+  &.pull-right {
+    align-items: flex-end;
   }
 
-  &.break {
-    width: 100%;
+  &.pull-left {
+    align-items: flex-start;
   }
 
-  @each $size, $breakpoint in $breakpoints {
-    @include create-columns($size, $columns, $breakpoint);
-    @include hide-columns($size, $columns, $breakpoint);
+  &.space-evenly {
+    align-items: space-evenly;
   }
 
-  .row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
+  &.space-around {
+    align-items: space-around;
+  }
 
-    &.vertical {
-      flex-direction: column;
-
-      &.center {
-        align-items: center;
-      }
-    }
-
-    &.center {
-      justify-content: center;
-    }
-
-    &.pull-right {
-      justify-content: flex-end;
-    }
-
-    &.pull-left {
-      justify-content: flex-start;
-    }
-
-    &.space-evenly {
-      justify-content: space-evenly;
-    }
-
-    &.space-around {
-      justify-content: space-around;
-    }
-
-    &.space-between {
-      justify-content: space-between;
-    }
+  &.space-between {
+    align-items: space-between;
   }
 }

@@ -1,9 +1,9 @@
 <template>
-  <input v-model="input"
+  <input id="input"
+         v-model="input"
          type="text"
-         class="input"
          autocomplete="off"
-         @keypress.enter="setUser">
+         @keypress.enter="setUser(); scrollBottom();">
 </template>
 
 <script>
@@ -21,23 +21,32 @@ export default {
     setUser() {
       this.$store.dispatch('setUser', this.$store.state.input)
     },
+    scrollBottom() {
+      this.$scrollTo('#bottom', 500, {
+        onStart() {
+          document.getElementById('input').blur()
+        },
+      })
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.input {
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300');
+
+#input {
   padding: 0.1em 0.9em;
-  width: 30em;
+  width: 50vw;
   height: 2em;
   border: 1px solid rgba(22, 22, 22, 0.507);
   border-right: 0;
   border-left: 0;
   border-radius: 0;
-  background: #050a385e;
+  background: rgba(22, 22, 22, 0.507);
   color: rgb(243, 243, 243);
   font-size: 1.8em;
-  font-family: 'Source Sans Pro';
+  font-family: 'Roboto Condensed';
 
   &:focus {
     outline: 0;

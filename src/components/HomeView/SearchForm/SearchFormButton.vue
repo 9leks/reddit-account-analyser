@@ -1,5 +1,6 @@
 <template>
-  <button class="button"
+  <button v-scroll-to="'#bottom'"
+          class="button"
           @click="setUser">
     <i class="fas fa-search" />
   </button>
@@ -10,21 +11,20 @@ export default {
   name: 'SearchFormButton',
   methods: {
     setUser() {
-      
-    }
-  }
+      this.$store.dispatch('setUser', this.$store.state.input)
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .button {
-  padding: 0 0.7em;
+  padding: 0 0.2em;
   border: 1px solid rgba(22, 22, 22, 0.507);
-  border-left: 0;
   border-radius: 5px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  background: #050a385e;
+  background: rgba(22, 22, 22, 0.507);
   color: rgb(235, 90, 23);
   font-weight: 700;
   font-size: 1.3em;
@@ -40,8 +40,8 @@ export default {
   }
 
   &:hover {
-    background: #2a2c2cef;
-    color: #f0f0f0ef;
+    background: rgb(42, 44, 44);
+    color: rgb(28, 253, 148);
   }
 }
 </style>
