@@ -18,9 +18,10 @@ export default {
   name: 'SearchFormInputField',
   computed: mapFields(['input']),
   methods: {
-    setUser() {
+    setUser(e) {
       if (this.$store.state.input) {
         this.$router.push(`/${this.$store.state.input}`)
+        e.target.blur();
       }
     },
   },
