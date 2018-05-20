@@ -3,7 +3,7 @@
          v-model="input"
          type="text"
          autocomplete="off"
-         @keypress.enter="setUser(); scrollBottom();">
+         @keypress.enter="setUser(); scrollBottom()">
 </template>
 
 <script>
@@ -19,14 +19,19 @@ export default {
   computed: mapFields(['input']),
   methods: {
     setUser() {
-      this.$store.dispatch('setUser', this.$store.state.input)
+      if (this.$store.state.input) {
+        this.$store.dispatch('setUser', this.$store.state.input)
+        this.$router.push(`/${this.$store.state.input}`)
+      }
     },
     scrollBottom() {
-      this.$scrollTo('#bottom', 500, {
-        onStart() {
-          document.getElementById('input').blur()
-        },
-      })
+      if (this.$store.state.input) {
+        this.$scrollTo('#bottom', 500, {
+          onStart() {
+            document.getElementById('input').blur()
+          },
+        })
+      }
     },
   },
 }

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
+
 import App from './App.vue'
 import store from './store'
+import router from './router'
 
 Vue.use(VueScrollTo, {
   container: 'body',
@@ -19,6 +21,7 @@ Vue.use(VueScrollTo, {
 Vue.config.productionTip = false
 
 new Vue({
+  router,
   store,
   render: h => h(App),
 }).$mount('#app')

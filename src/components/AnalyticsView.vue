@@ -1,5 +1,5 @@
 <template>
-  <div v-if="name">
+  <div v-if="name || this.$route.params.length">
     <div id="analytics">
       <div class="container fluid space-between">
         <UserOverviewMain />

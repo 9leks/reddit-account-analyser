@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import VueScrollTo from 'vue-scrollto'
 import HomeView from './components/HomeView'
 import AnalyticsView from './components/AnalyticsView'
 
@@ -16,9 +15,22 @@ export default {
   components: {
     HomeView,
     AnalyticsView,
+
   },
   mounted() {
-    VueScrollTo.scrollTo('#app', 0, { cancelable: false })
+    if (this.$route.params.user) {
+      this.setUser(this.$route.params.user)
+      this.$scrollTo('#bottom', 500)
+    } else {
+      this.$scrollTo('#app', 500, { cancelable: false })
+      this.$router.push('/')
+    }
+  },
+  methods: {
+    setUser(user) {
+      this.$store.dispatch('setUser', user)
+      this.$router.push(`/${user}`)
+    },
   },
 }
 </script>
