@@ -1,6 +1,6 @@
 <template>
   <button class="button"
-          @click="setUser(); scrollBottom()">
+          @click="setUser">
     <i class="fas fa-search" />
   </button>
 </template>
@@ -11,13 +11,7 @@ export default {
   methods: {
     setUser() {
       if (this.$store.state.input) {
-        this.$store.dispatch('setUser', this.$store.state.input)
         this.$router.push(`/${this.$store.state.input}`)
-      }
-    },
-    scrollBottom() {
-      if (this.$store.state.input) {
-        this.$scrollTo('#bottom', 500)
       }
     },
   },

@@ -20,12 +20,16 @@ export default new Vuex.Store({
       },
     },
   },
+
   getters: {
     getInput: state => getField(state),
   },
+
   mutations: {
     setInput: (state, input) => updateField(state, input),
+
     clearUser: (state, payload) => (state.user = payload),
+
     setUser: (state, payload) => {
       try {
         state.user = payload.metadata
@@ -35,17 +39,22 @@ export default new Vuex.Store({
         state.error = error
       }
     },
-    setUserByLocalStorage: (state, payload) =>
-      (state.user = JSON.parse(localStorage.getItem(payload))),
+
+    setUserByLocalStorage: (state, payload) => {
+      state.user = JSON.parse(localStorage.getItem(payload))
+    },
   },
+
   actions: {
     setUser: async ({ commit }, user) => {
       const metadata = await reddit.metadata(user)
       const payload = { metadata }
       commit('setUser', payload)
     },
+
     setUserByLocalStorage: ({ commit }, payload) =>
       commit('setUserByLocalStorage', payload),
-    clear: ({ commit }) => commit('clearUser', {}),
+
+    clearUser: ({ commit }) => commit('clearUser', {}),
   },
 })

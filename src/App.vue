@@ -21,25 +21,29 @@ export default {
       if (this.$route.params.user) {
         if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
           this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
+          this.$scrollTo('#bottom', 400)
         } else if (this.$route.params.user) {
-          this.$store.dispatch('setUser', this.$store.state.user.name)
+          this.$store.dispatch('setUser', this.$route.params.user)
+          this.$scrollTo('#bottom', 400)
         }
       } else {
-        this.$store.dispatch('clear')
-        this.$scrollTo('#app', 0)
+        this.$store.dispatch('clearUser')
+        this.$scrollTo('#app', 400)
       }
     },
   },
   mounted() {
-    if (this.$route.params) {
+    if (this.$route.params.user) {
       if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
         this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
+        this.$scrollTo('#bottom', 400)
       } else if (this.$route.params.user) {
-        this.$store.dispatch('setUser', this.$store.state.user.name)
+        this.$store.dispatch('setUser', this.$route.params.user)
+        this.$scrollTo('#bottom', 400)
       }
     } else {
       this.$store.dispatch('clearUser')
-      this.$scrollTo('#app', 0)
+      this.$scrollTo('#app', 400)
     }
   },
 }
