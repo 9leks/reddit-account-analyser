@@ -3,7 +3,7 @@
          v-model="input"
          type="text"
          autocomplete="off"
-         @keypress.enter="setUser(); scrollBottom()">
+         @keypress.enter="setUser">
 </template>
 
 <script>

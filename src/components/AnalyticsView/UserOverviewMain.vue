@@ -78,6 +78,7 @@ export default {
 
 .fa-birthday-cake {
   margin-left: -0.2em;
+  margin-right: -0.3em;
   font-size: 2em;
 }
 

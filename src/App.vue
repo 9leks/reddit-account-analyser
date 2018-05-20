@@ -15,22 +15,32 @@ export default {
   components: {
     HomeView,
     AnalyticsView,
-
+  },
+  watch: {
+    $route() {
+      if (this.$route.params.user) {
+        if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
+          this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
+        } else if (this.$route.params.user) {
+          this.$store.dispatch('setUser', this.$store.state.user.name)
+        }
+      } else {
+        this.$store.dispatch('clear')
+        this.$scrollTo('#app', 0)
+      }
+    },
   },
   mounted() {
-    if (this.$route.params.user) {
-      this.setUser(this.$route.params.user)
-      this.$scrollTo('#bottom', 500)
+    if (this.$route.params) {
+      if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
+        this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
+      } else if (this.$route.params.user) {
+        this.$store.dispatch('setUser', this.$store.state.user.name)
+      }
     } else {
-      this.$scrollTo('#app', 500, { cancelable: false })
-      this.$router.push('/')
+      this.$store.dispatch('clearUser')
+      this.$scrollTo('#app', 0)
     }
-  },
-  methods: {
-    setUser(user) {
-      this.$store.dispatch('setUser', user)
-      this.$router.push(`/${user}`)
-    },
   },
 }
 </script>

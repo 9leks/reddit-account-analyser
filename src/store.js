@@ -25,14 +25,18 @@ export default new Vuex.Store({
   },
   mutations: {
     setInput: (state, input) => updateField(state, input),
+    clearUser: (state, payload) => (state.user = payload),
     setUser: (state, payload) => {
       try {
         state.user = payload.metadata
+        localStorage.setItem(state.user.name, JSON.stringify(state.user))
         state.error = ''
       } catch (error) {
         state.error = error
       }
     },
+    setUserByLocalStorage: (state, payload) =>
+      (state.user = JSON.parse(localStorage.getItem(payload))),
   },
   actions: {
     setUser: async ({ commit }, user) => {
@@ -40,5 +44,8 @@ export default new Vuex.Store({
       const payload = { metadata }
       commit('setUser', payload)
     },
+    setUserByLocalStorage: ({ commit }, payload) =>
+      commit('setUserByLocalStorage', payload),
+    clear: ({ commit }) => commit('clearUser', {}),
   },
 })
