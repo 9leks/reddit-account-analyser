@@ -5,7 +5,7 @@ const metadata = async user => {
     axios.get(`https://www.reddit.com/user/${user}/about.json`),
     axios.get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&metadata=true&size=0`),
     axios.get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&metadata=true&size=0`)
-  ])
+  ]).catch(error => error + 'hi')
 
   return {
     name: about.data.data.name,

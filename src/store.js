@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getField, updateField } from 'vuex-map-fields'
+import Cookies from 'js-cookie'
 import reddit from './reddit.js'
 
 Vue.use(Vuex)
@@ -25,28 +26,24 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    clearUser: state => (state.user = {}),
     setInput: (state, input) => updateField(state, input),
-
-    clearUser: (state) => (state.user = {}),
-
-    setUserByAPICall: (state, payload) => {
-      state.user = payload.metadata
-    },
-    
-    setUserByLocalStorage: (state, payload) => {
-      state.user = JSON.parse(localStorage.getItem(payload))
-    },
+    setUserByAPICall: (state, payload) => (state.user = payload),
+    setUserByCookies: (state, payload) => (state.user = payload),
   },
-  
+
   actions: {
     setUserByAPICall: async ({ commit }, user) => {
       const metadata = await reddit.metadata(user)
-      localStorage.setItem(user, JSON.stringify(metadata))
-      commit('setUserByAPICall', { metadata })
+      const expirationTime = new Date(new Date().getTime() + 30 * 1000)
+      Cookies.set(user, metadata, { expires: expirationTime })
+      commit('setUserByAPICall', metadata)
     },
 
-    setUserByLocalStorage: ({ commit }, payload) =>
-      commit('setUserByLocalStorage', payload),
+    setUserByCookies: ({ commit }, payload) => {
+      const user = Cookies.getJSON(payload)
+      commit('setUserByCookies', user)
+    },
 
     clearUser: ({ commit }) => commit('clearUser'),
   },

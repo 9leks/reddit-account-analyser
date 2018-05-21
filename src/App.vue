@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import HomeView from './components/HomeView'
 import AnalyticsView from './components/AnalyticsView'
 
@@ -18,12 +19,11 @@ export default {
   },
   watch: {
     $route() {
-      if (this.$route.params.user) {
-        if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
-          this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
-        } else {
-          this.$store.dispatch('setUserByAPICall', this.$route.params.user)
-        }
+      const username = this.$route.params.username
+      if (username) {
+        Cookies.getJSON(username)
+          ? this.$store.dispatch('setUserByCookies', username)
+          : this.$store.dispatch('setUserByAPICall', username)
         this.$scrollTo('#bottom', 500)
       } else {
         this.$store.dispatch('clearUser')
@@ -32,12 +32,11 @@ export default {
     },
   },
   mounted() {
-    if (this.$route.params.user) {
-      if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
-        this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
-      } else {
-        this.$store.dispatch('setUserByAPICall', this.$route.params.user)
-      }
+    const username = this.$route.params.username
+    if (username) {
+      Cookies.getJSON(username)
+        ? this.$store.dispatch('setUserByCookies', username)
+        : this.$store.dispatch('setUserByAPICall', username)
       this.$scrollTo('#bottom', 500)
     }
   },
