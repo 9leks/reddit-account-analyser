@@ -6,12 +6,25 @@
 </template>
 
 <script>
+import swal from 'sweetalert2'
+
 export default {
   name: 'SearchFormButton',
   methods: {
+    validUser(user) {
+      if (user.length < 3 || user.length > 20) {
+        return false
+      }
+      return true
+    },
     setUser() {
-      if (this.$store.state.input) {
-        this.$router.push(`/${this.$store.state.input}`)
+      const username = this.$store.state.input
+      if (username) {
+        if (this.validUser(username)) {
+          this.$router.push(`/${username}`)
+        } else {
+          swal('Invalid username (placeholder popup in SearchFormButton)')
+        }
       }
     },
   },

@@ -8,6 +8,7 @@
 
 <script>
 import Cookies from 'js-cookie'
+import swal from 'sweetalert2'
 import HomeView from './components/HomeView'
 import AnalyticsView from './components/AnalyticsView'
 
@@ -22,12 +23,17 @@ export default {
       const username = this.$route.params.username
       if (username) {
         Cookies.getJSON(username)
-          ? this.$store.dispatch('setUserByCookies', username)
-          : this.$store.dispatch('setUserByAPICall', username)
-        this.$scrollTo('#bottom', 500)
+          ? this.$store
+              .dispatch('setUserByCookies', username)
+              .then(() => this.$scrollTo('#bottom', 500))
+          : this.$store
+              .dispatch('setUserByAPICall', username)
+              .then(() => this.$scrollTo('#bottom', 500))
+              .catch(() => swal('Invalid username (placeholder popup in App)'))
       } else {
-        this.$store.dispatch('clearUser')
-        this.$scrollTo('#app', 500)
+        this.$store
+          .dispatch('clearUser')
+          .then(() => this.$scrollTo('#app', 500))
       }
     },
   },
@@ -35,9 +41,13 @@ export default {
     const username = this.$route.params.username
     if (username) {
       Cookies.getJSON(username)
-        ? this.$store.dispatch('setUserByCookies', username)
-        : this.$store.dispatch('setUserByAPICall', username)
-      this.$scrollTo('#bottom', 500)
+        ? this.$store
+            .dispatch('setUserByCookies', username)
+            .then(() => this.$scrollTo('#bottom', 500))
+        : this.$store
+            .dispatch('setUserByAPICall', username)
+            .then(() => this.$scrollTo('#bottom', 500))
+            .catch(() => swal('Invalid username (placeholder popup in App)'))
     }
   },
 }

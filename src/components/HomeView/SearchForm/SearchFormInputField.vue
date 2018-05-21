@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert2'
 import { createHelpers } from 'vuex-map-fields'
 
 const { mapFields } = createHelpers({
@@ -18,10 +19,21 @@ export default {
   name: 'SearchFormInputField',
   computed: mapFields(['input']),
   methods: {
+    validUser(user) {
+      if (user.length < 3 || user.length > 20) {
+        return false
+      }
+      return true
+    },
     setUser(e) {
-      if (this.$store.state.input) {
-        this.$router.push(`/${this.$store.state.input}`)
-        e.target.blur();
+      const username = this.$store.state.input
+      if (username) {
+        if (this.validUser(username)) {
+          this.$router.push(`/${username}`)
+          e.target.blur()
+        } else {
+          swal('Invalid username (placeholder popup in SearchFormInputField)')
+        }
       }
     },
   },
