@@ -21,13 +21,13 @@ export default {
       if (this.$route.params.user) {
         if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
           this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
-        } else if (this.$route.params.user) {
-          this.$store.dispatch('setUser', this.$route.params.user)
+        } else {
+          this.$store.dispatch('setUserByAPICall', this.$route.params.user)
         }
-        this.$scrollTo('#bottom', 400)
+        this.$scrollTo('#bottom', 500)
       } else {
         this.$store.dispatch('clearUser')
-        this.$scrollTo('#app', 400)
+        this.$scrollTo('#app', 500)
       }
     },
   },
@@ -35,10 +35,10 @@ export default {
     if (this.$route.params.user) {
       if (JSON.parse(localStorage.getItem(this.$route.params.user))) {
         this.$store.dispatch('setUserByLocalStorage', this.$route.params.user)
-      } else if (this.$route.params.user) {
-        this.$store.dispatch('setUser', this.$route.params.user)
+      } else {
+        this.$store.dispatch('setUserByAPICall', this.$route.params.user)
       }
-      this.$scrollTo('#bottom', 400)
+      this.$scrollTo('#bottom', 500)
     }
   },
 }

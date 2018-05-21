@@ -8,7 +8,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     input: '',
-    error: '',
     user: {
       name: '',
       created: '',
@@ -28,33 +27,27 @@ export default new Vuex.Store({
   mutations: {
     setInput: (state, input) => updateField(state, input),
 
-    clearUser: (state, payload) => (state.user = payload),
+    clearUser: (state) => (state.user = {}),
 
-    setUser: (state, payload) => {
-      try {
-        state.user = payload.metadata
-        localStorage.setItem(state.user.name, JSON.stringify(state.user))
-        state.error = ''
-      } catch (error) {
-        state.error = error
-      }
+    setUserByAPICall: (state, payload) => {
+      state.user = payload.metadata
     },
-
+    
     setUserByLocalStorage: (state, payload) => {
       state.user = JSON.parse(localStorage.getItem(payload))
     },
   },
-
+  
   actions: {
-    setUser: async ({ commit }, user) => {
+    setUserByAPICall: async ({ commit }, user) => {
       const metadata = await reddit.metadata(user)
-      const payload = { metadata }
-      commit('setUser', payload)
+      localStorage.setItem(user, JSON.stringify(metadata))
+      commit('setUserByAPICall', { metadata })
     },
 
     setUserByLocalStorage: ({ commit }, payload) =>
       commit('setUserByLocalStorage', payload),
 
-    clearUser: ({ commit }) => commit('clearUser', {}),
+    clearUser: ({ commit }) => commit('clearUser'),
   },
 })
