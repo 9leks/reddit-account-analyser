@@ -13,19 +13,36 @@
       </div>
 
       <div class="search-form">
-        <SearchForm />
+        <SearchForm @error="createPopup" />
       </div>
 
     </div>
+
+    <SnackbarPopup v-if="error">{{ $store.state.input }} is not a valid username!</SnackbarPopup>
   </div>
 </template>
 
 <script>
 import SearchForm from './HomeView/SearchForm'
+import SnackbarPopup from '@/components/SnackbarPopup'
 
 export default {
   name: 'HomeView',
-  components: { SearchForm },
+  components: { SearchForm, SnackbarPopup },
+  data() {
+    return {
+      error: false,
+    }
+  },
+  methods: {
+    createPopup() {
+      this.error = true
+      setTimeout(() => this.removePopup(), 3000)
+    },
+    removePopup() {
+      this.error = false
+    },
+  },
 }
 </script>
 

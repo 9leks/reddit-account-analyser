@@ -2,13 +2,14 @@
   <div id="app">
     <HomeView />
     <AnalyticsView />
+    <SnackbarPopup v-if="error">{{ $route.params.username }} does not exist!</SnackbarPopup>
     <span id="bottom" />
   </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie'
-import swal from 'sweetalert2'
+import SnackbarPopup from './components/SnackbarPopup'
 import HomeView from './components/HomeView'
 import AnalyticsView from './components/AnalyticsView'
 
@@ -17,6 +18,12 @@ export default {
   components: {
     HomeView,
     AnalyticsView,
+    SnackbarPopup,
+  },
+  data() {
+    return {
+      error: false,
+    }
   },
   watch: {
     $route() {
@@ -29,7 +36,10 @@ export default {
           : this.$store
               .dispatch('setUserByAPICall', username)
               .then(() => this.$scrollTo('#bottom', 500))
-              .catch(() => swal('Invalid username (placeholder popup in App)'))
+              .catch(() => {
+                this.error = true
+                setTimeout(() => (this.error = false), 3000)
+              })
       } else {
         this.$store
           .dispatch('clearUser')
@@ -47,7 +57,10 @@ export default {
         : this.$store
             .dispatch('setUserByAPICall', username)
             .then(() => this.$scrollTo('#bottom', 500))
-            .catch(() => swal('Invalid username (placeholder popup in App)'))
+            .catch(() => {
+              this.error = true
+              setTimeout(() => (this.error = false), 3000)
+            })
     }
   },
 }

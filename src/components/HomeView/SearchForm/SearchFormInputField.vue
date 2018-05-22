@@ -1,13 +1,14 @@
 <template>
-  <input id="input"
-         v-model="input"
-         type="text"
-         autocomplete="off"
-         @keypress.enter="setUser">
+  <div>
+    <input id="input"
+           v-model="input"
+           type="text"
+           autocomplete="off"
+           @keypress.enter="setUser">
+  </div>
 </template>
 
 <script>
-import swal from 'sweetalert2'
 import { createHelpers } from 'vuex-map-fields'
 
 const { mapFields } = createHelpers({
@@ -26,13 +27,13 @@ export default {
       return true
     },
     setUser(e) {
-      const username = this.$store.state.input
+      const username = this.$store.state.input.trim()
       if (username) {
         if (this.validUser(username)) {
           this.$router.push(`/${username}`)
           e.target.blur()
         } else {
-          swal('Invalid username (placeholder popup in SearchFormInputField)')
+          this.$parent.$emit('error')
         }
       }
     },
