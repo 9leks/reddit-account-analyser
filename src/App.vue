@@ -2,9 +2,8 @@
   <div id="app">
     <HomeView />
     <AnalyticsView />
-    <SnackbarPopup v-if="error">{{ $route.params.username }} does not exist!</SnackbarPopup>
-    <span id="bottom"
-          ref="analytics" />
+    <SnackbarPopup v-if="error">{{ $route.params.username }} does not exist</SnackbarPopup>
+    <span id="bottom" />
   </div>
 </template>
 
@@ -40,7 +39,6 @@ export default {
   methods: {
     setUser(username) {
       if (username) {
-        this.$nextTick(() => this.$refs.analytics.focus())
         Cookies.getJSON(username)
           ? this.$store
               .dispatch('setUserByCookies', username)

@@ -21,7 +21,7 @@ export default {
         if (this.validUser(username)) {
           this.$router.push(`/${username}`)
         } else {
-          this.$emit('error')
+          this.$parent.$emit('error')
         }
       }
     },

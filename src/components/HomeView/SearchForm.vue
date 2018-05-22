@@ -1,5 +1,5 @@
 <template>
-  <div class="search-form">
+  <div id="search-form">
     <SearchFormDecoration />
     <SearchFormInputField />
     <SearchFormButton />
@@ -23,8 +23,14 @@ export default {
 
 
 <style lang="scss" scoped>
-.search-form {
+#search-form {
   display: flex;
+}
+
+#label {
+  color: rgb(211, 12, 22);
+  font-weight: 700;
+  font-size: 1.2em;
 }
 </style>
 

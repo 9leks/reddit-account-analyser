@@ -13,12 +13,12 @@
       </div>
 
       <div class="search-form">
-        <SearchForm @error="createPopup($store.state.input)" />
+        <SearchForm @error="createPopup()" />
       </div>
 
     </div>
 
-    <SnackbarPopup v-if="error">{{ username }} is not a valid username!</SnackbarPopup>
+    <SnackbarPopup v-if="error">Username must be between 3-20 characters</SnackbarPopup>
   </div>
 </template>
 
@@ -32,13 +32,12 @@ export default {
   data() {
     return {
       error: false,
-      username: '',
+      errorMessage: '',
     }
   },
   methods: {
-    createPopup(username) {
+    createPopup() {
       this.error = true
-      this.username = username
       setTimeout(() => this.removePopup(), 3000)
     },
     removePopup() {

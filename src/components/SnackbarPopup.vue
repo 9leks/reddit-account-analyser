@@ -12,12 +12,11 @@ export default {
 
 <style lang="scss">
 .snackbar {
-  position: absolute;
+  position: fixed;
   right: 1em;
   bottom: 1em;
   z-index: 1;
-  padding: 1em 0.5em;
-  min-width: 16rem;
+  padding: 1em;
   border-radius: 0.5em;
   background: linear-gradient(
     120deg,
