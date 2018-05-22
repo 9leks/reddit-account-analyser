@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <input id="input"
-           v-model="input"
-           type="text"
-           autocomplete="off"
-           @keypress.enter="setUser">
-  </div>
+  <input id="input"
+         ref="input"
+         v-model="input"
+         type="text"
+         autocomplete="off"
+         @keypress.enter="setUser">
 </template>
 
 <script>
@@ -26,12 +25,11 @@ export default {
       }
       return true
     },
-    setUser(e) {
+    setUser() {
       const username = this.$store.state.input.trim()
       if (username) {
         if (this.validUser(username)) {
           this.$router.push(`/${username}`)
-          e.target.blur()
         } else {
           this.$parent.$emit('error')
         }

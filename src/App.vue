@@ -3,7 +3,8 @@
     <HomeView />
     <AnalyticsView />
     <SnackbarPopup v-if="error">{{ $route.params.username }} does not exist!</SnackbarPopup>
-    <span id="bottom" />
+    <span id="bottom"
+          ref="analytics" />
   </div>
 </template>
 
@@ -28,7 +29,18 @@ export default {
   watch: {
     $route() {
       const username = this.$route.params.username
+      if (username) this.setUser(username)
+      else this.clearUser()
+    },
+  },
+  mounted() {
+    const username = this.$route.params.username
+    this.setUser(username)
+  },
+  methods: {
+    setUser(username) {
       if (username) {
+        this.$nextTick(() => this.$refs.analytics.focus())
         Cookies.getJSON(username)
           ? this.$store
               .dispatch('setUserByCookies', username)
@@ -40,28 +52,11 @@ export default {
                 this.error = true
                 setTimeout(() => (this.error = false), 3000)
               })
-      } else {
-        this.$store
-          .dispatch('clearUser')
-          .then(() => this.$scrollTo('#app', 500))
       }
     },
-  },
-  mounted() {
-    const username = this.$route.params.username
-    if (username) {
-      Cookies.getJSON(username)
-        ? this.$store
-            .dispatch('setUserByCookies', username)
-            .then(() => this.$scrollTo('#bottom', 500))
-        : this.$store
-            .dispatch('setUserByAPICall', username)
-            .then(() => this.$scrollTo('#bottom', 500))
-            .catch(() => {
-              this.error = true
-              setTimeout(() => (this.error = false), 3000)
-            })
-    }
+    clearUser() {
+      this.$store.dispatch('clearUser').then(() => this.$scrollTo('#app', 500))
+    },
   },
 }
 </script>

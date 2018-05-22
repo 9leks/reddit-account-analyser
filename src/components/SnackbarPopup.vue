@@ -17,7 +17,7 @@ export default {
   bottom: 1em;
   z-index: 1;
   padding: 1em 0.5em;
-  min-width: 16em;
+  min-width: 16rem;
   border-radius: 0.5em;
   background: linear-gradient(
     120deg,
@@ -28,29 +28,29 @@ export default {
   color: #fff;
   text-align: center;
   font-size: 1.5em;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.55s;
 }
 
 @keyframes fadein {
   from {
-    bottom: 0;
+    right: 0;
     opacity: 0;
   }
 
   to {
-    bottom: 1em;
+    right: 1em;
     opacity: 1;
   }
 }
 
 @keyframes fadeout {
   from {
-    bottom: 1em;
+    right: 1em;
     opacity: 1;
   }
 
   to {
-    bottom: 0;
+    right: 0;
     opacity: 0;
   }
 }
