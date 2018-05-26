@@ -1,21 +1,27 @@
 <template>
   <div class="grid">
-    <div class="grid grid__row grid__row--center">
+    <div class="grid grid__row">
       <div class="grid grid__item--dark grid__item--header">
         <img class="grid grid__item--center grid__item--vcenter"
              src="@/assets/logo.svg">
       </div>
-      <div class="grid grid__item--title grid__item--text-shadow">
+    </div>
+    <div class="grid grid__row">
+      <div class="grid grid__item--title grid__item--center grid__item--text-shadow">
         <p>
           <span class="orange">reddit</span> account analyser
         </p>
       </div>
-      <div class="grid grid__item--information grid__item--text-shadow">
+    </div>
+    <div class="grid grid__row">
+      <div class="grid grid__item--information grid__item--center grid__item--text-shadow">
         <p>
           Get information on your data, recent activity and favorite subreddits
         </p>
       </div>
-      <div class="grid grid__item--searchbar grid__item--center grid__item--drop-shadow ">
+    </div>
+    <div class="grid grid__row">
+      <div class="grid__item--drop-shadow">
         <Searchbar />
       </div>
     </div>
@@ -66,9 +72,5 @@ export default {
   font-weight: 300;
   font-size: 36px;
   opacity: 0.75;
-}
-
-.grid__item--searchbar {
-  width: 50%;
 }
 </style>

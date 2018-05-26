@@ -36,6 +36,7 @@ export default {
 }
 
 .grid__row--center {
+  justify-content: center;
   text-align: center;
 }
 
@@ -45,6 +46,7 @@ export default {
 
 .grid__item--center {
   justify-self: center;
+  text-align: center;
 }
 
 .grid__item--vcenter {
