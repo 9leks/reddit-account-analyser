@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getField, updateField } from 'vuex-map-fields'
 import Cookies from 'js-cookie'
 import reddit from './reddit.js'
 
@@ -20,14 +19,7 @@ export default new Vuex.Store({
       },
     },
   },
-
-  getters: {
-    getInput: state => getField(state),
-  },
-
   mutations: {
-    clearUser: state => (state.user = {}),
-    setInput: (state, input) => updateField(state, input),
     setUserByAPICall: (state, payload) => (state.user = payload),
     setUserByCookies: (state, payload) => (state.user = payload),
   },
@@ -41,10 +33,8 @@ export default new Vuex.Store({
     },
 
     setUserByCookies: ({ commit }, payload) => {
-      const user = Cookies.getJSON(payload)
-      commit('setUserByCookies', user)
+      const metadata = Cookies.getJSON(payload)
+      commit('setUserByCookies', metadata)
     },
-
-    clearUser: ({ commit }) => commit('clearUser'),
   },
 })

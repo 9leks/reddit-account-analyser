@@ -1,11 +1,7 @@
 <template>
-  <div class="grid">
-    <div class="grid__row">
-      <SearchView />
-    </div>
-    <!-- <div class="grid__row grid__row--center"> -->
-    <!-- <AnalyseView /> -->
-    <!-- </div> -->
+  <div>
+    <SearchView />
+    <AnalyseView />
   </div>
 </template>
 
@@ -26,12 +22,18 @@ export default {
   font-family: 'Poppins', sans-serif;
 }
 
+.orange {
+  color: #ff7843;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: 1;
+  padding-bottom: 200px; // DELETE
 }
 
 .grid__row {
+  display: inherit;
+
   grid-template-rows: 1;
 }
 
@@ -40,16 +42,22 @@ export default {
   text-align: center;
 }
 
-.grid__item {
-  background-color: rgb(227, 227, 227);
+.grid__row--vcenter {
+  align-items: center;
 }
 
-.grid__item--center {
-  justify-self: center;
-  text-align: center;
+.grid__item--header {
+  margin-bottom: 4rem;
+  padding: 0.5rem;
+
+  grid-template-rows: 180px;
 }
 
-.grid__item--vcenter {
-  align-self: center;
+.grid__item--dark {
+  background-color: #4f4f4f;
+}
+
+.grid__item--text-shadow {
+  text-shadow: 0 5px 5px rgb(200, 200, 200);
 }
 </style>

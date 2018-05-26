@@ -1,11 +1,14 @@
 <template>
   <div class="searchbar">
-    <button class="button button__disabled"
+    <button class="button button--disabled"
             disabled="disabled">/u/</button>
-    <input class="input"
-           type="text">
-    <button class="button button__send">
-      <span class="icon-search" />
+    <input :style="'width:' + width"
+           class="input"
+           type="text"
+           @keypress.enter="$emit('sent')"
+           @input="$emit('input', $event.target.value)">
+    <button class="button button--send">
+      <span class="icon--search" />
     </button>
   </div>
 </template>
@@ -13,6 +16,12 @@
 <script>
 export default {
   name: 'Searchbar',
+  props: {
+    width: {
+      type: String,
+      default: '100%',
+    },
+  },
 }
 </script>
 
@@ -24,22 +33,20 @@ export default {
 
 .searchbar {
   display: flex;
-  justify-content: center;
 }
 
 .input {
-  padding: 1rem;
-  width: 40%;
+  padding: 0.8rem;
   border: 0;
   background-color: #f0f0f0;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .input:focus {
   outline: 0;
 }
 
-.icon-search:before {
+.icon--search:before {
   position: relative;
   bottom: 1.2rem;
   display: flex;
@@ -60,17 +67,17 @@ export default {
   transition: background-color 0.09s ease-in-out;
 }
 
-.button__send:hover {
+.button--send:hover {
   outline: 0;
   background-color: #ff4800;
 }
 
-.button__send:active {
+.button--send:active {
   outline: 0;
   background-color: #d63d00;
 }
 
-.button__send:focus {
+.button--send:focus {
   outline: 0;
 }
 </style>
