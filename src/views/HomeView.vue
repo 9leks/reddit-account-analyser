@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import SearchForm from './HomeView/SearchForm'
-import SnackbarPopup from '@/components/SnackbarPopup'
+import SearchForm from '@/components/home/SearchForm'
+import SnackbarPopup from '@/components/utility/SnackbarPopup'
 
 export default {
   name: 'HomeView',

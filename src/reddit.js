@@ -12,7 +12,7 @@ const metadata = async user => {
     created: about.data.data.created,
     comments: comments.data.metadata.total_results,
     submissions: submissions.data.metadata.total_results,
-    karma: {
+      karma: {
       link: about.data.data.link_karma,
       comment: about.data.data.comment_karma,
     },

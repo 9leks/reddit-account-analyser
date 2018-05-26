@@ -26,10 +26,11 @@
     "@vue/cli-service": "^3.0.0-beta.10",
     "vue-template-compiler": "^2.5.13"
   },
+  "vue": {
+    "lintOnSave": false
+  },
   "babel": {
-    "presets": [
-      "@vue/app"
-    ]
+    "presets": ["@vue/app"]
   },
   "eslintConfig": {
     "root": true,
@@ -37,10 +38,7 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "extends": [
-      "plugin:vue/recommended",
-      "eslint:recommended"
-    ],
+    "extends": ["plugin:vue/recommended", "eslint:recommended"],
     "rules": {
       "vue/max-attributes-per-line": [
         2,
@@ -59,9 +57,5 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

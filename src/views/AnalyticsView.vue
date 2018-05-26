@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import UserOverviewMain from './AnalyticsView/UserOverviewMain'
-import UserOverviewActivity from './AnalyticsView/UserOverviewActivity'
-import UserOverviewGraphs from './AnalyticsView/UserOverviewGraphs'
+import UserOverviewMain from '@/components/analytics/UserOverviewMain'
+import UserOverviewActivity from '@/components/analytics/UserOverviewActivity'
+import UserOverviewGraphs from '@/components/analytics/UserOverviewGraphs'
 
 import { mapState } from 'vuex'
 

@@ -9,9 +9,9 @@
 
 <script>
 import Cookies from 'js-cookie'
-import SnackbarPopup from './components/SnackbarPopup'
-import HomeView from './components/HomeView'
-import AnalyticsView from './components/AnalyticsView'
+import SnackbarPopup from './components/utility/SnackbarPopup'
+import HomeView from './views/HomeView'
+import AnalyticsView from './views/AnalyticsView'
 
 export default {
   name: 'App',
@@ -38,22 +38,26 @@ export default {
   },
   methods: {
     setUser(username) {
-      if (username) {
-        Cookies.getJSON(username)
-          ? this.$store
-              .dispatch('setUserByCookies', username)
-              .then(() => this.$scrollTo('#bottom', 500))
-          : this.$store
-              .dispatch('setUserByAPICall', username)
-              .then(() => this.$scrollTo('#bottom', 500))
-              .catch(() => {
-                this.error = true
-                setTimeout(() => (this.error = false), 3000)
-              })
-      }
+      Cookies.getJSON(username)
+        ? this.setUserByCookies(username)
+        : this.setUserByAPICall(username)
     },
     clearUser() {
       this.$store.dispatch('clearUser').then(() => this.$scrollTo('#app', 500))
+    },
+    setUserByCookies(username) {
+      this.$store
+        .dispatch('setUserByCookies', username)
+        .then(() => this.$scrollTo('#bottom', 500))
+    },
+    setUserByAPICall(username) {
+      this.$store
+        .dispatch('setUserByAPICall', username)
+        .then(() => this.$scrollTo('#bottom', 500))
+        .catch(() => {
+          this.error = true
+          setTimeout(() => (this.error = false), 3000)
+        })
     },
   },
 }
