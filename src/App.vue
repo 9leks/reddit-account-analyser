@@ -1,10 +1,10 @@
 <template>
   <div class="grid">
-    <div class="grid__row grid__row--center">
+    <div class="grid__row">
       <SearchView />
     </div>
     <!-- <div class="grid__row grid__row--center"> -->
-      <!-- <AnalyseView /> -->
+    <!-- <AnalyseView /> -->
     <!-- </div> -->
   </div>
 </template>
@@ -28,26 +28,19 @@ export default {
 
 .grid {
   display: grid;
+  grid-template-columns: 1;
 }
 
 .grid__row {
-  grid-template-rows: 100%;
-}
-
-.grid__row--stretch {
-  justify-self: stretch;
+  grid-template-rows: 1;
 }
 
 .grid__row--center {
   text-align: center;
 }
 
-.grid__item--header {
-  grid-template-rows: 180px;
-}
-
 .grid__item {
-  background-color: #e3e3e3;
+  background-color: rgb(227, 227, 227);
 }
 
 .grid__item--center {
@@ -56,9 +49,5 @@ export default {
 
 .grid__item--vcenter {
   align-self: center;
-}
-
-.grid__item--dark {
-  background-color: #4f4f4f;
 }
 </style>
