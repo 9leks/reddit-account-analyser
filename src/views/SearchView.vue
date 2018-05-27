@@ -46,7 +46,9 @@ export default {
     setUser(username) {
       Cookies.getJSON(username)
         ? this.$store.dispatch('setUserByCookies', username)
-        : this.$store.dispatch('setUserByAPICall', username)
+        : this.$store
+            .dispatch('setUserByAPICall', username)
+            .catch(error => console.log(error)) // TODO: Add error handling
     },
   },
 }
