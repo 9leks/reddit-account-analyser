@@ -31,12 +31,6 @@ export default {
   padding-bottom: 200px; // DELETE
 }
 
-.grid__row {
-  display: inherit;
-
-  grid-template-rows: 1;
-}
-
 .grid__item--center {
   justify-content: center;
   text-align: center;

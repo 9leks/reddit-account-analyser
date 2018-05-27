@@ -1,19 +1,15 @@
 <template>
   <div class="grid">
-    <div class="grid__row">
-      <div class="grid__item--center grid__item--dark grid__item--header">
-        <div class="grid__item--overview-header grid__item--text-shadow-dark">
-          OVERVIEW FOR <br>
-          <span class="orange">{{ name }}</span>
-        </div>
+    <div class="grid__item--center grid__item--dark grid__item--header">
+      <div class="grid__item--overview-header grid__item--text-shadow-dark">
+        OVERVIEW FOR <br>
+        <span class="orange">{{ name }}</span>
       </div>
     </div>
-    <div class="grid__row">
-      <div class="grid__column--3 grid__item--center">
-        <div class="grid__item--column-header grid__item--text-shadow">DATA</div>
-        <div class="grid__item--column-header grid__item--text-shadow">ACTIVITY</div>
-        <div class="grid__item--column-header grid__item--text-shadow">GRAPHS</div>
-      </div>
+    <div class="grid__column--3 grid__item--center">
+      <div class="grid__item--column-header grid__item--text-shadow">DATA</div>
+      <div class="grid__item--column-header grid__item--text-shadow">ACTIVITY</div>
+      <div class="grid__item--column-header grid__item--text-shadow">GRAPHS</div>
     </div>
   </div>
 
@@ -44,6 +40,7 @@ export default {
 <style lang="scss" scoped>
 .grid__column--3 {
   display: inherit;
+  grid-gap: 2rem;
 }
 
 .grid__item--column-header {
@@ -64,6 +61,7 @@ export default {
 @media screen and (min-width: 768px) {
   .grid__column--3 {
     grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0;
   }
 
   .grid__item--overview-header {
