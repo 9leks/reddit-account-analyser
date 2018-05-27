@@ -2,8 +2,7 @@
   <div class="searchbar">
     <button class="button button--disabled"
             disabled>/u/</button>
-    <input :style="'width:' + width"
-           class="input"
+    <input class="input"
            type="text"
            @keypress.enter="$emit('send')"
            @input="$emit('input', $event.target.value)">
@@ -17,12 +16,6 @@
 <script>
 export default {
   name: 'Searchbar',
-  props: {
-    width: {
-      type: String,
-      default: '100%',
-    },
-  },
 }
 </script>
 
