@@ -1,5 +1,5 @@
 <template>
-  <div class="grid">
+  <div class="grid grid__search">
     <div class="grid__item grid__item--dark grid__item--header">
       <div class="grid__item grid__item--center grid__item--vcenter">
         <img src="@/assets/logo.svg">
@@ -15,7 +15,7 @@
         Get information on your data, recent activity and favorite subreddits
       </p>
     </div>
-    <div class="grid__item grid__item--center grid__item--searchbar grid__item--center grid__item--drop-shadow">
+    <div class="grid__item grid__item--center grid__item__searchbar grid__item--center grid__item--drop-shadow">
       <Searchbar v-model="username"
                  @send="setUser(username)" />
     </div>
@@ -47,6 +47,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.grid__search {
+  display: block;
+}
+
 .grid__item--title {
   margin-bottom: -2rem;
   font-weight: 200;
@@ -65,7 +69,13 @@ export default {
   opacity: 0.75;
 }
 
-.grid__item--searchbar {
-  margin-bottom: 5rem;
+.grid__item__searchbar {
+  margin-bottom: 10rem; // DELETE
+}
+
+@media screen and (min-width: 768px) {
+  .grid__search {
+    display: grid;
+  }
 }
 </style>

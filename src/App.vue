@@ -28,7 +28,6 @@ export default {
 
 .grid {
   display: grid;
-  padding-bottom: 200px; // DELETE
 }
 
 .grid__item {

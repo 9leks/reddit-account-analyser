@@ -28,9 +28,11 @@ export default {
 .searchbar {
   display: flex;
   justify-content: inherit;
+  margin: auto 2rem;
 }
 
 .input {
+  width: 100%;
   padding: 0.8rem;
   border: 0;
   background-color: #f0f0f0;

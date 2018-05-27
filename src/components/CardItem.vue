@@ -1,8 +1,6 @@
 <template>
   <div class="card-item">
     <h6 class="header">
-      <img v-if="icon"
-           src="icon">
       <slot name="header" />
     </h6>
     <p class="paragraph">
@@ -14,21 +12,12 @@
 <script>
 export default {
   name: 'CardItem',
-  props: {
-    icon: {
-      type: String,
-      default: '',
-    },
-  },
 }
 </script>
 
 <style lang="scss" scoped>
-.card-item {
-  text-align: center;
-}
-
 .header {
+  margin-top: 2rem;
   margin-bottom: -1rem;
   font-weight: 300;
   font-size: 1.5rem;
@@ -41,7 +30,9 @@ export default {
   background-color: #d7d7d7;
   color: rgb(40, 60, 60);
   text-align: left;
+  letter-spacing: 0.05px;
   font-weight: 400;
   font-size: 1.5rem;
+  line-height: 3rem;
 }
 </style>

@@ -8,18 +8,9 @@
     </div>
     <div class="grid__column--3 grid__item--center">
       <div class="grid__item  grid__item--text-shadow">
-        <h1 class="grid__item--column-header">DATA</h1>
 
-        <CardItem>
-          <template slot="header">
-            CAKE DAY
-          </template>
-          <template slot="paragraph">
-            This account was created {{ timeFromSignup }}, on
-            <span class="orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
-            <span class="orange">cake day</span> is in {{ timeToCakeDay }}
-          </template>
-        </CardItem>
+        <h1 class="grid__item--column-header">DATA</h1>
+        <DataView />
 
       </div>
       <div class="grid__item  grid__item--text-shadow">
@@ -27,7 +18,7 @@
 
       </div>
       <div class="grid__item  grid__item--text-shadow">
-        <h1 class="grid__item--column-header">DATA</h1>
+        <h1 class="grid__item--column-header">GRAPHS</h1>
 
       </div>
     </div>
@@ -37,34 +28,17 @@
 
 
 <script>
-import { format, distanceInWordsToNow } from 'date-fns'
 import { mapState } from 'vuex'
 
-import CardItem from '@/components/CardItem'
+import DataView from './DataView'
 
 export default {
   name: 'AnalyseView',
-  components: { CardItem },
+  components: { DataView },
   computed: {
     ...mapState({
       name: state => state.user.name,
-      created: state => state.user.created,
     }),
-    signupDate() {
-      const date = new Date(this.created * 1000)
-      return format(date, 'MMM Do, YYYY')
-    },
-    timeFromSignup() {
-      const date = new Date(this.created * 1000)
-      return distanceInWordsToNow(date)
-    },
-    timeToCakeDay() {
-      const date = new Date(this.created * 1000)
-      const month = date.getMonth()
-      const day = date.getDate()
-      const year = new Date().getFullYear()
-      return distanceInWordsToNow(new Date(year, month, day))
-    },
   },
 }
 </script>
@@ -81,7 +55,6 @@ export default {
 }
 
 .grid__item--column-header {
-  margin-bottom: -1rem;
   font-weight: 200;
   font-size: 2.5rem;
 }
@@ -89,7 +62,7 @@ export default {
 .grid__item--overview {
   color: #f0f0f0;
   font-weight: 200;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .grid__item--text-shadow-dark {
@@ -110,6 +83,12 @@ export default {
 
   .grid__item--column-header {
     font-weight: 200;
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .grid__item--overview {
     font-size: 3rem;
   }
 }
