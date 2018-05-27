@@ -7,6 +7,7 @@ const metadata = async user => {
       get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&metadata=true&size=0`),
       get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&metadata=true&size=0`)
     ])
+
     return {
       name: about.data.data.name,
       created: about.data.data.created,

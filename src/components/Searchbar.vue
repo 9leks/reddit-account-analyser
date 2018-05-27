@@ -34,6 +34,7 @@ export default {
 
 .searchbar {
   display: flex;
+  justify-content: inherit;
 }
 
 .input {

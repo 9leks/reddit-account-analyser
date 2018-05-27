@@ -22,10 +22,11 @@
       </div>
     </div>
     <div class="grid__row">
-      <Searchbar :width="'40%'"
-                 v-model="username"
-                 class="grid grid__item--center grid__item--searchbar grid__item--center grid__item--drop-shadow"
-                 @send="setUser(username)" />
+      <div class="grid__item--center grid__item--searchbar grid__item--center grid__item--drop-shadow">
+        <Searchbar :width="'40%'"
+                   v-model="username"
+                   @send="setUser(username)" />
+      </div>
     </div>
   </div>
 </template>
