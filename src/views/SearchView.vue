@@ -1,28 +1,32 @@
 <template>
   <div class="grid">
     <div class="grid__row">
-      <div class="grid__row--center grid__row--vcenter grid__item--dark grid__item--header">
-        <img src="@/assets/logo.svg">
+      <div class="grid__item--dark grid__item--header">
+        <div class="grid__item--center grid__item--vcenter">
+          <img src="@/assets/logo.svg">
+        </div>
       </div>
     </div>
-    <div class="grid__row grid__row--center">
-      <div class="grid__item--title grid__item--text-shadow">
+    <div class="grid__row">
+      <div class="grid__item--title grid__item--center grid__item--text-shadow">
         <p>
           <span class="orange">reddit</span> account analyser
         </p>
       </div>
     </div>
-    <div class="grid__row grid__row--center">
-      <div class="grid__item--information grid__item--text-shadow">
+    <div class="grid__row">
+      <div class="grid__item--information grid__item--center grid__item--text-shadow">
         <p>
           Get information on your data, recent activity and favorite subreddits
         </p>
       </div>
     </div>
-    <Searchbar :width="'40%'"
-               v-model="username"
-               class="grid__row--center grid__item--searchbar grid__item--drop-shadow"
-               @sent="setUser(username)" />
+    <div class="grid__row">
+      <Searchbar :width="'40%'"
+                 v-model="username"
+                 class="grid grid__item--center grid__item--searchbar grid__item--center grid__item--drop-shadow"
+                 @send="setUser(username)" />
+    </div>
   </div>
 </template>
 

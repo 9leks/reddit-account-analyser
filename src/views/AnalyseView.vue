@@ -1,17 +1,19 @@
 <template>
   <div class="grid">
     <div class="grid__row">
-      <div class="grid__row--center grid__row--vcenter grid__item--dark grid__item--header">
+      <div class="grid__item--center grid__item--dark grid__item--header">
         <div class="grid__item--overview-header grid__item--text-shadow-dark">
           OVERVIEW FOR <br>
           <span class="orange">{{ name }}</span>
         </div>
       </div>
     </div>
-    <div class="grid__row--center grid__column--3">
-      <div class="grid__item--column-header">DATA</div>
-      <div class="grid__item--column-header">ACTIVITY</div>
-      <div class="grid__item--column-header">GRAPHS</div>
+    <div class="grid__row">
+      <div class="grid__column--3 grid__item--center">
+        <div class="grid__item--column-header grid__item--text-shadow">DATA</div>
+        <div class="grid__item--column-header grid__item--text-shadow">ACTIVITY</div>
+        <div class="grid__item--column-header grid__item--text-shadow">GRAPHS</div>
+      </div>
     </div>
   </div>
 
@@ -19,7 +21,7 @@
 
 
 <script>
-import moment from 'moment'
+import { format, distanceInWordsToNow } from 'date-fns'
 import { mapState } from 'vuex'
 
 export default {
@@ -30,10 +32,10 @@ export default {
       created: state => state.user.created,
     }),
     signupDate() {
-      return moment.unix(this.created).format('MMM Do YYYY')
+      return format(new Date(this.created * 1000), 'MMM Do, YYYY')
     },
     timeFromSignup() {
-      return moment.unix(this.created).fromNow()
+      return distanceInWordsToNow(new Date(this.created * 1000))
     },
   },
 }

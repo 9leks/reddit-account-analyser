@@ -1,13 +1,14 @@
 <template>
   <div class="searchbar">
     <button class="button button--disabled"
-            disabled="disabled">/u/</button>
+            disabled>/u/</button>
     <input :style="'width:' + width"
            class="input"
            type="text"
-           @keypress.enter="$emit('sent')"
+           @keypress.enter="$emit('send')"
            @input="$emit('input', $event.target.value)">
-    <button class="button button--send">
+    <button class="button button--send"
+            @click="$emit('send')">
       <span class="icon--search" />
     </button>
   </div>
@@ -39,7 +40,7 @@ export default {
   padding: 0.8rem;
   border: 0;
   background-color: #f0f0f0;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 }
 
 .input:focus {
@@ -79,5 +80,11 @@ export default {
 
 .button--send:focus {
   outline: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .input {
+    font-size: 1.8rem;
+  }
 }
 </style>

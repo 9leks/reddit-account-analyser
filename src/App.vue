@@ -37,12 +37,12 @@ export default {
   grid-template-rows: 1;
 }
 
-.grid__row--center {
+.grid__item--center {
   justify-content: center;
   text-align: center;
 }
 
-.grid__row--vcenter {
+.grid__item--vcenter {
   align-items: center;
 }
 
