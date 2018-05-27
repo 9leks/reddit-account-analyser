@@ -25,15 +25,22 @@ export default {
   src: url('../assets/search.ttf');
 }
 
+@media screen and (min-width: 768px) {
+  .input {
+    font-size: 1.8rem;
+  }
+}
+
 .searchbar {
   display: flex;
   justify-content: inherit;
   margin: auto 2rem;
+  border-radius: inherit;
 }
 
 .input {
-  width: 100%;
   padding: 0.8rem;
+  width: 100%;
   border: 0;
   background-color: #f0f0f0;
   font-size: 1.5rem;
@@ -64,6 +71,16 @@ export default {
   transition: background-color 0.09s ease-in-out;
 }
 
+.button--disabled {
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+.button--send {
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+
 .button--send:hover {
   outline: 0;
   background-color: #ff4800;
@@ -76,11 +93,5 @@ export default {
 
 .button--send:focus {
   outline: 0;
-}
-
-@media screen and (min-width: 768px) {
-  .input {
-    font-size: 1.8rem;
-  }
 }
 </style>

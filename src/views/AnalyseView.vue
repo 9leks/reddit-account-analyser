@@ -44,6 +44,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width: 768px) {
+  .grid__column--3 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0;
+  }
+
+  .grid__item--overview {
+    color: #f0f0f0;
+    font-weight: 200;
+    font-size: 3rem;
+  }
+
+  .grid__item--column-header {
+    font-weight: 200;
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .grid__item--overview {
+    font-size: 3rem;
+  }
+}
 .grid__item--header {
   margin-bottom: -0.5rem;
 }
@@ -67,29 +90,5 @@ export default {
 
 .grid__item--text-shadow-dark {
   text-shadow: 0 5px 10px rgba(37, 37, 37, 0.699);
-}
-
-@media screen and (min-width: 768px) {
-  .grid__column--3 {
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0;
-  }
-
-  .grid__item--overview {
-    color: #f0f0f0;
-    font-weight: 200;
-    font-size: 3rem;
-  }
-
-  .grid__item--column-header {
-    font-weight: 200;
-    font-size: 3rem;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .grid__item--overview {
-    font-size: 3rem;
-  }
 }
 </style>

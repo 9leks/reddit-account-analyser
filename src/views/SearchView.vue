@@ -47,6 +47,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width: 768px) {
+  .grid__search {
+    display: grid;
+  }
+}
+
 .grid__search {
   display: block;
 }
@@ -71,11 +77,5 @@ export default {
 
 .grid__item__searchbar {
   margin-bottom: 10rem; // DELETE
-}
-
-@media screen and (min-width: 768px) {
-  .grid__search {
-    display: grid;
-  }
 }
 </style>

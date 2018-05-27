@@ -16,7 +16,7 @@ npm run build --report
 
 ## App Info
 
-Simple reddit account analyser app in Vue.js for learning, based on https://www.reddit.com/r/web_design/comments/5t8qfg/gif_of_a_reddit_account_analyser_im_building_with/
+Gives an analysis of any Reddit account. Built with Vue and chart.js.
 
 ### Author
 
