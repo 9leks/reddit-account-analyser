@@ -20,8 +20,8 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    setUserByAPICall: (state, payload) => (state.user = payload),
-    setUserByCookies: (state, payload) => (state.user = payload),
+    setUserByAPICall: (state, payload) => (state.user = payload.metadata),
+    setUserByCookie: (state, payload) => (state.user = payload.metadata),
   },
 
   actions: {
@@ -29,12 +29,12 @@ export default new Vuex.Store({
       const metadata = await reddit.metadata(user)
       const expirationTime = new Date(new Date().getTime() + 30 * 1000)
       Cookies.set(user, metadata, { expires: expirationTime })
-      commit('setUserByAPICall', metadata)
+      commit('setUserByAPICall', { metadata })
     },
 
-    setUserByCookies: ({ commit }, payload) => {
+    setUserByCookie: ({ commit }, payload) => {
       const metadata = Cookies.getJSON(payload)
-      commit('setUserByCookies', metadata)
+      commit('setUserByCookie', { metadata })
     },
   },
 })

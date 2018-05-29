@@ -1,4 +1,4 @@
-import  { get } from 'axios'
+import { get } from 'axios'
 
 const metadata = async user => {
   try {

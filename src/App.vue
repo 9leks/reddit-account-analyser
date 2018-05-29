@@ -1,60 +1,35 @@
 <template>
-  <div>
-    <SearchView />
-    <AnalyseView />
+  <div class="container container--app">
+    <HomeView class="app--home" />
+    <!-- <InfoView class="app-info" /> -->
   </div>
 </template>
 
 <script>
-import SearchView from './views/SearchView'
-import AnalyseView from './views/AnalyseView'
+import HomeView from './components/HomeView'
+import InfoView from './components/InfoView'
 
 export default {
   name: 'App',
-  components: { SearchView, AnalyseView },
+  components: { HomeView, InfoView },
 }
 </script>
 
-<style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400');
+<style lang="scss" scoped>
+@import './static/scss/global';
 
-* {
-  font-family: 'Poppins', sans-serif;
+.container--app {
+  grid-template-areas:
+    'home'
+    'info';
 }
 
-.orange {
-  color: #ff7843;
+.app--home {
+  grid-area: home;
 }
 
-.grid {
-  display: grid;
-}
-
-.grid__item {
-  display: inherit;
-}
-
-.grid__item--center {
-  justify-content: center;
-  text-align: center;
-}
-
-.grid__item--vcenter {
-  align-items: center;
-}
-
-.grid__item--header {
-  margin-bottom: 4rem;
-  padding: 0.5rem;
-
-  grid-template-rows: 180px;
-}
-
-.grid__item--dark {
-  background-color: #4f4f4f;
-}
-
-.grid__item--text-shadow {
-  text-shadow: 0 5px 5px rgb(200, 200, 200);
+.app--info {
+  grid-area: info;
 }
 </style>
+

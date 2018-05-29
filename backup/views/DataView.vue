@@ -1,53 +1,47 @@
 <template>
-  <div v-if="name">
-
-    <CardItem>
-      <template slot="header">
+  <div class="grid">
+    <div class="grid--row-3">
+      <h6 class="header">
         <img src="@/assets/cake.svg"
              class="icon icon--cake"> CAKE DAY
-      </template>
-      <template slot="paragraph">
+      </h6>
+      <p class="paragraph">
         This account was created {{ timeFromSignup }}, on
         <span class="orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
         <span class="orange">cake day</span> is in {{ timeToCakeDay }}.
-      </template>
-    </CardItem>
+      </p>
 
-    <CardItem>
-      <template slot="header">
+      <h6 class="header">
         <img src="@/assets/upvote.svg"
              class="icon"> UPVOTES
-      </template>
-      <template slot="paragraph">
+      </h6>
+      <p class="paragraph">
         /u/{{ name }} has a net worth of
         <span class="orange">{{ karma.comment }}</span> comment karma and
         <span class="orange">{{ karma.link }}</span> link karma.
-      </template>
-    </CardItem>
+      </p>
 
-    <CardItem>
-      <template slot="header">
+      <h6 class="header">
         <img src="@/assets/posts.svg"
              class="icon icon--posts"> POSTS
-      </template>
-      <template slot="paragraph">
+      </h6>
+      <p class="paragraph">
         A total of
         <span class="orange">{{ comments }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
         <span class="orange">{{ submissions }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }} has been posted by this account.
-      </template>
-    </CardItem>
+      </p>
+    </div>
+
   </div>
+
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { format, distanceInWordsToNow } from 'date-fns'
 
-import CardItem from '@/components/CardItem'
-
 export default {
   name: 'DataView',
-  components: { CardItem },
   computed: {
     ...mapState({
       name: state => state.user.name,
@@ -80,6 +74,11 @@ export default {
   margin-right: 0.5rem;
 }
 
+.grid--row-3 {
+  display: inherit;
+  grid-template-rows: 100% 100% 100%;
+}
+
 .icon--cake {
   margin-bottom: -0.1rem;
 }
@@ -91,5 +90,25 @@ export default {
 .icon--posts {
   margin-bottom: -0.4rem;
   margin-left: -2rem;
+}
+
+.header {
+  margin-top: 2rem;
+  margin-bottom: -1rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.paragraph {
+  text-align: left;
+  letter-spacing: 0.05px;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #d7d7d7;
+  color: rgb(40, 60, 60);
 }
 </style>

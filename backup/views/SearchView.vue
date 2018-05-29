@@ -37,7 +37,7 @@ export default {
   methods: {
     setUser(username) {
       Cookies.getJSON(username)
-        ? this.$store.dispatch('setUserByCookies', username)
+        ? this.$store.dispatch('setUserByCookie', username)
         : this.$store
             .dispatch('setUserByAPICall', username)
             .catch(error => console.log(error)) // TODO: Add error handling
@@ -47,12 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: 768px) {
-  .grid__search {
-    display: grid;
-  }
-}
-
 .grid__search {
   display: block;
 }
@@ -77,5 +71,11 @@ export default {
 
 .grid__item__searchbar {
   margin-bottom: 10rem; // DELETE
+}
+
+@media screen and (min-width: 768px) {
+  .grid__search {
+    display: grid;
+  }
 }
 </style>

@@ -25,12 +25,6 @@ export default {
   src: url('../assets/search.ttf');
 }
 
-@media screen and (min-width: 768px) {
-  .input {
-    font-size: 1.8rem;
-  }
-}
-
 .searchbar {
   display: flex;
   justify-content: inherit;
@@ -93,5 +87,11 @@ export default {
 
 .button--send:focus {
   outline: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .input {
+    font-size: 1.8rem;
+  }
 }
 </style>

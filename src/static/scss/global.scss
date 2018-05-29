@@ -1,0 +1,47 @@
+$white: rgb(240, 240, 240);
+$orange: rgba(255, 68, 0, 0.7);
+$gray: rgb(79, 79, 79);
+$light: rgb(235, 235, 235);
+$black: rgba(0, 0, 0, 0.7);
+
+@mixin format--std {
+  border: 0;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400');
+
+.container {
+  display: grid;
+}
+
+.container--center {
+  justify-content: center;
+}
+
+.text {
+  font-family: 'Poppins', sans-serif;
+}
+
+.text--black {
+  color: $black;
+}
+
+.text--white {
+  color: $white;
+}
+
+.text--orange {
+  color: $orange;
+}
+
+.text--center {
+  text-align: center;
+}
+
+.text--shadow {
+  text-shadow: 0 2.5px 5px rgba(50, 50, 50, 0.2);
+}
