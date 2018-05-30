@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~scss/global';
+$radius: 5px;
 
 .searchbar {
   display: flex;
@@ -54,6 +54,9 @@ export default {
 }
 
 .button--send {
+  border-top-right-radius: $radius;
+  border-bottom-right-radius: $radius;
+  cursor: pointer;
   transition: background-color 0.09s ease-in-out;
 
   &:hover {
@@ -67,6 +70,8 @@ export default {
 
 .button--disabled {
   padding: 0 1rem;
+  border-top-left-radius: $radius;
+  border-bottom-left-radius: $radius;
 }
 
 .icon--search {

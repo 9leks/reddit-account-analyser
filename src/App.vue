@@ -1,7 +1,7 @@
 <template>
   <div class="container container--app">
     <HomeView class="app--home" />
-    <!-- <InfoView class="app-info" /> -->
+    <InfoView class="app-info" />
   </div>
 </template>
 
@@ -16,9 +16,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './static/scss/global';
-
 .container--app {
+  grid-gap: 5rem;
   grid-template-areas:
     'home'
     'info';

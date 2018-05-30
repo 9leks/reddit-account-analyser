@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 module.exports = {
@@ -5,7 +6,14 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        scss: path.resolve(__dirname, './src/static/scss/'),
+        cards: path.resolve(__dirname, 'src/static/scss/cards.scss'),
+      },
+    },
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        data: fs.readFileSync('src/static/scss/styles.scss', 'utf-8'),
       },
     },
   },

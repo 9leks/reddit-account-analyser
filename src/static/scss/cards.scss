@@ -1,0 +1,40 @@
+.card {
+  padding: 2rem 0;
+}
+
+.card--header {
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-weight: 200;
+  font-size: 2.5rem;
+}
+
+.card--content {
+  padding: 1rem;
+  border-radius: 6px;
+  background: $lightgray;
+  font-weight: 400;
+  font-size: 1.5rem;
+
+  grid-area: content;
+}
+
+@media screen and (min-width: 768px) {
+  .card--header {
+    display: grid;
+    text-align: left;
+
+    grid-template-columns: 0.15fr 1fr;
+    grid-template-areas: 'icon title';
+  }
+
+  .card--header--title {
+    grid-area: title;
+  }
+
+  .card--header--icon {
+    text-align: center;
+
+    grid-area: icon;
+  }
+}
