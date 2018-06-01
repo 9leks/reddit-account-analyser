@@ -5,9 +5,12 @@
       <span class="text text--white text--shadow">/u/</span>
     </button>
     <input class="input text text--shadow"
-           type="search">
+           type="search"
+           @keypress.enter="$emit('send')"
+           @input="$emit('input', $event.target.value)">
     <button class="button button--send"
-            type="submit">
+            type="submit"
+            @click="$emit('send')">
       <img class="icon--search"
            src="@/static/img/search.png">
     </button>

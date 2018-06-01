@@ -9,9 +9,9 @@
           CAKE DAY
         </div>
       </div>
-      <div class="card--content text">This account was created 293 days ago, on
-        <span class="text--orange">May 12th 2015</span> , meaning /u/spez's
-        <span class="text--orange">cake</span> day is in seven days.
+      <div class="card--content text">This account was created {{ timeFromSignup }}, on
+        <span class="text--orange">{{ signupDate }}</span> , meaning /u/{{ name }}'s
+        <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
       </div>
     </div>
 
@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="card--content text">/u/ has a net worth of
-        <span class="text--orange">3214 comment karma</span> and
-        <span class="text--orange">32131 link karma</span>.
+        <span class="text--orange">{{ karma.comment }} comment karma</span> and
+        <span class="text--orange">{{ karma.link }} link karma</span>.
       </div>
     </div>
 
@@ -40,16 +40,43 @@
         </div>
       </div>
       <div class="card--content text">This account has posted
-        <span class="text--orange">232 comments</span> and
-        <span class="text--orange">232</span> submissions
+        <span class="text--orange">{{ comments }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
+        <span class="text--orange">{{ submissions }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { format, distanceInWordsToNow } from 'date-fns'
+
 export default {
   name: 'DataColumn',
+  computed: {
+    ...mapState({
+      name: state => state.user.name,
+      created: state => state.user.created,
+      karma: state => state.user.karma,
+      comments: state => state.user.comments,
+      submissions: state => state.user.submissions,
+    }),
+    signupDate() {
+      const date = new Date(this.created * 1000)
+      return format(date, 'MMM Do, YYYY')
+    },
+    timeFromSignup() {
+      const date = new Date(this.created * 1000)
+      return distanceInWordsToNow(date)
+    },
+    timeToCakeDay() {
+      const date = new Date(this.created * 1000)
+      const month = date.getMonth()
+      const day = date.getDate()
+      const year = new Date().getFullYear()
+      return distanceInWordsToNow(new Date(year, month, day))
+    },
+  },
 }
 </script>
 

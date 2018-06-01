@@ -1,10 +1,11 @@
 <template>
-  <div class="container container--info">
+  <div v-if="name"
+       class="container container--info">
 
     <div class="info--header">
       <div class="text text--white text--shadow text--center text--header">OVERVIEW FOR <br>
         <span class="text--orange">
-          /u/spez
+          /u/{{ name }}
         </span>
       </div>
     </div>
@@ -30,12 +31,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import DataColumn from './Info/DataColumn'
 import ActivityColumn from './Info/ActivityColumn'
 
 export default {
   name: 'InfoView',
   components: { DataColumn, ActivityColumn },
+  computed: {
+    ...mapState({
+      name: state => state.user.name,
+    }),
+  },
 }
 </script>
 

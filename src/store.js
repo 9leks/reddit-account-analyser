@@ -12,10 +12,30 @@ export default new Vuex.Store({
       name: '',
       created: '',
       comments: 0,
+      comment: {
+        new: {
+          body: '',
+          karma: 0,
+          created: 0,
+        },
+        top: {
+          body: '',
+          karma: 0,
+          created: 0,
+        },
+      },
       submissions: 0,
+      submission: {
+        top: {
+          title: '',
+          comments: 0,
+          karma: 0,
+          created: 0,
+        },
+      },
       karma: {
         link: 0,
-        comment: 0,
+        karma: 0,
       },
     },
   },

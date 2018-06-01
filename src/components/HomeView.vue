@@ -18,18 +18,33 @@
     </div>
 
     <div class="container home--searchbar container--center">
-      <Searchbar />
+      <Searchbar v-model="username"
+                 @send="setUser(username)" />
     </div>
 
   </div>
 </template>
 
 <script>
+import Cookies from 'js-cookie'
+
 import Searchbar from './Home/Searchbar.vue'
 
 export default {
   name: 'HomeView',
   components: { Searchbar },
+  data() {
+    return { username: '' }
+  },
+  methods: {
+    setUser(username) {
+      Cookies.getJSON(username)
+        ? this.$store.dispatch('setUserByCookie', username)
+        : this.$store
+            .dispatch('setUserByAPICall', username)
+            .catch(error => console.log(error)) // TODO: Add error handling
+    },
+  },
 }
 </script>
 
