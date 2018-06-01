@@ -48,7 +48,7 @@
           <img v-else
                src="@/static/img/downvoted.png">
         </div>
-        <div class="card--points">{{ submission.top.karma }} points</div>
+        <div class="card--points">{{ submission.top.karma }} {{ submission.top.karma === 1 ? 'point' : 'points' }}, <br> {{ submission.top.comments }} {{ submission.top.comments === 1 ? 'comment' : 'comments' }}</div>
         <div class="card--time">{{ timeFromPost(submission.top.created) }} ago</div>
         <div class="card--comment">{{ submission.top.title }}</div>
       </div>
