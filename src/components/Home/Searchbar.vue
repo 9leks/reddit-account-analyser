@@ -28,7 +28,6 @@ $radius: 5px;
   justify-content: inherit;
   filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
 }
-
 .input {
   padding: 1rem;
   width: 50vw;
@@ -38,12 +37,10 @@ $radius: 5px;
   font-size: 1.5rem;
 
   @include format--std;
-
   &::-webkit-search-cancel-button {
     display: none;
   }
 }
-
 .button {
   padding: 0.5rem;
   background-color: $orange;
@@ -52,35 +49,29 @@ $radius: 5px;
 
   @include format--std;
 }
-
 .button--send {
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
   cursor: pointer;
   transition: background-color 0.09s ease-in-out;
-
   &:hover {
     background-color: rgb(216, 89, 30);
   }
-
   &:active {
     background-color: rgb(189, 78, 27);
   }
 }
-
 .button--disabled {
   padding: 0 1rem;
   border-top-left-radius: $radius;
   border-bottom-left-radius: $radius;
 }
-
 .icon--search {
   display: flex;
   margin: -1.5rem -1.5rem;
 
   justify-self: center;
 }
-
 @media screen and (min-width: 1440px) {
   .input {
     width: 35vw;
