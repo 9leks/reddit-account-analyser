@@ -14,11 +14,13 @@ export default new Vuex.Store({
       comments: 0,
       comment: {
         new: {
+          title: 'NEWEST COMMENT',
           body: '',
           karma: 0,
           created: 0,
         },
         top: {
+          title: 'TOP COMMENT',
           body: '',
           karma: 0,
           created: 0,
@@ -40,8 +42,8 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    setUserByAPICall: (state, payload) => (state.user = payload.metadata),
-    setUserByCookie: (state, payload) => (state.user = payload.metadata),
+    setUserByAPICall: (state, { metadata }) => (state.user = metadata),
+    setUserByCookie: (state, { metadata }) => (state.user = metadata),
   },
 
   actions: {

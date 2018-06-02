@@ -34,11 +34,13 @@ const metadata = async user => {
       comments: comments.data.metadata.total_results,
       comment: {
         new: {
+          header: 'NEWEST COMMENT',
           body: newComment.data.data[0].body,
           karma: newComment.data.data[0].score,
           created: newComment.data.data[0].created_utc,
         },
         top: {
+          header: 'TOP COMMENT',
           body: topComment.data.data[0].body,
           karma: topComment.data.data[0].score,
           created: topComment.data.data[0].created_utc,

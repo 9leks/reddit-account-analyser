@@ -1,38 +1,22 @@
 <template>
   <div class="container container--activity">
-    <div class="card">
+    <div v-for="post in comment"
+         :key="post.id"
+         class="card">
       <div class="card--header text">
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">NEWEST COMMENT</div>
+        <div class="card--header--title">{{ post.header }}</div>
       </div>
       <div class="container container--card card--content text">
+        <div class="card--points">{{ post.karma }}</div>
         <div class="card--arrows">
-          <img v-if="comment.new.karma"
+          <img v-if="post.karma > 0"
                src="@/static/img/upvoted.png">
           <img v-else
                src="@/static/img/downvoted.png">
         </div>
-        <div class="card--points">{{ comment.new.karma }} {{ comment.new.karma === 1 ? 'point' : 'points' }}</div>
-        <div class="card--time">{{ timeFromPost(comment.new.created) }} ago</div>
-        <div class="card--comment">{{ comment.new.body }}</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">TOP COMMENT</div>
-      </div>
-      <div class="container container--card card--content text">
-        <div class="card--arrows">
-          <img v-if="comment.top.karma"
-               src="@/static/img/upvoted.png">
-          <img v-else
-               src="@/static/img/downvoted.png">
-        </div>
-        <div class="card--points">{{ comment.top.karma }} {{ comment.top.karma === 1 ? 'point' : 'points' }}</div>
-        <div class="card--time">{{ timeFromPost(comment.top.created) }} ago</div>
-        <div class="card--comment">{{ comment.top.body }}</div>
+        <div class="card--time">{{ timeFromPost(post.created) }} ago</div>
+        <div class="card--comment">{{ post.body }}</div>
       </div>
     </div>
 
@@ -42,13 +26,13 @@
         <div class="card--header--title">TOP SUBMISSION</div>
       </div>
       <div class="container container--card card--content text">
+        <div class="card--points">{{ submission.top.karma }}</div>
         <div class="card--arrows">
-          <img v-if="submission.top.karma"
+          <img v-if="submission.top.karma > 0"
                src="@/static/img/upvoted.png">
           <img v-else
                src="@/static/img/downvoted.png">
         </div>
-        <div class="card--points">{{ submission.top.karma }} {{ submission.top.karma === 1 ? 'point' : 'points' }}, <br> {{ submission.top.comments }} {{ submission.top.comments === 1 ? 'comment' : 'comments' }}</div>
         <div class="card--time">{{ timeFromPost(submission.top.created) }} ago</div>
         <div class="card--comment">{{ submission.top.title }}</div>
       </div>
@@ -84,10 +68,10 @@ export default {
 .container--card {
   font-size: 1rem;
 
-  grid-template-columns: 0.25fr 0.25fr 2.25fr 3fr;
+  grid-template-columns: 0.05fr 0.025fr 0.25fr 1fr 6fr;
   grid-template-areas:
-    'arrows . points time '
-    'arrows . comment comment';
+    '. points . arrows time'
+    '. points . arrows comment';
 }
 
 .card--time {
@@ -98,6 +82,7 @@ export default {
 }
 
 .card--points {
+  align-self: center;
   color: $gray;
   font-size: 0.85rem;
 
@@ -116,43 +101,28 @@ export default {
 
 @media screen and (min-width: 375px) {
   .container--card {
-    grid-template-columns: 0.25fr 0.25fr 1.75fr 3fr;
-  }
-}
-
-@media screen and (min-width: 425px) {
-  .container--card {
-    grid-template-columns: 0.25fr 0.25fr 1.25fr 3fr;
+    grid-template-columns: 0.05fr 0.025fr 0.25fr 0.5fr 6fr;
   }
 }
 
 @media screen and (min-width: 768px) {
   .container--card {
-    grid-template-columns: 0.25fr 0.25fr 1.25fr 8fr;
+    grid-template-areas:
+      'points . arrows time'
+      'points . arrows comment';
+    grid-template-columns: 0.025fr 0.125fr 0.45fr 12fr;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .container--card {
-    grid-template-columns: 0.25fr 0.25fr 2fr 4fr;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .container--card {
-    grid-template-columns: 0.25fr 0.25fr 2fr 6fr;
-  }
-}
-
-@media screen and (min-width: 1920px) {
-  .container--card {
-    grid-template-columns: 0.25fr 0.25fr 2fr 10fr;
+    grid-template-columns: 0.025fr 0.5fr 1fr 12fr;
   }
 }
 
 @media screen and (min-width: 2560px) {
   .container--card {
-    grid-template-columns: 0.25fr 0.25fr 2fr 16fr;
+    grid-template-columns: 0.025fr 0.25fr 1fr 16fr;
   }
 }
 </style>
