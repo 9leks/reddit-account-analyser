@@ -5,7 +5,7 @@
         <div class="card--header--icon">
           <img src="@/static/img/cake.png">
         </div>
-        <div class="card--header--title">
+        <div class="card--header--title container">
           CAKE DAY
         </div>
       </div>
