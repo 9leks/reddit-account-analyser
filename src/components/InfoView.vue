@@ -70,17 +70,16 @@ export default {
   }
 
   .info--data {
-    height: 100%;
     grid-area: data;
   }
 
   .info--activity {
-    height: 100%;
     grid-area: activity;
   }
 
   .info--graphs {
     height: 100%;
+
     grid-area: graphs;
   }
 }

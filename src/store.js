@@ -17,12 +17,14 @@ export default new Vuex.Store({
           body: '',
           karma: 0,
           created: 0,
+          link: '',
         },
         top: {
           title: 'TOP COMMENT',
           body: '',
           karma: 0,
           created: 0,
+          link: '',
         },
       },
       submissions: 0,
@@ -32,6 +34,7 @@ export default new Vuex.Store({
           comments: 0,
           karma: 0,
           created: 0,
+          link: '',
         },
       },
       karma: {

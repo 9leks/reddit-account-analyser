@@ -5,7 +5,7 @@
         <div class="card--header--icon">
           <img src="@/static/img/cake.png">
         </div>
-        <div class="card--header--title container">
+        <div class="card--header--title">
           CAKE DAY
         </div>
       </div>
@@ -99,11 +99,5 @@ export default {
 
 <style lang="scss" scoped>
 @import 'cards';
-
-.container--data {
-  height: 100%;
-
-  grid-template-rows: repeat(3, 1fr);
-}
 </style>
 

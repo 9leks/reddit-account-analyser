@@ -30,6 +30,8 @@
 
   .card--header--title {
     align-self: center;
+    padding-bottom: 0.5rem;
+    white-space: nowrap;
 
     grid-area: title;
   }
@@ -38,5 +40,17 @@
     text-align: center;
 
     grid-area: icon;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card--header--title {
+    padding-left: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .card--header--title {
+    padding-left: 0;
   }
 }

@@ -57,9 +57,7 @@ $radius: 5px;
   border-bottom-right-radius: $radius;
   cursor: pointer;
   transition: background-color 0.09s ease-in-out;
-  &:hover {
-    background-color: rgb(216, 89, 30);
-  }
+
   &:active {
     background-color: rgb(189, 78, 27);
   }
@@ -75,6 +73,15 @@ $radius: 5px;
 
   justify-self: center;
 }
+
+@media screen and (min-width: 1024px) {
+  .button--send {
+    &:hover {
+      background-color: rgb(216, 89, 30);
+    }
+  }
+}
+
 @media screen and (min-width: 1440px) {
   .input {
     width: 35vw;
