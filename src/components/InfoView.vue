@@ -24,6 +24,7 @@
 
       <div class="info--graphs">
         <div class="text text--center text--shadow text--header">GRAPHS</div>
+        <!-- <GraphColumn /> -->
       </div>
     </div>
 
@@ -35,10 +36,11 @@ import { mapState } from 'vuex'
 
 import DataColumn from './Info/DataColumn'
 import ActivityColumn from './Info/ActivityColumn'
+import GraphColumn from './Info/GraphColumn'
 
 export default {
   name: 'InfoView',
-  components: { DataColumn, ActivityColumn },
+  components: { DataColumn, ActivityColumn, GraphColumn },
   computed: {
     ...mapState({
       name: state => state.user.name,
@@ -68,14 +70,17 @@ export default {
   }
 
   .info--data {
+    height: 100%;
     grid-area: data;
   }
 
   .info--activity {
+    height: 100%;
     grid-area: activity;
   }
 
   .info--graphs {
+    height: 100%;
     grid-area: graphs;
   }
 }

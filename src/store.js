@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Cookies from 'js-cookie'
-import reddit from './reddit.js'
+import { set, getJSON } from 'js-cookie'
+import { metadata } from './reddit.js'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    input: '',
     user: {
       name: '',
       created: '',
@@ -42,21 +41,21 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    setUserByAPICall: (state, { metadata }) => (state.user = metadata),
-    setUserByCookie: (state, { metadata }) => (state.user = metadata),
+    setUserByAPICall: (state, { data }) => (state.user = data),
+    setUserByCookie: (state, { data }) => (state.user = data),
   },
 
   actions: {
     setUserByAPICall: async ({ commit }, user) => {
-      const metadata = await reddit.metadata(user)
+      const data = await metadata(user)
       const expirationTime = new Date(new Date().getTime() + 30 * 1000)
-      Cookies.set(user, metadata, { expires: expirationTime })
-      commit('setUserByAPICall', { metadata })
+      set(user, data, { expires: expirationTime })
+      commit('setUserByAPICall', { data })
     },
 
     setUserByCookie: ({ commit }, payload) => {
-      const metadata = Cookies.getJSON(payload)
-      commit('setUserByCookie', { metadata })
+      const data = getJSON(payload)
+      commit('setUserByCookie', { data })
     },
   },
 })

@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = {
-  lintOnSave: false,
   configureWebpack: {
     resolve: {
       alias: {
@@ -17,4 +16,5 @@ module.exports = {
       },
     },
   },
+  lintOnSave: false,
 }

@@ -33,7 +33,7 @@
           <img v-else
                src="@/static/img/downvoted.png">
         </div>
-        <div class="card--time">{{ timeFromPost(submission.top.created) }} ago</div>
+        <div class="card--time">{{ timeFromPost(submission.top.created) }} ago, <br> {{ submission.top.comments }} comments</div>
         <div class="card--comment">{{ submission.top.title }}</div>
       </div>
 
@@ -115,6 +115,12 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
+  .container--activity {
+    height: 100%;
+
+    grid-template-rows: repeat(3, 1fr);
+  }
+
   .container--card {
     grid-template-columns: 0.025fr 0.5fr 1fr 12fr;
   }

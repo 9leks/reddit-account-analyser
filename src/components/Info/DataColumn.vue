@@ -9,7 +9,7 @@
           CAKE DAY
         </div>
       </div>
-      <div class="card--content text">This account was created {{ timeFromSignup }}, on
+      <div class="card--content text">This account was created {{ timeFromSignup }} ago, on
         <span class="text--orange">{{ signupDate }}</span> , meaning /u/{{ name }}'s
         <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
       </div>
@@ -49,7 +49,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import { format, distanceInWordsToNow } from 'date-fns'
+import {
+  format,
+  distanceInWordsToNow,
+  differenceInCalendarDays,
+  distanceInWords,
+} from 'date-fns'
 
 export default {
   name: 'DataColumn',
@@ -62,19 +67,31 @@ export default {
       submissions: state => state.user.submissions,
     }),
     signupDate() {
-      const date = new Date(this.created * 1000)
+      const date = new Date(this.created * 1000 - 86400000)
       return format(date, 'MMM Do, YYYY')
     },
     timeFromSignup() {
-      const date = new Date(this.created * 1000)
-      return distanceInWordsToNow(date)
-    },
-    timeToCakeDay() {
-      const date = new Date(this.created * 1000)
+      const date = new Date(this.created * 1000 - 86400000)
+      const year = date.getFullYear()
       const month = date.getMonth()
       const day = date.getDate()
-      const year = new Date().getFullYear()
       return distanceInWordsToNow(new Date(year, month, day))
+    },
+    timeToCakeDay() {
+      const cakeDay = new Date(this.created * 1000 - 86400000)
+      const month = cakeDay.getMonth()
+      const day = cakeDay.getDate()
+
+      const currentDate = new Date()
+      const currentDay = new Date(
+        0,
+        currentDate.getMonth(),
+        currentDate.getDate()
+      )
+
+      return differenceInCalendarDays(new Date(0, month, day), currentDay) > 0
+        ? distanceInWords(new Date(0, month, day), currentDay)
+        : distanceInWords(new Date(1, month, day), currentDay)
     },
   },
 }
@@ -84,6 +101,8 @@ export default {
 @import 'cards';
 
 .container--data {
+  height: 100%;
+
   grid-template-rows: repeat(3, 1fr);
 }
 </style>

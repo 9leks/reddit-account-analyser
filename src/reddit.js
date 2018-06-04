@@ -1,6 +1,6 @@
 import { get } from 'axios'
 
-const metadata = async user => {
+async function metadata(user) {
   try {
     const [
       about,
@@ -11,21 +11,11 @@ const metadata = async user => {
       topSubmission,
     ] = await Promise.all([
       get(`https://www.reddit.com/user/${user}/about.json`),
-      get(
-        `https://api.pushshift.io/reddit/search/comment/?author=${user}&metadata=true&size=0`
-      ),
-      get(
-        `https://api.pushshift.io/reddit/search/submission/?author=${user}&metadata=true&size=0`
-      ),
-      get(
-        `https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=created_utc&size=1`
-      ),
-      get(
-        `https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=score&size=1`
-      ),
-      get(
-        `https://api.pushshift.io/reddit/search/submission/?author=${user}&sort_type=score&size=1`
-      ),
+      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&metadata=true&size=0`),
+      get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&metadata=true&size=0`),
+      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=created_utc&size=1`),
+      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=score&size=1`),
+      get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&sort_type=score&size=1`),
     ])
 
     return {
@@ -65,4 +55,21 @@ const metadata = async user => {
   }
 }
 
-export default { metadata }
+const numberOfCommentsPerSubreddit = async user => {
+  const data = await get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&size=1000`)
+  const comments = data.data.data.map(comment => comment.subreddit)
+  const map = new Map()
+  
+  comments.forEach(comment => map.set(comment, (map.get(comment) || 0) + 1))
+
+  const arr = [...map].map(comment => {
+    return {
+      subreddit: comment[0],
+      count: comment[1]
+    }
+  })
+
+  return arr
+}
+
+export { metadata, numberOfCommentsPerSubreddit }
