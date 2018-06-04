@@ -1,9 +1,20 @@
 <template>
-  <div class="container container--graphs">
-    <div class="graphs--comment-per-subreddit">
-      <CommentsPie :chart-data="pieChartData"
-                   :options="options" />
+  <div class="container">
+
+    <div class="card">
+      <div class="card--header text">
+        <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
+        <div class="card--header--title">LAST 100 COMMENTS</div>
+      </div>
+      <div class="card--content container container--center">
+        <div class="graph--comments">
+          <CommentsPie :chart-data="pieChartData"
+                       :options="options" />
+        </div>
+      </div>
     </div>
+  </div>
+
   </div>
 </template>
 
@@ -48,6 +59,11 @@ export default {
         this.options = {
           responsive: true,
           maintainAspectRatio: false,
+          elements: {
+            arc: {
+              borderWidth: 0,
+            },
+          },
         }
       },
     },
@@ -58,7 +74,7 @@ export default {
       const r = num >> 16
       const g = (num >> 8) & 255
       const b = num & 255
-      return `rgba(${r}, ${g}, ${b}, 0.75)`
+      return `rgba(${r}, ${g}, ${b}, 0.5)`
     },
     randomColors(amount) {
       return new Array(amount).fill('').map(() => this.randomColor())
@@ -68,14 +84,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container--graphs {
-  grid-template-areas:
-    'comment-per-subreddit'
-    'dsadsa'
-    'fdsfdsdas';
+@import 'cards';
+
+.graph--comments {
+  width: 80%;
 }
 
-.graphs--comment-per-subreddit {
-  grid-area: comment-per-subreddit;
+@media screen and (min-width: 375px) {
+  .graph--comments {
+    width: 87%;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .graph--comments {
+    width: 88.75%;
+  }
 }
 </style>

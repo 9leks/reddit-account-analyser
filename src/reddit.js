@@ -76,20 +76,16 @@ async function metadata(user) {
 }
 
 const numberOfCommentsPerSubreddit = async user => {
-  const data = await get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&size=1000`)
+  const data = await get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&size=100`)
   const comments = data.data.data.map(comment => comment.subreddit)
   const map = new Map()
   
   comments.forEach(comment => map.set(comment, (map.get(comment) || 0) + 1))
 
-  const arr = [...map].map(comment => {
-    return {
-      subreddit: comment[0],
-      count: comment[1]
-    }
-  })
-
-  return arr
+  return [...map].map(comment => ({
+    subreddit: comment[0],
+    count: comment[1],
+  }))
 }
 
 export { metadata, numberOfCommentsPerSubreddit }

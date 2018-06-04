@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card--content text">This account was created {{ timeFromSignup }} ago, on
-        <span class="text--orange">{{ signupDate }}</span> , meaning /u/{{ name }}'s
+        <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
         <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
       </div>
     </div>

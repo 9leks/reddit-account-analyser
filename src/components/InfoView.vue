@@ -24,7 +24,7 @@
 
       <div class="info--graphs">
         <div class="text text--center text--shadow text--header">GRAPHS</div>
-        <!-- <GraphColumn /> -->
+        <GraphColumn />
       </div>
     </div>
 
@@ -55,7 +55,7 @@ export default {
 }
 
 .info--columns {
-  padding: 1rem 2rem;
+  padding: 1.25rem;
 }
 
 .info--header {

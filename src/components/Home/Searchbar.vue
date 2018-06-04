@@ -7,7 +7,7 @@
     <input class="input text text--shadow"
            type="search"
            @keypress.enter="$emit('send')"
-           @input="$emit('input', $event.target.value)">
+           @input="$emit('input', $event.target.value.trim())">
     <button class="button button--send"
             type="submit"
             @click="$emit('send')">

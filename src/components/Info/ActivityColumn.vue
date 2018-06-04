@@ -40,8 +40,8 @@
         <div class="card--time">{{ timeFromPost(submission.top.created) }} ago, <br> {{ submission.top.comments }} comments</div>
         <div class="card--comment">{{ submission.top.title }}</div>
       </a>
-
     </div>
+    
   </div>
 </template>
 
