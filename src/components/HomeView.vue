@@ -37,9 +37,10 @@ export default {
   methods: {
     setUser(username) {
       if (username) {
-        this.$store
-          .dispatch('setUser', username)
-          .catch(error => alert('User does not exist!'))
+        this.$store.dispatch('setUser', username).catch(error => {
+          alert('User does not exist.')
+          throw error
+        })
       }
     },
   },

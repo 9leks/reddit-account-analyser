@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { getPosts } from '@/reddit.js'
+import { getSubredditCount } from '@/reddit.js'
 import { mapState } from 'vuex'
 
 import CommentsDoughnut from './Graph/CommentsDoughnut'
@@ -38,9 +38,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         elements: {
-          arc: {
-            borderWidth: 0,
-          },
+          arc: { borderWidth: 0 },
         },
       },
     }
@@ -54,17 +52,13 @@ export default {
     name: {
       immediate: true,
       async handler() {
-        const comments = await getPosts(this.name, this.maxComments)
-
+        const comments = await getSubredditCount(this.name, 'new', this.maxComments)
         this.doughnutChartData = {
           labels: comments.map(comment => comment.subreddit),
-
-          datasets: [
-            {
-              data: comments.map(comment => comment.count),
-              backgroundColor: this.randomColors(comments.length),
-            },
-          ],
+          datasets: [{ 
+            data: comments.map(comment => comment.count), 
+            backgroundColor: this.randomColors(comments.length) 
+            }],
         }
       },
     },
@@ -79,7 +73,7 @@ export default {
     },
     randomColors(amount) {
       return new Array(amount).fill('').map(() => this.randomColor())
-    },
+    },  
   },
 }
 </script>
