@@ -27,7 +27,8 @@
       </div>
       <div class="card--content text">/u/{{ name }} has a net worth of
         <span class="text--orange">{{ comments.karma }} comment karma</span> and
-        <span class="text--orange">{{ submissions.karma }} link karma</span>.
+        <span class="text--orange">{{ submissions.karma }} link karma</span> with a total of
+        <span class="text--orange">{{ comments.karma + submissions.karma }} karma</span>.
       </div>
     </div>
 
