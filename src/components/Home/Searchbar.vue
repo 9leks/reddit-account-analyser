@@ -6,6 +6,7 @@
     </button>
     <input class="input text text--shadow"
            type="search"
+           autofocus
            @keypress.enter="$emit('send')"
            @input="$emit('input', $event.target.value.trim())">
     <button class="button button--send"

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getData } from './reddit.js'
+import { getAbout, getComment, getPostCount, getSubmission } from './reddit.js'
 
 Vue.use(Vuex)
 
@@ -58,7 +58,40 @@ export default new Vuex.Store({
 
   actions: {
     setUser: async ({ commit }, username) => {
-      const data = await getData(username)
+      const [
+        about,
+        commentCount,
+        submissionCount,
+        newComment,
+        topComment,
+        topSubmission,
+      ] = await Promise.all([
+        getAbout(username),
+        getPostCount(username, 'comment'),
+        getPostCount(username, 'submission'),
+        getComment(username, 'new'),
+        getComment(username, 'top'),
+        getSubmission(username, 'top'),
+      ])
+
+      const { name, created_utc, comment_karma, link_karma } = about
+      const comments = {
+        karma: comment_karma,
+        count: commentCount,
+        posts: {
+          new: { header: 'NEWEST COMMENT', ...newComment },
+          top: { header: 'TOP COMMENT', ...topComment },
+        },
+      }
+      const submissions = {
+        karma: link_karma,
+        count: submissionCount,
+        posts: {
+          top: { header: 'TOP SUBMISSION', ...topSubmission },
+        },
+      }
+
+      const data = { name, created_utc, comments, submissions }
       commit('setUser', { data })
     },
   },

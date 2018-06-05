@@ -15,10 +15,6 @@
   background: $lightgray;
   font-weight: 400;
   font-size: 1.25rem;
-  transition: background-color 0.085s ease-in-out;
-  &:hover {
-    background-color: rgb(209, 209, 209);
-  }
   grid-area: content;
 }
 
@@ -49,6 +45,12 @@
 @media screen and (min-width: 1024px) {
   .card--header--title {
     padding-left: 0.5rem;
+  }
+  .card--content {
+    transition: background-color 0.085s ease-in-out;
+    &:hover {
+      background-color: rgb(209, 209, 209);
+    }
   }
 }
 

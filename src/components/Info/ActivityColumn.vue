@@ -24,6 +24,7 @@
                  src="@/static/img/downvoted.png">
           </div>
           <div class="card--time">
+            /r/{{ post.subreddit }} <br>
             <span :title="new Date(post.created_utc * 1000)">{{ timeFromPost(post.created_utc) }} ago</span>
           </div>
           <div class="card--comment">{{ post.body }}</div>
@@ -53,8 +54,7 @@
           <div class="card--time">
             /r/{{ submissions.top.subreddit }}
             <br>
-            <span :title="new Date(submissions.top.created_utc * 1000)">{{ timeFromPost(submissions.top.created_utc) }} ago</span>,
-            {{ submissions.top.num_comments }} comments
+            <span :title="new Date(submissions.top.created_utc * 1000)">{{ timeFromPost(submissions.top.created_utc) }} ago</span>, {{ submissions.top.num_comments }} comments
           </div>
           <div class="card--comment">{{ submissions.top.title }}</div>
         </a>
