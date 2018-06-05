@@ -1,6 +1,6 @@
 <template>
   <div class="container container--activity">
-    <div v-for="post in comment"
+    <div v-for="post in comments"
          :key="post.id"
          class="card">
       <div class="card--header text">
@@ -27,18 +27,18 @@
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
         <div class="card--header--title">TOP SUBMISSION</div>
       </div>
-      <a :href="submission.top.link"
+      <a :href="submissions.top.link"
          target="_blank"
          class="container container--card card--content card--link text">
-        <div class="card--points">{{ submission.top.karma }}</div>
+        <div class="card--points">{{ submissions.top.karma }}</div>
         <div class="card--arrows">
-          <img v-if="submission.top.karma > 0"
+          <img v-if="submissions.top.karma > 0"
                src="@/static/img/upvoted.png">
           <img v-else
                src="@/static/img/downvoted.png">
         </div>
-        <div class="card--time">{{ timeFromPost(submission.top.created) }} ago, <br> {{ submission.top.comments }} comments</div>
-        <div class="card--comment">{{ submission.top.title }}</div>
+        <div class="card--time">{{ timeFromPost(submissions.top.created) }} ago, <br> {{ submissions.top.comments }} comments</div>
+        <div class="card--comment">{{ submissions.top.title }}</div>
       </a>
     </div>
     
@@ -53,8 +53,8 @@ export default {
   name: 'ActivityColumn',
   computed: {
     ...mapState({
-      comment: state => state.user.comment,
-      submission: state => state.user.submission,
+      comments: state => state.user.comments.posts,
+      submissions: state => state.user.submissions.posts,
     }),
   },
   methods: {

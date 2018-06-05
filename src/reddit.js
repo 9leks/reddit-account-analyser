@@ -1,91 +1,90 @@
 import { get } from 'axios'
 
-async function metadata(user) {
+const getAbout = async username => {
   try {
-    const [
-      aboutData,
-      commentsData,
-      submissionsData,
-      newCommentData,
-      topCommentData,
-      topSubmissionData,
-    ] = await Promise.all([
-      get(`https://www.reddit.com/user/${user}/about.json`),
-      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&metadata=true&size=0`),
-      get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&metadata=true&size=0`),
-      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=created_utc&size=1`),
-      get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&sort_type=score&size=1`),
-      get(`https://api.pushshift.io/reddit/search/submission/?author=${user}&sort_type=score&size=1`),
-    ])
-
-    const [
-      about,
-      comments,
-      submissions,
-      newComment,
-      topComment,
-      topSubmission,
-    ] = [
-      aboutData.data.data,
-      commentsData.data.metadata,
-      submissionsData.data.metadata,
-      newCommentData.data.data[0],
-      topCommentData.data.data[0],
-      topSubmissionData.data.data[0],
-    ]
-
-
-    return {
-      name: about.name,
-      created: about.created,
-      comments: comments.total_results,
-      comment: {
-        new: {
-          header: 'NEWEST COMMENT',
-          body: newComment.body,
-          karma: newComment.score,
-          created: newComment.created_utc,
-          link: `https://reddit.com/r/${newComment.subreddit}/comments/${newComment.link_id.substring(3)}//${newComment.id}`
-        },
-        top: {
-          header: 'TOP COMMENT',
-          body: topComment.body,
-          karma: topComment.score,
-          created: topComment.created_utc,
-          link: `https://reddit.com/r/${topComment.subreddit}/comments/${topComment.link_id.substring(3)}//${topComment.id}`
-        },
-      },
-      submissions: submissions.total_results,
-      submission: {
-        top: {
-          title: topSubmission.title,
-          comments: topSubmission.num_comments,
-          karma: topSubmission.score,
-          created: topSubmission.created_utc,
-          link: `https://reddit.com${topSubmission.permalink}`
-        },
-      },
-      karma: {
-        link: about.link_karma,
-        comment: about.comment_karma,
-      },
-    }
+    const res = await get(`https://www.reddit.com/user/${username}/about.json`)
+    return res.data.data
   } catch (error) {
     throw error
   }
 }
 
-const numberOfCommentsPerSubreddit = async user => {
-  const data = await get(`https://api.pushshift.io/reddit/search/comment/?author=${user}&size=100`)
-  const comments = data.data.data.map(comment => comment.subreddit)
-  const map = new Map()
-  
-  comments.forEach(comment => map.set(comment, (map.get(comment) || 0) + 1))
-
-  return [...map].map(comment => ({
-    subreddit: comment[0],
-    count: comment[1],
-  }))
+const getPostCount = async (username, type) => {
+  try {
+    const res = await get(`https://api.pushshift.io/reddit/search/${type}/?author=${username}&metadata=true&size=0`)
+    return res.data.metadata.total_results
+  } catch (error) {
+    throw error
+  }
 }
 
-export { metadata, numberOfCommentsPerSubreddit }
+const getPost = async (username, post, sortType) => {
+  try {
+    const res = await get(`https://api.pushshift.io/reddit/search/${post}/?author=${username}&sort_type=${sortType}&size=1`)
+    const data = res.data.data[0]
+
+    const rest = {
+      karma: data.score,
+      created: data.created_utc,
+    }
+
+    return post === 'comment' ?
+      { body: data.body, link: `https://reddit.com/comments/${data.link_id.substring(3)}//${data.parent_id.substring(3)}`, ...rest }
+      : { title: data.title, link: `https://reddit.com/${data.id}`, comments: data.num_comments, ...rest }
+
+  } catch (error) {
+    throw error
+  }
+}
+
+const getPosts = async (username, amount) => {
+  try {
+    const res = await get(`https://api.pushshift.io/reddit/search/comment/?author=${username}&sort_type=created_utc&size=${amount}`)
+    return [...res.data.data
+      .map(comment => comment.subreddit)
+      .reduce((map, subreddit) => map.set(subreddit, (map.get(subreddit) || 0) + 1), new Map())]
+      .map(subreddit => ({
+        subreddit: subreddit[0],
+        count: subreddit[1],
+      }))
+  } catch (error) {
+    throw error
+  }
+}
+
+const getData = async username => {
+  const [about, 
+         commentCount, 
+         submissionCount, 
+         newComment, 
+         topComment, 
+         topSubmission] = await Promise.all([
+           getAbout(username),
+           getPostCount(username, 'comment'),
+           getPostCount(username, 'submission'),
+           getPost(username, 'comment', 'created_utc'),
+           getPost(username, 'comment', 'score'),
+           getPost(username, 'submission', 'score'),
+         ])
+
+  const { created } = about
+  const comments = {
+    karma: about.comment_karma,
+    count: commentCount,
+    posts: {
+      new: { header: 'NEWEST COMMENT', ...newComment },
+      top: { header: 'TOP COMMENT', ...topComment },
+    }
+  }
+  const submissions = {
+    karma: about.link_karma,
+    count: submissionCount,
+    posts: {
+      top: { header: 'TOP SUBMISSION', ...topSubmission },
+    },
+  }
+  return { username, created, comments, submissions }
+}
+
+
+export { getData, getPosts }

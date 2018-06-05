@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="card--content text">This account was created {{ timeFromSignup }} ago, on
-        <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
+        <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ username }}'s
         <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
       </div>
     </div>
@@ -24,9 +24,9 @@
           KARMA
         </div>
       </div>
-      <div class="card--content text">/u/{{ name }} has a net worth of
-        <span class="text--orange">{{ karma.comment }} comment karma</span> and
-        <span class="text--orange">{{ karma.link }} link karma</span>.
+      <div class="card--content text">/u/{{ username }} has a net worth of
+        <span class="text--orange">{{ comments.karma }} comment karma</span> and
+        <span class="text--orange">{{ submissions.karma }} link karma</span>.
       </div>
     </div>
 
@@ -40,8 +40,8 @@
         </div>
       </div>
       <div class="card--content text">This account has posted
-        <span class="text--orange">{{ comments }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
-        <span class="text--orange">{{ submissions }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.
+        <span class="text--orange">{{ comments.count }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
+        <span class="text--orange">{{ submissions.count }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.
       </div>
     </div>
   </div>
@@ -60,9 +60,8 @@ export default {
   name: 'DataColumn',
   computed: {
     ...mapState({
-      name: state => state.user.name,
+      username: state => state.user.username,
       created: state => state.user.created,
-      karma: state => state.user.karma,
       comments: state => state.user.comments,
       submissions: state => state.user.submissions,
     }),

@@ -4,11 +4,11 @@
     <div class="card">
       <div class="card--header text">
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">LAST 100 COMMENTS</div>
+        <div class="card--header--title">LAST {{ maxComments }} COMMENTS</div>
       </div>
       <div class="card--content container container--center">
         <div class="graph--comments">
-          <CommentsPie :chart-data="pieChartData"
+          <CommentsBar :chart-data="barChartData"
                        :options="options" />
         </div>
       </div>
@@ -19,51 +19,44 @@
 </template>
 
 <script>
-import { numberOfCommentsPerSubreddit } from '@/reddit.js'
+import { getPosts } from '@/reddit.js'
 import { mapState } from 'vuex'
 
-import CommentsPie from './Graph/CommentsPie'
+import CommentsBar from './Graph/CommentsBar'
 
 export default {
   name: 'GraphColumn',
-  components: { CommentsPie },
+  components: { CommentsBar },
   data() {
     return {
-      pieChartData: {},
-      options: {},
+      maxComments: 50,
+      barChartData: {},
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: { display: false },
+      },
     }
   },
   computed: {
     ...mapState({
-      name: state => state.user.name,
+      username: state => state.user.username,
     }),
   },
   watch: {
-    name: {
+    username: {
       immediate: true,
       async handler() {
-        const data = await numberOfCommentsPerSubreddit(this.name)
-        const comments = data
+        const comments = await getPosts(this.username, this.maxComments)
 
-        this.pieChartData = {
+        this.barChartData = {
           labels: comments.map(comment => comment.subreddit),
 
-          datasets: [
-            {
+          datasets: [{
               data: comments.map(comment => comment.count),
               backgroundColor: this.randomColors(comments.length),
             },
           ],
-        }
-
-        this.options = {
-          responsive: true,
-          maintainAspectRatio: false,
-          elements: {
-            arc: {
-              borderWidth: 0,
-            },
-          },
         }
       },
     },
