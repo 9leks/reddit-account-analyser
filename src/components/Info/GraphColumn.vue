@@ -6,10 +6,10 @@
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
         <div class="card--header--title">LATEST COMMENTS</div>
       </div>
-      <div v-if="barChartData.labels.length"
+      <div v-if="doughnutChartData.labels.length"
            class="card--content container container--center">
         <div class="graph--comments">
-          <CommentsDoughnut :chart-data="barChartData"
+          <CommentsDoughnut :chart-data="doughnutChartData"
                             :options="options" />
         </div>
       </div>
@@ -33,10 +33,15 @@ export default {
   data() {
     return {
       maxComments: 50,
-      barChartData: { labels: [], datasets: [] },
+      doughnutChartData: { labels: [], datasets: [] },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        elements: {
+          arc: {
+            borderWidth: 0,
+          },
+        },
       },
     }
   },
@@ -51,7 +56,7 @@ export default {
       async handler() {
         const comments = await getPosts(this.name, this.maxComments)
 
-        this.barChartData = {
+        this.doughnutChartData = {
           labels: comments.map(comment => comment.subreddit),
 
           datasets: [

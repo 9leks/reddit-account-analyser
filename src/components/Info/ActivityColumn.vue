@@ -7,7 +7,7 @@
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
         <div class="card--header--title">{{ post.header }}</div>
       </div>
-      <div v-if="post.score">
+      <div v-if="post.link">
         <a :href="post.link"
            target="_blank"
            class="container container--card card--content card--link text">
@@ -39,7 +39,7 @@
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
         <div class="card--header--title"> {{ submissions.top.header }}</div>
       </div>
-      <div v-if="submissions.top.score">
+      <div v-if="submissions.top.link">
         <a :href="submissions.top.link"
            target="_blank"
            class="container container--card card--content card--link text">

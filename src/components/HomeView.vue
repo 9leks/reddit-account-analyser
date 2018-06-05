@@ -39,7 +39,7 @@ export default {
       if (username) {
         this.$store
           .dispatch('setUser', username)
-          .catch(error => console.log(error)) // TODO: Add error handling
+          .catch(error => alert('User does not exist!'))
       }
     },
   },
