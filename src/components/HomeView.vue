@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { getJSON as getCookie } from 'js-cookie'
-
 import Searchbar from './Home/Searchbar.vue'
 
 export default {
@@ -38,11 +36,11 @@ export default {
   },
   methods: {
     setUser(username) {
-      getCookie(username)
-        ? this.$store.dispatch('setUserByCookie', username)
-        : this.$store
-            .dispatch('setUserByAPICall', username)
-            .catch(error => console.log(error)) // TODO: Add error handling
+      if (username) {
+        this.$store
+          .dispatch('setUser', username)
+          .catch(error => console.log(error)) // TODO: Add error handling
+      }
     },
   },
 }

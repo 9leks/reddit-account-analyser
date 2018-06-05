@@ -7,41 +7,61 @@
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
         <div class="card--header--title">{{ post.header }}</div>
       </div>
-      <a :href="post.link"
-         target="_blank"
-         class="container container--card card--content card--link text">
-        <div class="card--points">{{ post.karma }}</div>
-        <div class="card--arrows">
-          <img v-if="post.karma > 0"
-               src="@/static/img/upvoted.png">
-          <img v-else
-               src="@/static/img/downvoted.png">
-        </div>
-        <div class="card--time">{{ timeFromPost(post.created) }} ago</div>
-        <div class="card--comment">{{ post.body }}</div>
-      </a>
+      <div v-if="post.score">
+        <a :href="post.link"
+           target="_blank"
+           class="container container--card card--content card--link text">
+          <i v-if="post.score_hidden"
+             class="card--points text--hidden">score <br> hidden</i>
+          <div v-else
+               class="card--points">{{ post.score }}</div>
+          <div class="card--arrows">
+            <img v-if="post.score_hidden"
+                 src="@/static/img/blank_vote.png">
+            <img v-else-if="post.score > 0"
+                 src="@/static/img/upvoted.png">
+            <img v-else
+                 src="@/static/img/downvoted.png">
+          </div>
+          <div class="card--time">
+            <span :title="new Date(post.created_utc * 1000)">{{ timeFromPost(post.created_utc) }} ago</span>
+          </div>
+          <div class="card--comment">{{ post.text }}</div>
+        </a>
+      </div>
+      <div v-else>
+        <div class="container container--center card--content text">/u/{{ name }} has not posted any comment.</div>
+      </div>
     </div>
 
     <div class="card">
       <div class="card--header text">
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">TOP SUBMISSION</div>
+        <div class="card--header--title"> {{ submissions.top.header }}</div>
       </div>
-      <a :href="submissions.top.link"
-         target="_blank"
-         class="container container--card card--content card--link text">
-        <div class="card--points">{{ submissions.top.karma }}</div>
-        <div class="card--arrows">
-          <img v-if="submissions.top.karma > 0"
-               src="@/static/img/upvoted.png">
-          <img v-else
-               src="@/static/img/downvoted.png">
-        </div>
-        <div class="card--time">{{ timeFromPost(submissions.top.created) }} ago, <br> {{ submissions.top.comments }} comments</div>
-        <div class="card--comment">{{ submissions.top.title }}</div>
-      </a>
+      <div v-if="submissions.top.score">
+        <a :href="submissions.top.link"
+           target="_blank"
+           class="container container--card card--content card--link text">
+          <div class="card--points">{{ submissions.top.score }}</div>
+          <div class="card--arrows">
+            <img v-if="submissions.top.score > 0"
+                 src="@/static/img/upvoted.png">
+            <img v-else
+                 src="@/static/img/downvoted.png">
+          </div>
+          <div class="card--time">
+            <span :title="new Date(submissions.top.created_utc * 1000)">{{ timeFromPost(submissions.top.created_utc) }} ago</span>,
+            <br> {{ submissions.top.comments }} comments
+          </div>
+          <div class="card--comment">{{ submissions.top.text }}</div>
+        </a>
+      </div>
+      <div v-else>
+        <div class="container container--center card--content text">/u/{{ name }} has not posted any submission.</div>
+      </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -53,6 +73,7 @@ export default {
   name: 'ActivityColumn',
   computed: {
     ...mapState({
+      name: state => state.user.name,
       comments: state => state.user.comments.posts,
       submissions: state => state.user.submissions.posts,
     }),
@@ -78,9 +99,13 @@ export default {
     '. points . arrows time'
     '. points . arrows comment';
 
-  &:hover {
-    background-color: rgb(209, 209, 209);
+  &:active {
+    background-color: rgba(219, 182, 164, 0.596);
   }
+}
+
+.text--hidden {
+  font-size: 0.75rem;
 }
 
 .card--link {

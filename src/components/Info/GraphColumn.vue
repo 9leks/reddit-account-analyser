@@ -4,17 +4,20 @@
     <div class="card">
       <div class="card--header text">
         <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">LAST {{ maxComments }} COMMENTS</div>
+        <div class="card--header--title">LATEST COMMENTS</div>
       </div>
-      <div class="card--content container container--center">
+      <div v-if="barChartData.labels.length"
+           class="card--content container container--center">
         <div class="graph--comments">
-          <CommentsBar :chart-data="barChartData"
-                       :options="options" />
+          <CommentsDoughnut :chart-data="barChartData"
+                            :options="options" />
         </div>
       </div>
+      <div v-else
+           class="card--content container container--center text">
+        /u/{{ name }} has not posted any comment recently.
+      </div>
     </div>
-  </div>
-
   </div>
 </template>
 
@@ -22,37 +25,37 @@
 import { getPosts } from '@/reddit.js'
 import { mapState } from 'vuex'
 
-import CommentsBar from './Graph/CommentsBar'
+import CommentsDoughnut from './Graph/CommentsDoughnut'
 
 export default {
   name: 'GraphColumn',
-  components: { CommentsBar },
+  components: { CommentsDoughnut },
   data() {
     return {
       maxComments: 50,
-      barChartData: {},
+      barChartData: { labels: [], datasets: [] },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: { display: false },
       },
     }
   },
   computed: {
     ...mapState({
-      username: state => state.user.username,
+      name: state => state.user.name,
     }),
   },
   watch: {
-    username: {
+    name: {
       immediate: true,
       async handler() {
-        const comments = await getPosts(this.username, this.maxComments)
+        const comments = await getPosts(this.name, this.maxComments)
 
         this.barChartData = {
           labels: comments.map(comment => comment.subreddit),
 
-          datasets: [{
+          datasets: [
+            {
               data: comments.map(comment => comment.count),
               backgroundColor: this.randomColors(comments.length),
             },

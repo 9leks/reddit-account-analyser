@@ -1,11 +1,11 @@
 <template>
-  <div v-if="username"
+  <div v-if="name"
        class="container container--info">
 
     <div class="info--header">
       <div class="text text--white text--shadow text--center text--header">OVERVIEW FOR <br>
         <span class="text--orange">
-          /u/{{ username }}
+          /u/{{ name }}
         </span>
       </div>
     </div>
@@ -43,7 +43,7 @@ export default {
   components: { DataColumn, ActivityColumn, GraphColumn },
   computed: {
     ...mapState({
-      username: state => state.user.username,
+      name: state => state.user.name,
     }),
   },
 }

@@ -12,29 +12,23 @@ const getAbout = async username => {
 const getPostCount = async (username, type) => {
   try {
     const res = await get(`https://api.pushshift.io/reddit/search/${type}/?author=${username}&metadata=true&size=0`)
-    return res.data.metadata.total_results
+    return res.data.metadata.total_results || 0
   } catch (error) {
     throw error
   }
 }
 
-const getPost = async (username, post, sortType) => {
-  try {
-    const res = await get(`https://api.pushshift.io/reddit/search/${post}/?author=${username}&sort_type=${sortType}&size=1`)
-    const data = res.data.data[0]
+const getPost = async (username, type, sort, limit) => {
+  const res = await get(`https://www.reddit.com/user/${username}/${type}.json?sort=${sort}&limit=${limit}`)
+  if (!res.data.data.children.length) return; 
+  const data = res.data.data.children[0].data
+  const { score_hidden, score, created_utc, permalink } = data 
 
-    const rest = {
-      karma: data.score,
-      created: data.created_utc,
-    }
+  const text = data.body || data.title
+  const comments = data.num_comments || 0
+  const link = `https://www.reddit.com${permalink}`
 
-    return post === 'comment' ?
-      { body: data.body, link: `https://reddit.com/comments/${data.link_id.substring(3)}//${data.parent_id.substring(3)}`, ...rest }
-      : { title: data.title, link: `https://reddit.com/${data.id}`, comments: data.num_comments, ...rest }
-
-  } catch (error) {
-    throw error
-  }
+  return { text, score_hidden, score, created_utc, link, comments }
 }
 
 const getPosts = async (username, amount) => {
@@ -62,12 +56,12 @@ const getData = async username => {
            getAbout(username),
            getPostCount(username, 'comment'),
            getPostCount(username, 'submission'),
-           getPost(username, 'comment', 'created_utc'),
-           getPost(username, 'comment', 'score'),
-           getPost(username, 'submission', 'score'),
+           getPost(username, 'comments', 'new', 1),
+           getPost(username, 'comments', 'top', 1),
+           getPost(username, 'submitted', 'top', 1),
          ])
 
-  const { created } = about
+  const { name, created_utc } = about
   const comments = {
     karma: about.comment_karma,
     count: commentCount,
@@ -80,10 +74,10 @@ const getData = async username => {
     karma: about.link_karma,
     count: submissionCount,
     posts: {
-      top: { header: 'TOP SUBMISSION', ...topSubmission },
+      top: { header: 'TOP/PINNED SUBMISSION', ...topSubmission },
     },
   }
-  return { username, created, comments, submissions }
+  return { name, created_utc, comments, submissions }
 }
 
 

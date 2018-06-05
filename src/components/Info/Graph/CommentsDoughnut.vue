@@ -1,9 +1,9 @@
 <script>
-import { Bar, mixins } from 'vue-chartjs'
+import { Doughnut, mixins } from 'vue-chartjs'
 
 export default {
-  name: 'CommentsBar',
-  extends: Bar,
+  name: 'CommentsDoughnut',
+  extends: Doughnut,
   mixins: [mixins.reactiveProp],
   props: {
     chartData: {
