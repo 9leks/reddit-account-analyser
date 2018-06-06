@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getAbout, getComment, getPostCount, getSubmission } from './reddit.js'
+import { getAbout, getComment, getPostCount, getSubmission, getSubredditCount } from './reddit.js'
 
 Vue.use(Vuex)
 
@@ -13,6 +13,7 @@ export default new Vuex.Store({
         karma: 0,
         count: 0,
         posts: {
+          recent: [],
           new: {
             header: '',
             body: '',
@@ -65,6 +66,7 @@ export default new Vuex.Store({
         newComment,
         topComment,
         topSubmission,
+        subredditCount,
       ] = await Promise.all([
         getAbout(username),
         getPostCount(username, 'comment'),
@@ -72,12 +74,14 @@ export default new Vuex.Store({
         getComment(username, 'new'),
         getComment(username, 'top'),
         getSubmission(username, 'top'),
+        getSubredditCount(username, 'new', 50),
       ])
 
       const { name, created_utc, comment_karma, link_karma } = about
       const comments = {
         karma: comment_karma,
         count: commentCount,
+        subredditCount,
         posts: {
           new: { header: 'NEWEST COMMENT', ...newComment },
           top: { header: 'TOP COMMENT', ...topComment },

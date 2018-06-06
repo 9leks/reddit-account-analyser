@@ -15,14 +15,13 @@
       </div>
       <div v-else
            class="card--content container container--center text">
-        /u/{{ name }} has not posted any comment recently.
+        /u/{{ name }} has not posted any comment.
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getSubredditCount } from '@/reddit.js'
 import { mapState } from 'vuex'
 
 import CommentsDoughnut from './Graph/CommentsDoughnut'
@@ -46,18 +45,18 @@ export default {
   computed: {
     ...mapState({
       name: state => state.user.name,
+      comments: state => state.user.comments,
     }),
   },
   watch: {
     name: {
       immediate: true,
       async handler() {
-        const comments = await getSubredditCount(this.name, 'new', this.maxComments)
         this.doughnutChartData = {
-          labels: comments.map(comment => comment.subreddit),
+          labels: this.comments.subredditCount.map(comment => comment.subreddit),
           datasets: [{ 
-            data: comments.map(comment => comment.count), 
-            backgroundColor: this.randomColors(comments.length) 
+            data: this.comments.subredditCount.map(comment => comment.count), 
+            backgroundColor: this.randomColors(this.comments.subredditCount.length) 
             }],
         }
       },
