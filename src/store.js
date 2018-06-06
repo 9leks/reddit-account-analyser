@@ -1,6 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getAbout, getComment, getPostCount, getSubmission, getSubredditCount } from './reddit.js'
+import {
+  getAbout,
+  getComment,
+  getPostCount,
+  getSubmission,
+  getSubredditCount,
+} from './reddit.js'
 
 Vue.use(Vuex)
 
@@ -54,7 +60,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    setUser: (state, payload) => (state.user = payload.data),
+    setUser: (state, payload) => (state.user = { ...state.user, ...payload.data }),
   },
 
   actions: {

@@ -8,7 +8,7 @@ export const getAbout = async username => {
   try {
     const res = await get(`https://www.reddit.com/user/${username}/about.json`)
     return res.data.data
-  } catch(error) {
+  } catch (error) {
     throw error
   }
 }
@@ -16,7 +16,7 @@ export const getAbout = async username => {
 /**
  * @param   {String} username The username of a Reddit user.
  * @param   {String} sort The sorting type: _new_, _new_, _controversial_, or _top_.
- * @returns {Object} Returns title, amount of comments, score, UTC creation date and link to top submission based on karma. 
+ * @returns {Object} Returns title, amount of comments, score, UTC creation date and link to submission, sorted by specified filter. 
  */
 export const getSubmission = async (username, sort) => {
   try {
@@ -25,7 +25,15 @@ export const getSubmission = async (username, sort) => {
 
     const data = res.data.data.children
     const post = data.find(submission => submission.data.pinned !== true).data
-    const { title, num_comments, score, created_utc, permalink, subreddit, id } = post
+    const {
+      title,
+      num_comments,
+      score,
+      created_utc,
+      permalink,
+      subreddit,
+      id,
+    } = post
     const link = `https://www.reddit.com${permalink}`
 
     return { title, num_comments, score, created_utc, subreddit, link, id }
@@ -60,7 +68,7 @@ export const getComment = async (username, sort) => {
   if (!res.length) return
 
   const post = res[0].data
-  const { body, score_hidden, score, created_utc, permalink, subreddit, id } = post 
+  const { body, score_hidden, score, created_utc, permalink, subreddit, id } = post
   const link = `https://www.reddit.com${permalink}`
   return { body, score_hidden, score, created_utc, link, subreddit, id }
 }
@@ -85,7 +93,7 @@ export const getPostCount = async (username, type) => {
  * @param   {Number}        limit The amount of posts to return, max 1000.
  * @returns {Array<Object>} Returns an array containing objects, each with subreddit name and count of the subreddit's occurences. 
  */
-  export const getSubredditCount = async (username, sort, limit) => {
+export const getSubredditCount = async (username, sort, limit) => {
   try {
     const res = await getComments(username, sort, limit)
     return [...res
