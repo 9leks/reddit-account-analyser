@@ -3,7 +3,8 @@
        class="container container--info">
 
     <div class="info--header">
-      <div class="text text--white text--shadow text--center text--header">OVERVIEW FOR <br>
+      <div class="text text--white text--shadow text--center text--header">
+        OVERVIEW FOR <br>
         <span class="text--orange">
           /u/{{ name }}
         </span>

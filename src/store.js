@@ -60,7 +60,8 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    setUser: (state, payload) => (state.user = { ...state.user, ...payload.data }),
+    setUser: (state, payload) =>
+      (state.user = { ...state.user, ...payload.data }),
   },
 
   actions: {
