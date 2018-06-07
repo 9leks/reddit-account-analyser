@@ -13,9 +13,8 @@ const getData = async url => {
  * @returns {Object} Returns formatted about.json data of user.
  */
 export const getAbout = async username => {
-  const res = await getData(
-    `https://www.reddit.com/user/${username}/about.json`
-  )
+  const url = `https://www.reddit.com/user/${username}/about.json`
+  const res = await getData(url)
   return res.data.data
 }
 
@@ -25,10 +24,10 @@ export const getAbout = async username => {
  * @returns {Number} Returns amount of comments or submissions made by user.
  */
 export const getPostCount = async (username, type) => {
-  const res = await getData(
+  const url =
     `https://api.pushshift.io/reddit/search/${type}` +
-      `/?author=${username}&metadata=true&size=0`
-  )
+    `/?author=${username}&metadata=true&size=0`
+  const res = await getData(url)
   return res.data.metadata.total_results
 }
 
@@ -41,10 +40,10 @@ export const getPostCount = async (username, type) => {
  * @returns {Object} Returns submission, sorted by specified filter.
  */
 export const getPost = async (username, sort, type, limit) => {
-  const res = await getData(
+  const url =
     `https://www.reddit.com/user/${username}` +
-      `/${type}.json?sort=${sort}&limit=${limit}`
-  )
+    `/${type}.json?sort=${sort}&limit=${limit}`
+  const res = await getData(url)
   const data = res.data.data.children
   return data ? data : []
 }
@@ -69,8 +68,10 @@ export const getComments = async (username, sort, limit) => {
 export const getComment = async (username, sort) => {
   const res = await getComments(username, sort, 1)
   if (!res.length) return
+  
   const post = res[0].data
-  return { ...post, link: `https://www.reddit.com${post.permalink}` }
+  const link = `https://www.reddit.com${post.permalink}`
+  return { ...post, link }
 }
 
 /**
@@ -82,8 +83,10 @@ export const getComment = async (username, sort) => {
 export const getSubmission = async (username, sort) => {
   const res = await getPost(username, sort, 'submitted', 5)
   if (!res.length) return
+  
   const post = res.find(submission => submission.data.pinned !== true).data
-  return { ...post, link: `https://www.reddit.com${post.permalink}` }
+  const link = `https://www.reddit.com${post.permalink}` 
+  return { ...post, link }
 }
 
 /**
