@@ -1,122 +1,145 @@
 <template>
-  <div class="container container--activity">
-    <div v-for="post in comments"
-         :key="post.id"
-         class="card">
-      <div class="card--header text">
-        <div class="card--header--icon">
-          <img src="@/static/img/quotes.png">
-        </div>
-        <div class="card--header--title">{{ post.header }}</div>
-      </div>
+  <div class="container">
+    <CardItem v-for="post in posts"
+              :key="post.id"
+              :icon="post.icon"
+              :header="post.header">
       <div v-if="post.link">
-        <a :href="post.link"
-           target="_blank"
-           class="container container--card card--content card--link text">
+        <a class="container container--card">
           <i v-if="post.score_hidden"
              class="card--points text--hidden">score <br> hidden</i>
           <div v-else
                class="card--points">{{ post.score }}</div>
           <div class="card--arrows">
             <img v-if="post.score_hidden"
-                 src="@/static/img/blank_vote.png">
+                 src="@/assets/img/blank_vote.png">
             <img v-else-if="post.score > 0"
-                 src="@/static/img/upvoted.png">
+                 src="@/assets/img/upvoted.png">
             <img v-else
-                 src="@/static/img/downvoted.png">
+                 src="@/assets/img/downvoted.png">
           </div>
           <div class="card--time">
-            /r/{{ post.subreddit }} <br>
-            <span :title="new Date(post.created_utc * 1000)">
-              {{ timeFromPost(post.created_utc) }} ago</span>
+            <a :href="post.link"
+               class="card--link"
+               target="_blank">
+              /r/{{ post.subreddit }} <br>
+              <span :title="new Date(post.created_utc * 1000)">
+                {{ timeFromPost(post.created_utc) }} ago</span>
+            </a>
           </div>
-          <div class="card--comment">{{ post.body }}</div>
+          <a class="card--paragraph"
+             @click="toggleParagraph(post, post.title || post.body)">
+            <span v-if="(post.title || post.body).length > 150 && post.toggle">
+              {{ (post.title || post.body).substring(0, 150) }} ...
+              <i>({{ (post.title || post.body).length }} words)</i>
+            </span>
+            <span v-else>
+              {{ post.title || post.body }}
+            </span>
+          </a>
         </a>
       </div>
       <div v-else>
-        <div class="container container--center card--content text">
-          /u/{{ name }} has not posted any comment.
+        <div class="container container--center">
+          /u/{{ name }} has not posted any {{ post.type }}s.
         </div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon">
-          <img src="@/static/img/quotes.png">
-        </div>
-        <div class="card--header--title">
-          {{ submissions.top.header }}
-        </div>
-      </div>
-      <div v-if="submissions.top.link">
-        <a :href="submissions.top.link"
-           target="_blank"
-           class="container container--card card--content card--link text">
-          <div class="card--points">{{ submissions.top.score }}</div>
-          <div class="card--arrows">
-            <img v-if="submissions.top.score > 0"
-                 src="@/static/img/upvoted.png">
-            <img v-else
-                 src="@/static/img/downvoted.png">
-          </div>
-          <div class="card--time">
-            /r/{{ submissions.top.subreddit }}
-            <br>
-            <span :title="new Date(submissions.top.created_utc * 1000)">
-              {{ timeFromPost(submissions.top.created_utc) }} ago,
-            </span> {{ submissions.top.num_comments }} comments
-          </div>
-          <div class="card--comment">{{ submissions.top.title }}</div>
-        </a>
-      </div>
-      <div v-else>
-        <div class="container container--center card--content text">
-          /u/{{ name }} has not posted any submission.
-        </div>
-      </div>
-    </div>
-
+    </CardItem>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { distanceInWordsToNow } from 'date-fns'
+import icon from '@/assets/img/quotes.png'
+
+import CardItem from '@/components/Utilities/CardItem'
 
 export default {
   name: 'ActivityColumn',
+  components: { CardItem },
+  data() {
+    return {
+      postData: [
+        {
+          id: 0,
+          header: 'NEWEST COMMENT',
+          type: 'comment',
+          toggle: true,
+          icon,
+        },
+        {
+          id: 1,
+          header: 'TOP COMMENT',
+          type: 'comment',
+          toggle: true,
+          icon,
+        },
+        {
+          id: 2,
+          header: 'TOP SUBMISSION',
+          type: 'submission',
+          toggle: true,
+          icon,
+        },
+      ],
+    }
+  },
   computed: {
     ...mapState({
       name: state => state.user.name,
       comments: state => state.user.comments.posts,
       submissions: state => state.user.submissions.posts,
     }),
+    posts() {
+      return [
+        { ...this.comments.new, ...this.postData[0] },
+        { ...this.comments.top, ...this.postData[1] },
+        { ...this.submissions.top, ...this.postData[2] },
+      ]
+    },
+  },
+  watch: {
+    name: {
+      immediate: true,
+      handler() {
+        this.postData = this.posts.map((post, index) => {
+          const text = post.title || post.body
+          return text.length > 150
+            ? { ...this.postData[index], toggle: true }
+            : { ...this.postData[index], toggle: false }
+        })
+      },
+    },
   },
   methods: {
     timeFromPost(time) {
       const date = new Date(time * 1000)
       return distanceInWordsToNow(date)
     },
+    toggleParagraph(post, text) {
+      if (text.length > 150) {
+        this.postData[post.id].toggle = !this.postData[post.id].toggle
+      }
+    },
+    paragraph(post, text) {
+      if (post) {
+        return post.toggle
+          ? `${text.substring(0, 150)} ... (${text.length} words)`
+          : text
+      }
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'cards';
-
 .container--card {
   font-size: 1rem;
-  transition: background-color 0.085s ease-in-out;
-
   grid-template-columns: 0.05fr 0.025fr 0.25fr 1fr 6fr;
   grid-template-areas:
     '. points . arrows time'
-    '. points . arrows comment';
-
-  &:active {
-    background-color: rgba(219, 182, 164, 0.596);
-  }
+    '. points . arrows paragraph';
 }
 
 .text--hidden {
@@ -126,6 +149,10 @@ export default {
 .card--link {
   color: inherit;
   text-decoration: none;
+
+  &:hover {
+    color: rgb(0, 0, 0);
+  }
 }
 
 .card--time {
@@ -149,8 +176,8 @@ export default {
   grid-area: arrows;
 }
 
-.card--comment {
-  grid-area: comment;
+.card--paragraph {
+  grid-area: paragraph;
 }
 
 @media screen and (min-width: 375px) {
@@ -163,7 +190,7 @@ export default {
   .container--card {
     grid-template-areas:
       'points . arrows time'
-      'points . arrows comment';
+      'points . arrows paragraph';
     grid-template-columns: 0.025fr 0.125fr 0.45fr 12fr;
   }
 }

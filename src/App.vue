@@ -17,6 +17,8 @@ export default {
 
 <style lang="scss" scoped>
 .container--app {
+  font-family: 'Poppins', sans-serif;
+
   grid-gap: 5rem;
   grid-template-areas:
     'home'

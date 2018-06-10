@@ -2,9 +2,9 @@
   <div class="searchbar">
     <button class="button button--disabled"
             disabled="disabled">
-      <span class="text text--white text--shadow">/u/</span>
+      <span class="text--white text--shadow">/u/</span>
     </button>
-    <input class="input text text--shadow"
+    <input class="input text--shadow"
            type="search"
            autofocus
            @keypress.enter="$emit('send')"
@@ -13,7 +13,7 @@
             type="submit"
             @click="$emit('send')">
       <img class="icon--search"
-           src="@/static/img/search.png">
+           src="@/assets/img/search.png">
     </button>
   </div>
 </template>

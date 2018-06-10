@@ -3,7 +3,7 @@
        class="container container--info">
 
     <div class="info--header">
-      <div class="text text--white text--shadow text--center text--header">
+      <div class="text--white text--shadow text--center text--header">
         OVERVIEW FOR <br>
         <span class="text--orange">
           /u/{{ name }}
@@ -14,17 +14,17 @@
     <div class="container info--columns">
 
       <div class="info--data">
-        <div class="text text--center text--shadow text--header">DATA</div>
+        <div class="text--center text--shadow text--header">DATA</div>
         <DataColumn />
       </div>
 
       <div class="info--activity">
-        <div class="text text--center text--shadow text--header">ACTIVITY</div>
+        <div class="text--center text--shadow text--header">ACTIVITY</div>
         <ActivityColumn />
       </div>
 
       <div class="info--graphs">
-        <div class="text text--center text--shadow text--header">GRAPHS</div>
+        <div class="text--center text--shadow text--header">GRAPHS</div>
         <GraphColumn />
       </div>
     </div>
@@ -79,8 +79,6 @@ export default {
   }
 
   .info--graphs {
-    height: 100%;
-
     grid-area: graphs;
   }
 }

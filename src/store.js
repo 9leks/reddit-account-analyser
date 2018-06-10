@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import path from 'path'
 import {
   getAbout,
   getComment,
@@ -20,47 +21,21 @@ export default new Vuex.Store({
         count: 0,
         posts: {
           recent: [],
-          new: {
-            header: '',
-            body: '',
-            score: 0,
-            score_hidden: false,
-            created_utc: 0,
-            link: '',
-            id: 0,
-          },
-          top: {
-            header: '',
-            body: '',
-            score: 0,
-            score_hidden: false,
-            created_utc: 0,
-            link: '',
-            id: 0,
-          },
+          new: {},
+          top: {},
         },
       },
       submissions: {
         karma: 0,
         count: 0,
         posts: {
-          top: {
-            header: '',
-            title: '',
-            score: 0,
-            score_hidden: false,
-            created_utc: 0,
-            link: '',
-            num_comments: 0,
-            id: 0,
-            subreddit: '',
-          },
+          top: {},
         },
       },
     },
   },
   mutations: {
-    setUser: (state, payload) =>
+    SET_USER: (state, payload) =>
       (state.user = { ...state.user, ...payload.data }),
   },
 
@@ -90,20 +65,20 @@ export default new Vuex.Store({
         count: commentCount,
         subredditCount,
         posts: {
-          new: { header: 'NEWEST COMMENT', ...newComment },
-          top: { header: 'TOP COMMENT', ...topComment },
+          new: newComment,
+          top: topComment,
         },
       }
       const submissions = {
         karma: link_karma,
         count: submissionCount,
         posts: {
-          top: { header: 'TOP SUBMISSION', ...topSubmission },
+          top: topSubmission,
         },
       }
 
       const data = { name, created_utc, comments, submissions }
-      commit('setUser', { data })
+      commit('SET_USER', { data })
     },
   },
 })

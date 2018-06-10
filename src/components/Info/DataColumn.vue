@@ -1,56 +1,35 @@
 <template>
-  <div class="container container--data">
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon">
-          <img src="@/static/img/cake.png">
-        </div>
-        <div class="card--header--title">
-          CAKE DAY
-        </div>
-      </div>
-      <div class="card--content text">This account was created
-        <span :title="new Date(created_utc * 1000)">{{ timeFromSignup }} ago</span>, on
-        <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
-        <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
-      </div>
-    </div>
+  <div class="container">
+    <CardItem :header="'CAKE DAY'"
+              :icon="cakeIcon">
+      This account was created
+      <span :title="new Date(created_utc * 1000)">{{ timeFromSignup }} ago</span>, on
+      <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
+      <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
+    </CardItem>
 
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon">
-          <img src="@/static/img/upvote.png">
-        </div>
-        <div class="card--header--title">
-          KARMA
-        </div>
-      </div>
-      <div class="card--content text">/u/{{ name }} has a net worth of
-        <span class="text--orange">{{ comments.karma }} comment karma</span> and
-        <span class="text--orange">{{ submissions.karma }} link karma</span> with a total of
-        <span class="text--orange">{{ comments.karma + submissions.karma }} karma</span>.
-      </div>
-    </div>
+    <CardItem :header="'CAKE DAY'"
+              :icon="upvoteIcon">
+      /u/{{ name }} has a net worth of
+      <span class="text--orange">{{ comments.karma }} comment karma</span> and
+      <span class="text--orange">{{ submissions.karma }} link karma</span> for a total of
+      <span class="text--orange">{{ comments.karma + submissions.karma }} karma</span>.
+    </CardItem>
 
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon">
-          <img src="@/static/img/upload.png">
-        </div>
-        <div class="card--header--title">
-          POSTS
-        </div>
-      </div>
-      <div class="card--content text">This account has posted
-        <span class="text--orange">{{ comments.count }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
-        <span class="text--orange">{{ submissions.count }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.
-      </div>
-    </div>
+    <CardItem :header="'CAKE DAY'"
+              :icon="cakeIcon">
+      This account has posted
+      <span class="text--orange">{{ comments.count }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
+      <span class="text--orange">{{ submissions.count }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.
+    </CardItem>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import cakeIcon from '@/assets/img/cake.png'
+import upvoteIcon from '@/assets/img/upvote.png'
+import uploadIcon from '@/assets/img/upload.png'
 import {
   format,
   distanceInWordsToNow,
@@ -58,8 +37,18 @@ import {
   distanceInWords,
 } from 'date-fns'
 
+import CardItem from '@/components/Utilities/CardItem'
+
 export default {
   name: 'DataColumn',
+  components: { CardItem },
+  data() {
+    return {
+      cakeIcon,
+      upvoteIcon,
+      uploadIcon,
+    }
+  },
   computed: {
     ...mapState({
       name: state => state.user.name,
@@ -97,8 +86,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'cards';
-</style>
-

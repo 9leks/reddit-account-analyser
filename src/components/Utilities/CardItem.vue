@@ -1,3 +1,40 @@
+<template>
+  <div>
+    <div class="card">
+      <div class="card--header">
+        <div class="card--header--icon">
+          <img :src="icon">
+        </div>
+        <div class="card--header--title">
+          {{ header }}
+        </div>
+      </div>
+      <div class="card--content">
+        <slot />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'CardItem',
+  props: {
+    icon: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    header: {
+      type: String,
+      default: '',
+      required: false,
+    },
+  },
+}
+</script>
+
+<style lang="scss">
 .card {
   padding: 2rem 0;
 }
@@ -59,3 +96,4 @@
     padding-left: 0;
   }
 }
+</style>

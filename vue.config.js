@@ -5,14 +5,14 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        cards: path.resolve(__dirname, 'src/static/scss/cards.scss'),
+        cards: path.resolve(__dirname, 'src/assets/scss/cards.scss'),
       },
     },
   },
   css: {
     loaderOptions: {
       sass: {
-        data: fs.readFileSync('src/static/scss/styles.scss', 'utf-8'),
+        data: fs.readFileSync('src/assets/scss/styles.scss', 'utf-8'),
       },
     },
   },

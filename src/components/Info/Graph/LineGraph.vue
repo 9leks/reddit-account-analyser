@@ -1,9 +1,9 @@
 <script>
-import { Doughnut, mixins } from 'vue-chartjs'
+import { Line, mixins } from 'vue-chartjs'
 
 export default {
-  name: 'CommentsDoughnut',
-  extends: Doughnut,
+  name: 'LineDoughnut',
+  extends: Line,
   mixins: [mixins.reactiveProp],
   props: {
     chartData: {

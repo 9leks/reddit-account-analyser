@@ -1,38 +1,55 @@
 <template>
   <div class="container">
 
-    <div class="card">
-      <div class="card--header text">
-        <div class="card--header--icon"><img src="@/static/img/quotes.png"></div>
-        <div class="card--header--title">LATEST COMMENTS</div>
-      </div>
+    <CardItem :icon="quotesIcon"
+              :header="'LATEST COMMENTS'">
       <div v-if="doughnutChartData.labels.length"
            class="card--content container container--center">
         <div class="graph--comments">
-          <CommentsDoughnut :chart-data="doughnutChartData"
-                            :options="options" />
+          <DoughnutGraph :chart-data="doughnutChartData"
+                         :options="options" />
         </div>
       </div>
       <div v-else
-           class="card--content container container--center text">
-        /u/{{ name }} has not posted any comment.
+           class="card--content container container--center">
+        /u/{{ name }} has not posted any comments.
       </div>
-    </div>
+    </CardItem>
+
+    <CardItem :icon="quotesIcon"
+              :header="'COMMENTS OVER TIME'">
+      <div v-if="lineChartData.labels.length"
+           class="card--content container container--center">
+        <div class="graph--comments">
+          <DoughnutGraph :chart-data="lineChartData"
+                         :options="options" />
+        </div>
+      </div>
+      <div v-else
+           class="card--content container container--center">
+        /u/{{ name }} has not posted any comments.
+      </div>
+    </CardItem>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import quotesIcon from '@/assets/img/quotes.png'
 
-import CommentsDoughnut from './Graph/CommentsDoughnut'
+import DoughnutGraph from './Graph/DoughnutGraph'
+import LineGraph from './Graph/LineGraph'
+import CardItem from '@/components/Utilities/CardItem'
 
 export default {
   name: 'GraphColumn',
-  components: { CommentsDoughnut },
+  components: { DoughnutGraph, LineGraph, CardItem },
   data() {
     return {
+      quotesIcon,
       maxComments: 50,
       doughnutChartData: { labels: [], datasets: [] },
+      lineChartData: { labels: [], datasets: [] },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -53,11 +70,17 @@ export default {
       immediate: true,
       async handler() {
         this.doughnutChartData = {
-          labels: this.comments.subredditCount.map(comment => comment.subreddit),
-          datasets: [{ 
-            data: this.comments.subredditCount.map(comment => comment.count), 
-            backgroundColor: this.randomColors(this.comments.subredditCount.length) 
-            }],
+          labels: this.comments.subredditCount.map(
+            comment => comment.subreddit
+          ),
+          datasets: [
+            {
+              data: this.comments.subredditCount.map(comment => comment.count),
+              backgroundColor: this.randomColors(
+                this.comments.subredditCount.length
+              ),
+            },
+          ],
         }
       },
     },
@@ -72,14 +95,12 @@ export default {
     },
     randomColors(amount) {
       return new Array(amount).fill('').map(() => this.randomColor())
-    },  
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'cards';
-
 .graph--comments {
   width: 80%;
 }

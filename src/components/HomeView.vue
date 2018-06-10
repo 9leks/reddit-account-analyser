@@ -2,17 +2,17 @@
   <div class="container container--home">
 
     <div class="container home--header container--center">
-      <img src="@/static/img/logo.png">
+      <img src="@/assets/img/logo.png">
     </div>
 
     <div class="home--title container--center">
-      <div class="text text--black text--shadow text--center">
+      <div class="text--black text--shadow text--center">
         <span class="text--orange">reddit</span> account analyser
       </div>
     </div>
 
     <div class="home--description container--center">
-      <div class="text text--black text--shadow text--center">
+      <div class="text--black text--shadow text--center">
         Get information on your data, recent activity and favorite subreddits
       </div>
     </div>
