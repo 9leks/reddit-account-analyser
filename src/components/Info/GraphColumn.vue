@@ -4,32 +4,32 @@
     <CardItem :icon="quotesIcon"
               :header="'LATEST COMMENTS'">
       <div v-if="doughnutChartData.labels.length"
-           class="card--content container container--center">
+           class="container container--center">
         <div class="graph--comments">
           <DoughnutGraph :chart-data="doughnutChartData"
                          :options="options" />
         </div>
       </div>
       <div v-else
-           class="card--content container container--center">
+           class="container container--center">
         /u/{{ name }} has not posted any comments.
       </div>
     </CardItem>
 
-    <CardItem :icon="quotesIcon"
+    <!-- <CardItem :icon="quotesIcon"
               :header="'COMMENTS OVER TIME'">
       <div v-if="lineChartData.labels.length"
-           class="card--content container container--center">
+           class="container container--center">
         <div class="graph--comments">
           <DoughnutGraph :chart-data="lineChartData"
                          :options="options" />
         </div>
       </div>
       <div v-else
-           class="card--content container container--center">
+           class="container container--center">
         /u/{{ name }} has not posted any comments.
       </div>
-    </CardItem>
+    </CardItem> -->
   </div>
 </template>
 

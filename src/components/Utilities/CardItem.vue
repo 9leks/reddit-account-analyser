@@ -50,8 +50,10 @@ export default {
   padding: 0.75rem;
   border-radius: 6px;
   background: $lightgray;
+  box-shadow: 0 2.5px 1px rgba(0, 0, 0, 0.11);
   font-weight: 400;
   font-size: 1.25rem;
+
   grid-area: content;
 }
 

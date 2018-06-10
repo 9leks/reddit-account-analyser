@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import path from 'path'
 import {
   getAbout,
   getComment,
@@ -13,6 +12,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    utils: {
+      loading: false,
+    },
     user: {
       name: '',
       created_utc: 0,
@@ -35,12 +37,17 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_LOADING_STATE: (state, payload) => {
+      state.utils = { ...state.utils, ...payload }
+    },
     SET_USER: (state, payload) =>
       (state.user = { ...state.user, ...payload.data }),
   },
 
   actions: {
     setUser: async ({ commit }, username) => {
+      commit('SET_LOADING_STATE', { loading: true })
+
       const [
         about,
         commentCount,
@@ -78,7 +85,10 @@ export default new Vuex.Store({
       }
 
       const data = { name, created_utc, comments, submissions }
+      commit('SET_LOADING_STATE', { loading: false })
       commit('SET_USER', { data })
     },
+    setLoadingState: ({ commit }, val) =>
+      commit('SET_LOADING_STATE', { loading: val }),
   },
 })

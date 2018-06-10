@@ -30,7 +30,7 @@ $radius: 5px;
 .searchbar {
   display: flex;
   justify-content: inherit;
-  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 3px 1px rgba(0, 0, 0, 0.3));
 }
 .input {
   padding: 1rem;

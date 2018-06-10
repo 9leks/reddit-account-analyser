@@ -29,13 +29,19 @@
           </div>
           <a class="card--paragraph"
              @click="toggleParagraph(post, post.title || post.body)">
-            <span v-if="(post.title || post.body).length > 150 && post.toggle">
-              {{ (post.title || post.body).substring(0, 150) }} ...
-              <i>({{ (post.title || post.body).length }} words)</i>
-            </span>
-            <span v-else>
+            <div v-if="(post.title || post.body).length > maxLength && post.toggle">
+              {{ (post.title || post.body).substring(0, maxLength) }}
+              <i class="text--black">
+                <span>
+                  ... ({{ (post.title || post.body).substring(maxLength).length }} </span>
+                <span>
+                  {{ (post.title || post.body).substring(maxLength).length === 1 ? 'word' : 'words' }})
+                </span>
+              </i>
+            </div>
+            <div v-else>
               {{ post.title || post.body }}
-            </span>
+            </div>
           </a>
         </a>
       </div>
@@ -60,6 +66,7 @@ export default {
   components: { CardItem },
   data() {
     return {
+      maxLength: 175,
       postData: [
         {
           id: 0,
@@ -105,9 +112,12 @@ export default {
       handler() {
         this.postData = this.posts.map((post, index) => {
           const text = post.title || post.body
-          return text.length > 150
-            ? { ...this.postData[index], toggle: true }
-            : { ...this.postData[index], toggle: false }
+          if (text) {
+            return text.length > this.maxLength
+              ? { ...this.postData[index], toggle: true }
+              : { ...this.postData[index], toggle: false }
+          }
+          return this.postData[index]
         })
       },
     },
@@ -118,15 +128,8 @@ export default {
       return distanceInWordsToNow(date)
     },
     toggleParagraph(post, text) {
-      if (text.length > 150) {
+      if (text && text.length > this.maxLength) {
         this.postData[post.id].toggle = !this.postData[post.id].toggle
-      }
-    },
-    paragraph(post, text) {
-      if (post) {
-        return post.toggle
-          ? `${text.substring(0, 150)} ... (${text.length} words)`
-          : text
       }
     },
   },
@@ -136,6 +139,7 @@ export default {
 <style lang="scss" scoped>
 .container--card {
   font-size: 1rem;
+
   grid-template-columns: 0.05fr 0.025fr 0.25fr 1fr 6fr;
   grid-template-areas:
     '. points . arrows time'

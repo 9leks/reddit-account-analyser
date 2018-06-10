@@ -1,5 +1,6 @@
 <template>
-  <div class="container container--home">
+  <div id="top"
+       class="container container--home">
 
     <div class="container home--header container--center">
       <img src="@/assets/img/logo.png">
@@ -37,10 +38,13 @@ export default {
   methods: {
     setUser(username) {
       if (username) {
-        this.$store.dispatch('setUser', username).catch(error => {
-          alert('User does not exist.')
-          throw error
-        })
+        this.$store.dispatch('setLoadingState', false)
+        setTimeout(() => {
+          this.$store.dispatch('setUser', username).catch(error => {
+            alert('User does not exist.')
+            throw error
+          })
+        }, 500)
       }
     },
   },
