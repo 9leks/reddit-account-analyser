@@ -1,23 +1,26 @@
 <template>
-  <div class="container">
+  <div class="container container--data">
     <CardItem :header="'CAKE DAY'"
-              :icon="cakeIcon">
+              :icon="cakeIcon"
+              class="cake">
       This account was created
       <span :title="new Date(created_utc * 1000)">{{ timeFromSignup }} ago</span>, on
       <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
       <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
     </CardItem>
 
-    <CardItem :header="'CAKE DAY'"
-              :icon="upvoteIcon">
+    <CardItem :header="'KARMA'"
+              :icon="upvoteIcon"
+              class="upvote">
       /u/{{ name }} has a net worth of
       <span class="text--orange">{{ comments.karma }} comment karma</span> and
       <span class="text--orange">{{ submissions.karma }} link karma</span> for a total of
       <span class="text--orange">{{ comments.karma + submissions.karma }} karma</span>.
     </CardItem>
 
-    <CardItem :header="'CAKE DAY'"
-              :icon="cakeIcon">
+    <CardItem :header="'POSTS'"
+              :icon="uploadIcon"
+              class="upload">
       This account has posted
       <span class="text--orange">{{ comments.count }}</span> {{ comments === 1 ? 'comment' : 'comments' }} and
       <span class="text--orange">{{ submissions.count }}</span> {{ submissions === 1 ? 'submission' : 'submissions' }}.

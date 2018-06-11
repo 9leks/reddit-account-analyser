@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container--activity">
     <CardItem v-for="post in posts"
               :key="post.id"
               :icon="post.icon"

@@ -20,7 +20,6 @@
         </div>
 
         <div class="container info--columns">
-
           <div class="info--data">
             <div class="text--center text--shadow text--header">DATA</div>
             <DataColumn />
@@ -63,6 +62,7 @@ export default {
 <style lang="scss" scoped>
 .info--columns {
   padding: 1.25rem;
+  margin-bottom: 3rem;
 }
 
 .info--header {
@@ -97,11 +97,9 @@ export default {
 @keyframes spin {
   0% {
     transform: rotate(0deg);
-    transform-origin: center;
   }
   100% {
     transform: rotate(360deg);
-    transform-origin: center;
   }
 }
 @media screen and (min-width: 1024px) {
@@ -109,6 +107,10 @@ export default {
     grid-gap: 5rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'data activity graphs';
+  }
+
+  .spinner {
+    bottom: 1rem;
   }
 
   .info--data {

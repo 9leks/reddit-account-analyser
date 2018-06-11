@@ -4,14 +4,15 @@
             disabled="disabled">
       <span class="text--white text--shadow">/u/</span>
     </button>
-    <input class="input text--shadow"
+    <input ref="input"
+           class="input text--shadow"
            type="search"
            autofocus
-           @keypress.enter="$emit('send')"
+           @keypress.enter="sendUser"
            @input="$emit('input', $event.target.value.trim())">
     <button class="button button--send"
             type="submit"
-            @click="$emit('send')">
+            @click="sendUser">
       <img class="icon--search"
            src="@/assets/img/search.png">
     </button>
@@ -21,6 +22,12 @@
 <script>
 export default {
   name: 'Searchbar',
+  methods: {
+    sendUser() {
+      this.$emit('send')
+      this.$refs.input.blur()
+    },
+  },
 }
 </script>
 
