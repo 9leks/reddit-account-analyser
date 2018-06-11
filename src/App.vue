@@ -1,23 +1,16 @@
 <template>
-  <span id="top">
+  <div>
+    <span id="top" />
     <div class="container container--app">
       <HomeView class="app--home" />
-
-      <transition name="fade">
-        <div v-if="loading">
-          <div class="spinner" />
-        </div>
-      </transition>
-
-      <span id="info" />
-      <InfoView class="app-info" />
+      <InfoView id="info"
+                class="app-info" />
     </div>
-  </span>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-
 import HomeView from './components/HomeView'
 import InfoView from './components/InfoView'
 
@@ -31,7 +24,7 @@ export default {
   },
   watch: {
     loading() {
-      this.loading ? this.$scrollTo('#top', 500) : this.$scrollTo('#info', 700)
+      this.loading ? this.$scrollTo('#top') : this.$scrollTo('#info')
     },
   },
 }

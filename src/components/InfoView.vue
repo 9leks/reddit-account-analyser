@@ -1,9 +1,11 @@
 <template>
   <div class="container container--info">
-    <transition name="fade"
-                mode="in-out">
+    <transition name="fade">
       <div v-if="loading">
-        <div class="spinner" />
+        <div class="container container--spinner">
+          <div id="spinner"
+               class="spinner" />
+        </div>
       </div>
     </transition>
     <transition name="fade">
@@ -62,6 +64,18 @@ export default {
   padding: 1.25rem;
 }
 
+.container--spinner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .info--header {
   @include header;
 }
@@ -76,11 +90,6 @@ export default {
 }
 
 .spinner {
-  position: absolute;
-  right: 0;
-  left: 0;
-  margin-right: auto;
-  margin-left: auto;
   width: 4rem;
   height: 4rem;
   border-top: 2px solid $orange;
@@ -89,6 +98,9 @@ export default {
   border-left: 2px solid transparent;
   border-radius: 50%;
   animation: spin 1.5s ease-in-out infinite;
+
+  align-self: center;
+  justify-self: center;
 }
 
 @keyframes spin {
@@ -99,6 +111,7 @@ export default {
     transform: rotate(360deg);
   }
 }
+
 @media screen and (min-width: 1024px) {
   .info--columns {
     grid-gap: 5rem;
