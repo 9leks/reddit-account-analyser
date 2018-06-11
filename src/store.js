@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import {
   getAbout,
   getComment,
@@ -46,47 +47,48 @@ export default new Vuex.Store({
 
   actions: {
     setUser: async ({ commit }, username) => {
-      commit('SET_LOADING_STATE', { loading: true })
+      try {
+        const [
+          about,
+          commentCount,
+          submissionCount,
+          newComment,
+          topComment,
+          topSubmission,
+          subredditCount,
+        ] = await Promise.all([
+          getAbout(username),
+          getPostCount(username, 'comment'),
+          getPostCount(username, 'submission'),
+          getComment(username, 'new'),
+          getComment(username, 'top'),
+          getSubmission(username, 'top'),
+          getSubredditCount(username, 'new', 50),
+        ])
 
-      const [
-        about,
-        commentCount,
-        submissionCount,
-        newComment,
-        topComment,
-        topSubmission,
-        subredditCount,
-      ] = await Promise.all([
-        getAbout(username),
-        getPostCount(username, 'comment'),
-        getPostCount(username, 'submission'),
-        getComment(username, 'new'),
-        getComment(username, 'top'),
-        getSubmission(username, 'top'),
-        getSubredditCount(username, 'new', 50),
-      ])
+        const { name, created_utc, comment_karma, link_karma } = about
+        const comments = {
+          karma: comment_karma,
+          count: commentCount,
+          subredditCount,
+          posts: {
+            new: newComment,
+            top: topComment,
+          },
+        }
+        const submissions = {
+          karma: link_karma,
+          count: submissionCount,
+          posts: {
+            top: topSubmission,
+          },
+        }
 
-      const { name, created_utc, comment_karma, link_karma } = about
-      const comments = {
-        karma: comment_karma,
-        count: commentCount,
-        subredditCount,
-        posts: {
-          new: newComment,
-          top: topComment,
-        },
+        const data = { name, created_utc, comments, submissions }
+        commit('SET_USER', { data })
+      } catch (error) {
+        throw error
       }
-      const submissions = {
-        karma: link_karma,
-        count: submissionCount,
-        posts: {
-          top: topSubmission,
-        },
-      }
-
-      const data = { name, created_utc, comments, submissions }
-      commit('SET_LOADING_STATE', { loading: false })
-      commit('SET_USER', { data })
     },
     setLoadingState: ({ commit }, val) =>
       commit('SET_LOADING_STATE', { loading: val }),

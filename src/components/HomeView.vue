@@ -19,7 +19,8 @@
     </div>
 
     <div class="home--searchbar container--center">
-      <Searchbar v-model="username"
+      <Searchbar ref="search"
+                 v-model="username"
                  @send="setUser(username)" />
     </div>
 
@@ -36,21 +37,30 @@ export default {
     return { username: '' }
   },
   methods: {
-    setUser(username) {
+    async setUser(username) {
       if (username) {
-        this.$store.dispatch('setLoadingState', false)
+        this.$store.dispatch('setLoadingState', true)
         setTimeout(() => {
-          this.$store.dispatch('setUser', username).catch(error => {
-            alert('User does not exist.')
-            throw error
-          })
-        }, 500)
+          this.$store
+            .dispatch('setUser', username)
+            .then(() => {
+              this.$refs.search.$el.children[1].blur()
+              this.$store.dispatch('setLoadingState', false)
+            })
+            .catch(() => {
+              this.$store.dispatch('setLoadingState', false)
+              this.$toasted.error(`${username} does not exist!`, {
+                theme: 'bubble',
+                position: 'top-right',
+                duration: 2500,
+              })
+            })
+        }, 800)
       }
     },
   },
 }
 </script>
-
 <style lang="scss" scoped>
 .container--home {
   grid-template-areas:

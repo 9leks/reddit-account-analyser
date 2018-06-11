@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container container--info">
     <transition name="fade"
                 mode="in-out">
       <div v-if="loading">
@@ -7,9 +7,7 @@
       </div>
     </transition>
     <transition name="fade">
-      <div v-if="!loading && name"
-           class="container container--info">
-
+      <div v-if="!loading && name">
         <div class="info--header">
           <div class="text--white text--shadow text--center text--header">
             OVERVIEW FOR <br>
@@ -62,7 +60,6 @@ export default {
 <style lang="scss" scoped>
 .info--columns {
   padding: 1.25rem;
-  margin-bottom: 3rem;
 }
 
 .info--header {

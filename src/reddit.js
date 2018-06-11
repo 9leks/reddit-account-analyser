@@ -1,5 +1,9 @@
 import { get } from 'axios'
 
+/**
+ * @param   {string}  url 
+ * @returns {Promise} Returns a Promise to a file fetched from the web.
+ */
 const getData = async url => {
   try {
     return await get(url)

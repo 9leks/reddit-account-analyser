@@ -2,8 +2,15 @@
   <span id="top">
     <div class="container container--app">
       <HomeView class="app--home" />
-      <InfoView id="info"
-                class="app-info" />
+
+      <transition name="fade">
+        <div v-if="loading">
+          <div class="spinner" />
+        </div>
+      </transition>
+
+      <span id="info" />
+      <InfoView class="app-info" />
     </div>
   </span>
 </template>
@@ -24,13 +31,7 @@ export default {
   },
   watch: {
     loading() {
-      if (window.outerWidth > 768) {
-        this.loading ? this.$scrollTo('#top') : this.$scrollTo('#info')
-      } else {
-        this.loading
-          ? this.$scrollTo('#top', 500, { offset: 150 })
-          : this.$scrollTo('#info', 500)
-      }
+      this.loading ? this.$scrollTo('#top', 500) : this.$scrollTo('#info', 700)
     },
   },
 }
@@ -38,8 +39,6 @@ export default {
 
 <style lang="scss" scoped>
 .container--app {
-  font-family: 'Poppins', sans-serif;
-
   grid-gap: 5rem;
   grid-template-areas:
     'home'

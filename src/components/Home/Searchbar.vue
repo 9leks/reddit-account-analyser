@@ -25,7 +25,6 @@ export default {
   methods: {
     sendUser() {
       this.$emit('send')
-      this.$refs.input.blur()
     },
   },
 }

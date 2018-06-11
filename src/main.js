@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
+import Toasted from 'vue-toasted'
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -14,6 +15,8 @@ Vue.use(VueScrollTo, {
   x: false,
   y: true,
 })
+
+Vue.use(Toasted)
 
 Vue.config.productionTip = false
 

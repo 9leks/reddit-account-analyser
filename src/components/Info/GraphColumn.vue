@@ -1,13 +1,15 @@
 <template>
   <div class="container">
-
-    <CardItem :icon="quotesIcon"
-              :header="'LATEST COMMENTS'">
-      <div v-if="doughnutChartData.labels.length"
+    <CardItem v-for="{ id, icon, header, chartData, type, options } in graphs"
+              :key="id"
+              :icon="icon"
+              :header="header">
+      <div v-if="chartData.labels.length"
            class="container container--center">
-        <div class="graph--comments">
-          <DoughnutGraph :chart-data="doughnutChartData"
-                         :options="options" />
+        <div class="graph">
+          <component :is="type"
+                     :chart-data="chartData"
+                     :options="setOptions(options)" />
         </div>
       </div>
       <div v-else
@@ -15,21 +17,6 @@
         /u/{{ name }} has not posted any comments.
       </div>
     </CardItem>
-
-    <!-- <CardItem :icon="quotesIcon"
-              :header="'COMMENTS OVER TIME'">
-      <div v-if="lineChartData.labels.length"
-           class="container container--center">
-        <div class="graph--comments">
-          <DoughnutGraph :chart-data="lineChartData"
-                         :options="options" />
-        </div>
-      </div>
-      <div v-else
-           class="container container--center">
-        /u/{{ name }} has not posted any comments.
-      </div>
-    </CardItem> -->
   </div>
 </template>
 
@@ -46,16 +33,29 @@ export default {
   components: { DoughnutGraph, LineGraph, CardItem },
   data() {
     return {
-      quotesIcon,
-      maxComments: 50,
-      doughnutChartData: { labels: [], datasets: [] },
-      lineChartData: { labels: [], datasets: [] },
-      options: {
+      graphs: [
+        {
+          type: 'DoughnutGraph',
+          icon: quotesIcon,
+          header: 'RECENT COMMENTS / SUBREDDIT',
+          chartData: { labels: [], datasets: [] },
+          options: {
+            elements: {
+              arc: { borderWidth: 0 },
+            },
+          },
+        },
+        {
+          type: 'LineGraph',
+          icon: quotesIcon,
+          header: 'RECENT COMMENTS / TIME',
+          chartData: { labels: [], datasets: [] },
+          options: {},
+        },
+      ],
+      standardOptions: {
         responsive: true,
         maintainAspectRatio: false,
-        elements: {
-          arc: { borderWidth: 0 },
-        },
       },
     }
   },
@@ -69,7 +69,7 @@ export default {
     name: {
       immediate: true,
       async handler() {
-        this.doughnutChartData = {
+        this.graphs[0].chartData = {
           labels: this.comments.subredditCount.map(
             comment => comment.subreddit
           ),
@@ -86,6 +86,9 @@ export default {
     },
   },
   methods: {
+    setOptions(options) {
+      return { ...this.standardOptions, ...options }
+    },
     randomColor() {
       const num = Math.round(0xffffff * Math.random())
       const r = num >> 16
@@ -101,18 +104,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.graph--comments {
+.graph {
   width: 80%;
 }
 
 @media screen and (min-width: 375px) {
-  .graph--comments {
+  .graph {
     width: 87%;
   }
 }
 
 @media screen and (min-width: 425px) {
-  .graph--comments {
+  .graph {
     width: 88.75%;
   }
 }
