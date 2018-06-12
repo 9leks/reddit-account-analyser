@@ -139,3 +139,19 @@ export const getAmountOfCommentsOverTime = async (username, limit) => {
       ),
   ].map(date => ({ date: date[0], count: date[1] }))
 }
+
+/**
+ * @param {string}    username The username of a Reddit user to check if valid.
+ * @returns {Boolean} Returns (asynchronously) true if valid, else false. 
+ */
+export const isValidUsername = async username => {
+  if (!username) return false
+  const url = `https://www.reddit.com/user/${username}/about.json`
+
+  try {
+    await get(url)
+    return true
+  } catch (error) {
+    return false
+  }
+}

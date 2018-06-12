@@ -10,7 +10,7 @@
            type="search"
            autofocus
            @keypress.enter="setUser(username)"
-           @input="$emit('input', $event.target.value.trim())">
+           @input="$emit('input', $event.target.value)">
     <button class="button button--send"
             type="submit"
             @click="setUser(username)">
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     setUser(username) {
-      this.$parent.$emit('set-user', username)
+      this.$parent.$emit('set-user', username.trim())
     },
   },
 }

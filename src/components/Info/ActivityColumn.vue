@@ -1,55 +1,56 @@
 <template>
   <div class="container container--activity">
-    <CardItem v-for="post in posts"
-              :key="post.id"
-              :icon="post.icon"
-              :header="post.header">
-      <div v-if="post.link">
+    <CardItem v-for="{ id, icon, header, link, 
+                       score_hidden, score, type,
+                       created_utc, toggle, subreddit } in posts"
+              :key="id"
+              :icon="icon"
+              :header="header">
+      <div v-if="link">
         <a class="container container--card">
-          <i v-if="post.score_hidden"
+          <i v-if="score_hidden"
              class="card--points text--hidden">score <br> hidden</i>
           <div v-else
-               class="card--points">{{ post.score }}</div>
+               class="card--points">{{ score }}</div>
           <div class="card--arrows">
-            <img v-if="post.score_hidden"
+            <img v-if="score_hidden"
                  src="@/assets/img/blank_vote.png">
-            <img v-else-if="post.score > 0"
+            <img v-else-if="score > 0"
                  src="@/assets/img/upvoted.png">
             <img v-else
                  src="@/assets/img/downvoted.png">
           </div>
           <div class="card--time">
-            <a :href="post.link"
+            <a :href="link"
                class="card--link"
                target="_blank">
-              /r/{{ post.subreddit }} <br>
-              <span :title="new Date(post.created_utc * 1000)">
-                {{ timeFromPost(post.created_utc) }} ago</span>
+              /r/{{ subreddit }} <br>
+              <span :title="new Date(created_utc * 1000)">
+                {{ timeFromPost(created_utc) }} ago</span>
             </a>
           </div>
           <a class="card--paragraph"
-             @click="toggleParagraph(post.id, getText(post))">
-            <div v-if="(getText(post)).length > maxLength && post.toggle">
+             @click="toggleParagraph(id, getText(posts[id]))">
+            <div v-if="getText(posts[id]).length > maxLength && toggle">
               <span class="text--content"
-                    v-html="parseMarkdown(getText(post)).substring(0, maxLength)" />
+                    v-html="`
+                    ${parsedText(id).substr(0, maxLength)} ...
+                    `" />
               <i class="text--black">
-                <span>
-                  ... ({{ parseMarkdown(getText(post)).substring(maxLength).length }}
-                </span>
-                <span>
-                  character{{ parseMarkdown(getText(post)).substring(maxLength).length === 1 ? '' : 's' }})
-                </span>
+                ({{ parsedText(id).substr(maxLength).length }}
+                {{ parsedText(id).substr(maxLength).length === 1 
+                ? 'character' : 'characters' }})
               </i>
             </div>
             <div v-else
                  class="text--content"
-                 v-html="parseMarkdown(getText(post))" />
+                 v-html="parsedText(id)" />
           </a>
         </a>
       </div>
       <div v-else>
         <div class="container container--center">
-          /u/{{ name }} has not posted any {{ post.type }}s.
+          /u/{{ name }} has not posted any {{ type }}s.
         </div>
       </div>
     </CardItem>
@@ -69,7 +70,7 @@ export default {
   components: { CardItem },
   data() {
     return {
-      maxLength: 175,
+      maxLength: 150,
       postData: [
         {
           id: 0,
@@ -107,7 +108,7 @@ export default {
         { ...this.comments.top, ...this.postData[1] },
         { ...this.submissions.top, ...this.postData[2] },
       ]
-    },
+    },    
   },
   watch: {
     name: {
@@ -135,7 +136,10 @@ export default {
         this.postData[id].toggle = !this.postData[id].toggle
       }
     },
-    parseMarkdown(text) {
+    parsedText(id) {
+      return markdown(this.getText(this.posts[id]))
+    },
+    parse(text) {
       return markdown(text)
     },
     getText(post) {

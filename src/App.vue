@@ -12,45 +12,60 @@
 </template>
 
 <script>
+import { isValidUsername } from './reddit.js'
 import HomeView from './components/HomeView'
 import InfoView from './components/InfoView'
 
 export default {
   name: 'App',
   components: { HomeView, InfoView },
-  methods: {
-    setUser(username) {
-      if (username) {
-        this.$scrollTo('#top', 500)
-        this.$store.dispatch('setLoadingState', true)
-        this.$refs.home.$el.children[3].children[0].children[1].blur()
+  watch: {
+    '$route.params.username'() {
+      this.$scrollTo('#top', 500)
+      const username = this.$route.params.username
+      username
+        ? this.storeUser(username)
+        : this.this.$store.dispatch('clearUser')
+    },
+  },
 
-        setTimeout(async () => {
-          try {
-            await this.storeUser(username)
-          } catch (error) {
-            this.catchError(username)
-          }
-        })
+  mounted() {
+    const username = this.$route.params.username
+    if (username) this.storeUser(username)
+  },
+
+  methods: {
+    async setUser(username) {
+      const searchbar = this.$refs.home.$el.children[3].children[0].children[1]
+      if (await isValidUsername(username)) {
+        searchbar.blur()
+        this.$router.push(`/${username}`)
+      } else {
+        this.showErrorNotification(username)
       }
     },
 
     async storeUser(username) {
-      await this.$store.dispatch('setUser', username)
-      this.$scrollTo('#info', 700)
-      this.$store.dispatch('setLoadingState', false)
+      this.$store.dispatch('setLoadingState', true)
+      try {
+        await this.$store.dispatch('setUser', username)
+        this.$store.dispatch('setLoadingState', false)
+        this.$scrollTo('#info', 700)
+      } catch (error) {
+        this.this.$store.dispatch('clearUser')
+        this.showErrorNotification(username)
+        setTimeout(() => this.$store.dispatch('setLoadingState', false), 500)
+      }
     },
 
-    catchError(username) {
-      this.$store.dispatch('setUser')
-      setTimeout(() => {
-        this.$store.dispatch('setLoadingState', false)
+    showErrorNotification(username) {
+      if (username) {
         this.$toasted.error(`${username} does not exist!`, {
           theme: 'bubble',
           position: 'bottom-center',
-          duration: 3500,
+          duration: 2500,
         })
-      }, 700)
+      }
     },
   },
 }

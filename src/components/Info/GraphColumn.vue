@@ -66,6 +66,13 @@ export default {
             scales: {
               yAxes: [
                 {
+                  ticks: {
+                    suggestedMax: 5,
+                    beginAtZero: true,
+                    callback(value) {
+                      if (Number.isInteger(value)) return value
+                    },
+                  },
                   scaleLabel: {
                     display: true,
                     labelString: '# of comments',
@@ -107,13 +114,11 @@ export default {
             label(tooltipItem, data) {
               if (tooltipItem.yLabel) {
                 const label = tooltipItem.yLabel
-                return label === 1 ? `${label} comment` : `${label} comments`
+                return `${label} comment${label === 1 ? '' : 's'}`
               }
               const label = data.labels[tooltipItem.index]
               const value = data.datasets[0].data[tooltipItem.index]
-              return `${label}: ${
-                value === 1 ? `${value} comment` : `${value} comments`
-              }`
+              return `${label}: ${value} comment${value === 1 ? '' : 's'}`
             },
           },
         },
@@ -131,14 +136,16 @@ export default {
       immediate: true,
       handler() {
         this.graphs[0].chartData = {
-          labels: this.comments.subredditCount.map(
-            comment => comment.subreddit
-          ),
+          labels: this.comments.subredditCount
+            .slice(0, 15)
+            .map(comment => comment.subreddit),
           datasets: [
             {
-              data: this.comments.subredditCount.map(comment => comment.count),
+              data: this.comments.subredditCount
+                .slice(0, 15)
+                .map(comment => comment.count),
               backgroundColor: this.randomColors(
-                this.comments.subredditCount.length
+                this.comments.subredditCount.slice(0, 15).length
               ),
             },
           ],
