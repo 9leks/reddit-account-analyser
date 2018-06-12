@@ -1,5 +1,5 @@
 <template>
-  <div class="container container--info">
+  <div>
     <transition name="fade">
       <div v-if="loading">
         <div class="container container--spinner">
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div class="container info--columns">
+        <div class="container container--info">
           <div class="info--data">
             <div class="text--center text--shadow text--header">DATA</div>
             <DataColumn />
@@ -59,8 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.info--columns {
-  padding: 1.25rem;
+.container--info {
+  padding: 2.5rem;
 }
 
 .container--spinner {
@@ -112,8 +112,8 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
-  .info--columns {
-    grid-gap: 5rem;
+  .container--info {
+    grid-gap: 4rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'data activity graphs';
   }

@@ -58,7 +58,7 @@ export default {
 
 <style lang="scss" scoped>
 .container--app {
-  grid-gap: 5rem;
+  grid-gap: 10rem;
   grid-template-areas:
     'home'
     'info';

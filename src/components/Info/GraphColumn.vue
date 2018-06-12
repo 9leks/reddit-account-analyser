@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container--graphs">
     <CardItem v-for="{ id, icon, header, chartData, type, options } in graphs"
               :key="id"
               :icon="icon"
@@ -22,10 +22,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import quotesIcon from '@/assets/img/quotes.png'
+import commentIcon from '@/assets/img/comment.png'
+import calendarIcon from '@/assets/img/calendar.png'
 
-import DoughnutGraph from './Graph/DoughnutGraph'
-import LineGraph from './Graph/LineGraph'
+import DoughnutGraph from '@/components/Utilities/DoughnutGraph'
+import LineGraph from '@/components/Utilities/LineGraph'
 import CardItem from '@/components/Utilities/CardItem'
 
 export default {
@@ -36,26 +37,86 @@ export default {
       graphs: [
         {
           type: 'DoughnutGraph',
-          icon: quotesIcon,
+          icon: commentIcon,
           header: 'RECENT COMMENTS / SUBREDDIT',
           chartData: { labels: [], datasets: [] },
           options: {
             elements: {
               arc: { borderWidth: 0 },
             },
+            legend: {
+              labels: {
+                fontColor: 'rgba(0, 0, 0, 0.75)',
+                fontFamily: 'Poppins',
+                fontStyle: '400',
+                fontSize: 12.5,
+              },
+            },
           },
         },
         {
           type: 'LineGraph',
-          icon: quotesIcon,
+          icon: calendarIcon,
           header: 'RECENT COMMENTS / TIME',
           chartData: { labels: [], datasets: [] },
-          options: {},
+          options: {
+            legend: {
+              display: false,
+            },
+            scales: {
+              yAxes: [
+                {
+                  scaleLabel: {
+                    display: true,
+                    labelString: '# of comments',
+                    fontColor: 'rgba(0, 0, 0, 0.75)',
+                    fontFamily: 'Poppins',
+                    fontStyle: '400',
+                    fontSize: 16,
+                  },
+                },
+              ],
+              xAxes: [
+                {
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Date',
+                    fontColor: 'rgba(0, 0, 0, 0.75)',
+                    fontFamily: 'Poppins',
+                    fontStyle: '400',
+                    fontSize: 16,
+                  },
+                },
+              ],
+            },
+          },
         },
       ],
+      graphFont: {
+        fontColor: 'rgba(0, 0, 0, 0.75)',
+        fontFamily: 'Poppins',
+        fontStyle: '400',
+      },
       standardOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        tooltips: {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label(tooltipItem, data) {
+              if (tooltipItem.yLabel) {
+                const label = tooltipItem.yLabel
+                return label === 1 ? `${label} comment` : `${label} comments`
+              }
+              const label = data.labels[tooltipItem.index]
+              const value = data.datasets[0].data[tooltipItem.index]
+              return `${label}: ${
+                value === 1 ? `${value} comment` : `${value} comments`
+              }`
+            },
+          },
+        },
       },
     }
   },
@@ -78,6 +139,20 @@ export default {
               data: this.comments.subredditCount.map(comment => comment.count),
               backgroundColor: this.randomColors(
                 this.comments.subredditCount.length
+              ),
+            },
+          ],
+        }
+
+        this.graphs[1].chartData = {
+          labels: this.comments.commentsOverTime.map(comment => comment.date),
+          datasets: [
+            {
+              data: this.comments.commentsOverTime.map(
+                comment => comment.count
+              ),
+              backgroundColor: this.randomColors(
+                this.comments.commentsOverTime.length
               ),
             },
           ],
@@ -110,6 +185,7 @@ export default {
 
 @media screen and (min-width: 375px) {
   .graph {
+    margin: 0 0.5rem;
     width: 87%;
   }
 }
@@ -117,6 +193,13 @@ export default {
 @media screen and (min-width: 425px) {
   .graph {
     width: 88.75%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container--graphs {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2.5rem;
   }
 }
 </style>

@@ -7,6 +7,7 @@ import {
   getPostCount,
   getSubmission,
   getSubredditCount,
+  getAmountOfCommentsOverTime,
 } from './reddit.js'
 
 Vue.use(Vuex)
@@ -57,6 +58,7 @@ export default new Vuex.Store({
           topComment,
           topSubmission,
           subredditCount,
+          commentsOverTime,
         ] = await Promise.all([
           getAbout(username),
           getPostCount(username, 'comment'),
@@ -65,6 +67,7 @@ export default new Vuex.Store({
           getComment(username, 'top'),
           getSubmission(username, 'top'),
           getSubredditCount(username, 'new', 50),
+          getAmountOfCommentsOverTime(username, 50),
         ])
 
         const { name, created_utc, comment_karma, link_karma } = about
@@ -72,6 +75,7 @@ export default new Vuex.Store({
           karma: comment_karma,
           count: commentCount,
           subredditCount,
+          commentsOverTime,
           posts: {
             new: newComment,
             top: topComment,

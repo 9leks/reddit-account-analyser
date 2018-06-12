@@ -1,7 +1,7 @@
 import { get } from 'axios'
 
 /**
- * @param   {string}  url 
+ * @param   {string}  url
  * @returns {Promise} Returns a Promise to a file fetched from the web.
  */
 const getData = async url => {
@@ -114,4 +114,22 @@ export const getSubredditCount = async (username, sort, limit) => {
         new Map()
       ),
   ].map(subreddit => ({ subreddit: subreddit[0], count: subreddit[1] }))
+}
+
+export const getAmountOfCommentsOverTime = async (username, limit) => {
+  const res = await getComments(username, 'new', limit)
+  return [
+    ...res
+      .map(comment => {
+        const date = new Date(comment.data.created_utc * 1000)
+        const day = date.getDate()
+        const month = date.getMonth()
+        const year = date.getFullYear()
+        return new Date(year, month, day).toLocaleDateString()
+      })
+      .reduce(
+        (map, date) => map.set(date, (map.get(date) || 0) + 1),
+        new Map()
+      ),
+  ].map(date => ({ date: date[0], count: date[1] }))
 }
