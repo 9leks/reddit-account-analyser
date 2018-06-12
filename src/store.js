@@ -38,16 +38,17 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    SET_LOADING_STATE: (state, payload) => {
-      state.utils = { ...state.utils, ...payload }
-    },
+    SET_LOADING_STATE: (state, payload) =>
+      (state.utils = { ...state.utils, ...payload }),
     SET_USER: (state, payload) =>
       (state.user = { ...state.user, ...payload.data }),
+    CLEAR_USER: state => (state.user = {}),
   },
 
   actions: {
     setUser: async ({ commit }, username) => {
-      try {
+      if (!username) commit('CLEAR_USER')
+      else {
         const [
           about,
           commentCount,
@@ -86,10 +87,9 @@ export default new Vuex.Store({
 
         const data = { name, created_utc, comments, submissions }
         commit('SET_USER', { data })
-      } catch (error) {
-        throw error
       }
     },
+
     setLoadingState: ({ commit }, val) =>
       commit('SET_LOADING_STATE', { loading: val }),
   },

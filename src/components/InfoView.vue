@@ -3,8 +3,7 @@
     <transition name="fade">
       <div v-if="loading">
         <div class="container container--spinner">
-          <div id="spinner"
-               class="spinner" />
+          <div class="spinner" />
         </div>
       </div>
     </transition>

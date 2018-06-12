@@ -1,6 +1,5 @@
 <template>
-  <div id="top"
-       class="container container--home">
+  <div class="container container--home">
 
     <div class="container home--header container--center">
       <img src="@/assets/img/logo.png">
@@ -19,9 +18,7 @@
     </div>
 
     <div class="home--searchbar container--center">
-      <Searchbar ref="search"
-                 v-model="username"
-                 @send="setUser(username)" />
+      <Searchbar />
     </div>
 
   </div>
@@ -33,32 +30,6 @@ import Searchbar from './Home/Searchbar.vue'
 export default {
   name: 'HomeView',
   components: { Searchbar },
-  data() {
-    return { username: '' }
-  },
-  methods: {
-    async setUser(username) {
-      if (username) {
-        this.$store.dispatch('setLoadingState', true)
-        setTimeout(() => {
-          this.$store
-            .dispatch('setUser', username)
-            .then(() => {
-              this.$refs.search.$el.children[1].blur()
-              this.$store.dispatch('setLoadingState', false)
-            })
-            .catch(() => {
-              this.$store.dispatch('setLoadingState', false)
-              this.$toasted.error(`${username} does not exist!`, {
-                theme: 'bubble',
-                position: 'top-right',
-                duration: 2500,
-              })
-            })
-        }, 800)
-      }
-    },
-  },
 }
 </script>
 <style lang="scss" scoped>

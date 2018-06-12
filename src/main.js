@@ -8,7 +8,7 @@ import router from './router'
 Vue.use(VueScrollTo, {
   container: 'body',
   easing: 'ease',
-  cancelable: true,
+  cancelable: false,
   onStart: false,
   onDone: false,
   onCancel: false,

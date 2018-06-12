@@ -5,14 +5,15 @@
       <span class="text--white text--shadow">/u/</span>
     </button>
     <input ref="input"
+           v-model="username"
            class="input text--shadow"
            type="search"
            autofocus
-           @keypress.enter="sendUser"
+           @keypress.enter="setUser(username)"
            @input="$emit('input', $event.target.value.trim())">
     <button class="button button--send"
             type="submit"
-            @click="sendUser">
+            @click="setUser(username)">
       <img class="icon--search"
            src="@/assets/img/search.png">
     </button>
@@ -22,9 +23,14 @@
 <script>
 export default {
   name: 'Searchbar',
+  data() {
+    return {
+      username: '',
+    }
+  },
   methods: {
-    sendUser() {
-      this.$emit('send')
+    setUser(username) {
+      this.$parent.$emit('set-user', username)
     },
   },
 }

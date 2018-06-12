@@ -35,7 +35,7 @@
                 <span>
                   ... ({{ (post.title || post.body).substring(maxLength).length }} </span>
                 <span>
-                  {{ (post.title || post.body).substring(maxLength).length === 1 ? 'word' : 'words' }})
+                  {{ (post.title || post.body).substring(maxLength).length === 1 ? 'character' : 'characters' }})
                 </span>
               </i>
             </div>

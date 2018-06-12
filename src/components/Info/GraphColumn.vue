@@ -68,7 +68,7 @@ export default {
   watch: {
     name: {
       immediate: true,
-      async handler() {
+      handler() {
         this.graphs[0].chartData = {
           labels: this.comments.subredditCount.map(
             comment => comment.subreddit
