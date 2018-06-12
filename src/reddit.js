@@ -116,6 +116,12 @@ export const getSubredditCount = async (username, sort, limit) => {
   ].map(subreddit => ({ subreddit: subreddit[0], count: subreddit[1] }))
 }
 
+/**
+ * @param   {string}        username The username of a Reddit user.
+ * @param   {number}        limit    The amount of posts to return, max 1000.
+ * @returns {Array<object>} Returns an array of objects, each with date
+ *                          and count of the comments that day.
+ */
 export const getAmountOfCommentsOverTime = async (username, limit) => {
   const res = await getComments(username, 'new', limit)
   return [
