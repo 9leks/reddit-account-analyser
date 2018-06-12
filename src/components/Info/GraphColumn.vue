@@ -180,26 +180,19 @@ export default {
 
 <style lang="scss" scoped>
 .graph {
-  width: 80%;
-}
-
-@media screen and (min-width: 375px) {
-  .graph {
-    margin: 0 0.5rem;
-    width: 87%;
-  }
-}
-
-@media screen and (min-width: 425px) {
-  .graph {
-    width: 88.75%;
-  }
+  width: 80vw;
 }
 
 @media screen and (min-width: 1024px) {
+  .graph {
+    width: 20vw;
+  }
+}
+
+@media screen and (min-width: 1366px) {
   .container--graphs {
-    grid-template-columns: repeat(2, 1fr);
     grid-gap: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

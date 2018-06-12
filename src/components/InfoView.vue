@@ -60,7 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 .container--info {
-  padding: 2.5rem;
+  padding: 1rem;
 }
 
 .container--spinner {
@@ -113,6 +113,7 @@ export default {
 
 @media screen and (min-width: 1024px) {
   .container--info {
+    padding: 2rem;
     grid-gap: 4rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'data activity graphs';

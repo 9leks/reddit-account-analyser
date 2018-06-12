@@ -37,7 +37,7 @@ export default {
 
     async storeUser(username) {
       await this.$store.dispatch('setUser', username)
-      this.$scrollTo('#info', 500)
+      this.$scrollTo('#info', 700)
       this.$store.dispatch('setLoadingState', false)
     },
 
@@ -50,7 +50,7 @@ export default {
           position: 'bottom-center',
           duration: 3500,
         })
-      }, 500)
+      }, 700)
     },
   },
 }
