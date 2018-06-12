@@ -25,7 +25,7 @@ export default {
       const username = this.$route.params.username
       username
         ? this.storeUser(username)
-        : this.this.$store.dispatch('clearUser')
+        : this.$store.dispatch('clearUser')
     },
   },
 
@@ -52,7 +52,7 @@ export default {
         this.$store.dispatch('setLoadingState', false)
         this.$scrollTo('#info', 700)
       } catch (error) {
-        this.this.$store.dispatch('clearUser')
+        this.$store.dispatch('clearUser')
         this.showErrorNotification(username)
         setTimeout(() => this.$store.dispatch('setLoadingState', false), 500)
       }
