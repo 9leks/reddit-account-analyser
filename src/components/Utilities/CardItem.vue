@@ -75,9 +75,9 @@ export default {
   }
 
   .card--header--icon {
-    text-align: center;
     align-self: center;
     margin-right: 10px;
+    text-align: center;
 
     grid-area: icon;
   }

@@ -28,20 +28,22 @@
             </a>
           </div>
           <a class="card--paragraph"
-             @click="toggleParagraph(post, post.title || post.body)">
-            <div v-if="(post.title || post.body).length > maxLength && post.toggle">
-              {{ (post.title || post.body).substring(0, maxLength) }}
+             @click="toggleParagraph(post.id, getText(post))">
+            <div v-if="(getText(post)).length > maxLength && post.toggle">
+              <span class="text--content"
+                    v-html="parseMarkdown(getText(post)).substring(0, maxLength)" />
               <i class="text--black">
                 <span>
-                  ... ({{ (post.title || post.body).substring(maxLength).length }} </span>
+                  ... ({{ parseMarkdown(getText(post)).substring(maxLength).length }}
+                </span>
                 <span>
-                  {{ (post.title || post.body).substring(maxLength).length === 1 ? 'character' : 'characters' }})
+                  character{{ parseMarkdown(getText(post)).substring(maxLength).length === 1 ? '' : 's' }})
                 </span>
               </i>
             </div>
-            <div v-else>
-              {{ post.title || post.body }}
-            </div>
+            <div v-else
+                 class="text--content"
+                 v-html="parseMarkdown(getText(post))" />
           </a>
         </a>
       </div>
@@ -55,6 +57,7 @@
 </template>
 
 <script>
+import { markdown } from 'snudown-js'
 import { mapState } from 'vuex'
 import { distanceInWordsToNow } from 'date-fns'
 import icon from '@/assets/img/quotes.png'
@@ -111,7 +114,7 @@ export default {
       immediate: true,
       handler() {
         this.postData = this.posts.map((post, index) => {
-          const text = post.title || post.body
+          const text = this.getText(post)
           if (text) {
             return text.length > this.maxLength
               ? { ...this.postData[index], toggle: true }
@@ -127,10 +130,16 @@ export default {
       const date = new Date(time * 1000)
       return distanceInWordsToNow(date)
     },
-    toggleParagraph(post, text) {
+    toggleParagraph(id, text) {
       if (text && text.length > this.maxLength) {
-        this.postData[post.id].toggle = !this.postData[post.id].toggle
+        this.postData[id].toggle = !this.postData[id].toggle
       }
+    },
+    parseMarkdown(text) {
+      return markdown(text)
+    },
+    getText(post) {
+      return post.title || post.body
     },
   },
 }
@@ -152,8 +161,6 @@ export default {
 
 .card--link {
   color: inherit;
-  text-decoration: none;
-
   &:hover {
     color: rgb(0, 0, 0);
   }
