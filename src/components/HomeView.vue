@@ -43,9 +43,12 @@ export default {
 .container--home {
   grid-template-areas:
     'header'
+    '.'
     'title'
     'description'
-    'searchbar';
+    'searchbar'
+    '.'
+    'github';
   grid-gap: 3rem;
 }
 
@@ -83,6 +86,8 @@ export default {
   text-align: center;
   opacity: 0.75;
   transition: opacity 0.1s ease-in-out;
+
+  grid-area: github;
 
   &:hover {
     opacity: 1;
