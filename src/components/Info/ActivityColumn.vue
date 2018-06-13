@@ -31,19 +31,21 @@
           </div>
           <a class="card--paragraph"
              @click="toggleParagraph(id, getText(posts[id]))">
-            <div v-if="getText(posts[id]).length > maxLength && toggle"
+            <div v-if="textLength(getText(posts[id])) > maxLength && toggle"
                  class="text--content">
-              <span v-html="`
-                    ${parsedText(id).substr(0, maxLength)} ...
-                    `" />
-              <i class="text--black">
-                ({{ parsedText(id).substr(maxLength).length }} {{ parsedText(id).substr(maxLength).length === 1 ? 'character' : 'characters' }})
-              </i>
+              <div class="content--toggled">
+                <span v-html="parsedText(id)" />
+              </div>
             </div>
             <div v-else
                  class="text--content">
               <span v-html="parsedText(id)" />
             </div>
+            <span v-if="textLength(getText(posts[id])) > maxLength && toggle">
+              <i class="text--black paragraph--rem">
+                ... ({{ textLength(parsedText(id).substring(maxLength)) }} character{{ textLength( parsedText(id).substring(maxLength) ) === 1 ? '' : 's' }})
+              </i>
+            </span>
           </a>
         </a>
       </div>
@@ -69,7 +71,7 @@ export default {
   components: { CardItem },
   data() {
     return {
-      maxLength: 150,
+      maxLength: 200,
       postData: [
         {
           id: 0,
@@ -130,17 +132,23 @@ export default {
       const date = new Date(time * 1000)
       return distanceInWordsToNow(date)
     },
+
     toggleParagraph(id, text) {
       if (text && text.length > this.maxLength) {
         this.postData[id].toggle = !this.postData[id].toggle
       }
     },
+
     parsedText(id) {
       return markdown(this.getText(this.posts[id]))
+        .replace(/href="\/r/g, 'href="http://reddit.com/r')
+        .replace(/href/g, 'target="_blank" href')
     },
-    parse(text) {
-      return markdown(text)
+
+    textLength(text) {
+      return text.replace(/<(?:.|\n)*?>/gm, '').length
     },
+
     getText(post) {
       return post.title || post.body
     },
@@ -163,7 +171,12 @@ export default {
 }
 
 .text--content {
+  overflow: hidden;
   word-break: break-word;
+}
+
+.content--toggled {
+  height: 5rem;
 }
 
 .card--link {
