@@ -5,22 +5,29 @@
       <img src="@/assets/img/logo.png">
     </div>
 
-    <div class="home--title container--center">
+    <div class="home--title">
       <div class="text--black text--shadow text--center">
         <span class="text--orange">reddit</span> account analyser
       </div>
     </div>
 
-    <div class="home--description container--center">
+    <div class="home--description">
       <div class="text--black text--shadow text--center">
         Get information on your data, recent activity and favorite subreddits
       </div>
     </div>
 
-    <div class="home--searchbar container--center">
+    <div class="home--searchbar">
       <Searchbar />
     </div>
 
+    <div class="home--github">
+      <a href="https://github.com/alexjondiaz/reddit-analyser/"
+         target="_blank">
+        <img src="@/assets/img/github.png">
+
+      </a>
+    </div>
   </div>
 </template>
 
@@ -66,8 +73,19 @@ export default {
 }
 
 .home--searchbar {
+  justify-content: center;
   padding: 0 0.5rem;
 
   grid-area: searchbar;
+}
+
+.home--github {
+  text-align: center;
+  opacity: 0.75;
+  transition: opacity 0.1s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

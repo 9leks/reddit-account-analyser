@@ -31,20 +31,19 @@
           </div>
           <a class="card--paragraph"
              @click="toggleParagraph(id, getText(posts[id]))">
-            <div v-if="getText(posts[id]).length > maxLength && toggle">
-              <span class="text--content"
-                    v-html="`
+            <div v-if="getText(posts[id]).length > maxLength && toggle"
+                 class="text--content">
+              <span v-html="`
                     ${parsedText(id).substr(0, maxLength)} ...
                     `" />
               <i class="text--black">
-                ({{ parsedText(id).substr(maxLength).length }}
-                {{ parsedText(id).substr(maxLength).length === 1 
-                ? 'character' : 'characters' }})
+                ({{ parsedText(id).substr(maxLength).length }} {{ parsedText(id).substr(maxLength).length === 1 ? 'character' : 'characters' }})
               </i>
             </div>
             <div v-else
-                 class="text--content"
-                 v-html="parsedText(id)" />
+                 class="text--content">
+              <span v-html="parsedText(id)" />
+            </div>
           </a>
         </a>
       </div>
@@ -108,7 +107,7 @@ export default {
         { ...this.comments.top, ...this.postData[1] },
         { ...this.submissions.top, ...this.postData[2] },
       ]
-    },    
+    },
   },
   watch: {
     name: {
@@ -161,6 +160,10 @@ export default {
 
 .text--hidden {
   font-size: 0.75rem;
+}
+
+.text--content {
+  word-break: break-word;
 }
 
 .card--link {
