@@ -23,9 +23,7 @@ export default {
     '$route.params.username'() {
       this.$scrollTo('#top', 500)
       const username = this.$route.params.username
-      username
-        ? this.storeUser(username)
-        : this.$store.dispatch('clearUser')
+      username ? this.storeUser(username) : this.$store.dispatch('clearUser')
     },
   },
 
