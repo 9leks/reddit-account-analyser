@@ -161,7 +161,6 @@ export default {
 
 <style lang="scss" scoped>
 .container--card {
-  max-width: 80vw;
   font-size: 1rem;
 
   grid-template-columns: 0.05fr 0.025fr 0.25fr 1fr 6fr;
@@ -176,7 +175,6 @@ export default {
 
 .text--content {
   overflow: hidden;
-  max-width: 80vw;
   word-break: break-word;
 }
 
