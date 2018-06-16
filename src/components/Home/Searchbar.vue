@@ -11,7 +11,7 @@
            autofocus
            @keypress.enter="setUser(username)"
            @input="$emit('input', $event.target.value)">
-    <button class="button button--send"
+    <button :class="sendButton"
             type="submit"
             @click="setUser(username)">
       <img class="icon--search"
@@ -26,11 +26,14 @@ export default {
   data() {
     return {
       username: '',
+      sendButton: 'button button--send',
     }
   },
   methods: {
     setUser(username) {
       this.$parent.$emit('set-user', username.trim())
+      this.sendButton = 'button button--send button--send--animate'
+      setTimeout(() => (this.sendButton = 'button button--send'), 1200)
     },
   },
 }
@@ -75,6 +78,11 @@ $radius: 5px;
     background-color: rgb(189, 78, 27);
   }
 }
+
+.button--send--animate {
+  animation: pulse 0.75s;
+}
+
 .button--disabled {
   padding: 0 1rem;
   border-top-left-radius: $radius;
@@ -85,6 +93,16 @@ $radius: 5px;
   margin: -1.5rem -1.5rem;
 
   justify-self: center;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(255, 128, 43, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 0 30px rgba(0, 0, 0, 0);
+  }
 }
 
 @media screen and (min-width: 1024px) {
