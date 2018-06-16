@@ -31,7 +31,7 @@
           </div>
           <a class="card--paragraph"
              @click="toggleParagraph(id, getText(posts[id]))">
-            <div v-if="textLength(getText(posts[id])) > maxLength && toggle"
+            <div v-if="textIsLong(id, toggle)"
                  class="text--content">
               <div class="content--toggled">
                 <span v-html="parsedText(id)" />
@@ -41,9 +41,9 @@
                  class="text--content">
               <span v-html="parsedText(id)" />
             </div>
-            <span v-if="textLength(getText(posts[id])) > maxLength && toggle">
+            <span v-if="textIsLong(id, toggle)">
               <i class="text--black paragraph--rem">
-                ... ({{ textLength(parsedText(id).substring(maxLength)) }} character{{ textLength( parsedText(id).substring(maxLength) ) === 1 ? '' : 's' }})
+                {{ charCount(id) }}
               </i>
             </span>
           </a>
@@ -132,6 +132,24 @@ export default {
     timeFromPost(time) {
       const date = new Date(time * 1000)
       return distanceInWordsToNow(date)
+    },
+
+    textIsLong(id, toggle) {
+      return (
+        this.textLength(this.getText(this.posts[id])) > this.maxLength && toggle
+      )
+    },
+
+    charCount(id) {
+      const length = this.textLength(
+        this.parsedText(id).substring(this.maxLength)
+      )
+      const character =
+        this.textLength(this.parsedText(id).substring(this.maxLength)) === 1
+          ? 'character'
+          : 'characters'
+
+      return `... (${length} ${character})`
     },
 
     toggleParagraph(id, text) {

@@ -6,7 +6,7 @@
       This account was created
       <span :title="new Date(created_utc * 1000)">{{ timeFromSignup }} ago</span>, on
       <span class="text--orange">{{ signupDate }}</span>, meaning /u/{{ name }}'s
-      <span class="text--orange">cake day</span> is in {{ timeToCakeDay }}.
+      <span class="text--orange">cake day</span> is {{ timeToCakeDay }}
     </CardItem>
 
     <CardItem :header="'KARMA'"
@@ -82,9 +82,12 @@ export default {
         currentDate.getDate()
       )
 
+      const diff = differenceInCalendarDays(new Date(0, month, day), currentDay)
+
+      if (diff === 0) return 'today. Happy cake day!'
       return differenceInCalendarDays(new Date(0, month, day), currentDay) > 0
-        ? distanceInWords(new Date(0, month, day), currentDay)
-        : distanceInWords(new Date(1, month, day), currentDay)
+        ? `in ${distanceInWords(new Date(0, month, day), currentDay)}.`
+        : `in ${distanceInWords(new Date(1, month, day), currentDay)}.`
     },
   },
 }
