@@ -21,10 +21,10 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Tajawal:200,300,400');
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400');
 
 * {
-  font-family: 'Tajawal', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 </style>
 

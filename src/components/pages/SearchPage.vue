@@ -43,13 +43,13 @@ export default {
 .search--header {
   padding: 1rem;
   text-align: center;
-  font-weight: 300;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
 .header--main {
-  margin-bottom: 1rem;
-  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+  font-size: 3rem;
 }
 
 .orange {
@@ -57,13 +57,14 @@ export default {
 }
 
 .header--subtitle {
+  font-weight: 200;
   margin-bottom: 4rem;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .search--searchbar {
   width: 75%;
-  height: 150%;
+  height: 125%;
   filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 
   justify-self: center;

@@ -3,8 +3,8 @@
     <div class="button button--r">
       <span class="button--content">/u/</span>
     </div>
-    <input class="input">
-    <button ref="button" class="button button--send">
+    <input ref="input" class="input">
+    <button :class="sendButton">
       <i class="fas fa-search" />
     </button>
   </form>
@@ -13,11 +13,21 @@
 <script>
 export default {
   name: 'AppSearchbar',
+  data() {
+    return {
+      sendButton: 'button button--send',
+    }
+  },
   methods: {
     onSubmit(event) {
       const { value } = event.target[0]
-      setTimeout(() => this.$refs.button.blur(), 750)
+      this.$refs.input.blur()
+      this.emitPulse()
       this.$emit('submit', value)
+    },
+    emitPulse() {
+      this.sendButton = 'button button--send pulse'
+      setTimeout(() => (this.sendButton = 'button button--send'), 750)
     },
   },
 }
@@ -82,10 +92,11 @@ $radius: 5px;
   &:hover {
     background-color: rgb(255, 77, 0);
   }
+}
 
-  &:focus {
-    animation: pulse 0.75s;
-  }
+.pulse {
+  animation: pulse 0.75s;
+  pointer-events: none;
 }
 
 @keyframes pulse {
