@@ -1,6 +1,6 @@
 <template>
   <div class="container--app">
-    <search-page />
+    <search-page @submit="handleSubmit" />
     <data-page />
   </div>
 </template>
@@ -12,11 +12,17 @@ import ActivityPage from './components/pages/ActivityPage'
 import GraphsPage from './components/pages/GraphsPage'
 
 export default {
+  name: 'App',
   components: {
     SearchPage,
     DataPage,
     ActivityPage,
     GraphsPage,
+  },
+  methods: {
+    handleSubmit(value) {
+      console.log(value)
+    },
   },
 }
 </script>

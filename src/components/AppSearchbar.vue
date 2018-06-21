@@ -1,10 +1,10 @@
 <template>
-  <form class="searchbar" @submit.prevent="onSubmit">
+  <form class="searchbar" @submit.prevent="handleSubmit">
     <div class="button button--r">
       <span class="button--content">/u/</span>
     </div>
     <input ref="input" class="input">
-    <button :class="sendButton">
+    <button :class="`button button--send ${pulse}`">
       <i class="fas fa-search" />
     </button>
   </form>
@@ -15,19 +15,22 @@ export default {
   name: 'AppSearchbar',
   data() {
     return {
-      sendButton: 'button button--send',
+      submitted: false,
     }
   },
-  methods: {
-    onSubmit(event) {
-      const { value } = event.target[0]
-      this.$refs.input.blur()
-      this.emitPulse()
-      this.$emit('submit', value)
+  computed: {
+    pulse() {
+      return this.submitted ? 'pulse' : ''
     },
-    emitPulse() {
-      this.sendButton = 'button button--send pulse'
-      setTimeout(() => (this.sendButton = 'button button--send'), 750)
+  },
+  methods: {
+    handleSubmit(event) {
+      const { value } = event.target[0]
+      this.$emit('submit', value)
+
+      this.$refs.input.blur()
+      this.submitted = true
+      setTimeout(() => (this.submitted = false), 750)
     },
   },
 }

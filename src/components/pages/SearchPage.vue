@@ -7,7 +7,7 @@
     <h2 class="search--header header--subtitle">
       get information on your data, activity and favorite subreddits
     </h2>
-    <search-searchbar class="search--searchbar" @submit="onSubmit" />
+    <search-searchbar class="search--searchbar" @submit="handleSubmit" />
   </div>
 </template>
 
@@ -20,8 +20,8 @@ export default {
     searchSearchbar,
   },
   methods: {
-    onSubmit(value) {
-      console.log(value)
+    handleSubmit(value) {
+      this.$emit('submit', value)
     },
   },
 }
