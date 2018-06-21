@@ -1,6 +1,6 @@
 <template>
   <form class="searchbar" @submit.prevent="handleSubmit">
-    <div class="button button--r">
+    <div class="button button--u">
       <span class="button--content">/u/</span>
     </div>
     <input ref="input" class="input">
@@ -80,7 +80,7 @@ $radius: 5px;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
-.button--r {
+.button--u {
   display: flex;
   align-items: center;
   border-top-left-radius: $radius;

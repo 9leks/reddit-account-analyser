@@ -1,12 +1,12 @@
 <template>
   <div class="container--search">
     <img src="@/assets/logo.png" alt="logo" class="search--logo">
-    <h1 class="search--header header--main">
+    <div class="search--header header--main">
       <span class="orange">reddit</span> account analyser
-    </h1>
-    <h2 class="search--header header--subtitle">
+    </div>
+    <div class="search--header header--subtitle">
       get information on your data, activity and favorite subreddits
-    </h2>
+    </div>
     <search-searchbar class="search--searchbar" @submit="handleSubmit" />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
 }
 
 .search--logo {
-  margin-top: 5rem;
+  margin-top: 7.5rem;
   margin-bottom: 1rem;
   filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 
@@ -47,8 +47,8 @@ export default {
 }
 
 .header--main {
-  font-weight: 400;
   margin-bottom: 0.25rem;
+  font-weight: 400;
   font-size: 3rem;
 }
 
@@ -57,8 +57,8 @@ export default {
 }
 
 .header--subtitle {
-  font-weight: 200;
   margin-bottom: 4rem;
+  font-weight: 200;
   font-size: 2rem;
 }
 

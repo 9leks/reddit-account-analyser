@@ -34,6 +34,9 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
+    "env": {
+      "amd": true
+    },
     "extends": [
       "plugin:vue/recommended",
       "eslint:recommended"
