@@ -33,7 +33,8 @@ export default {
     setUser(username) {
       this.$parent.$emit('set-user', username.trim())
       this.sendButton = 'button button--send button--send--animate'
-      setTimeout(() => (this.sendButton = 'button button--send'), 1200)
+      this.$refs.input.blur()
+      setTimeout(() => (this.sendButton = 'button button--send'), 750)
     },
   },
 }
@@ -81,6 +82,7 @@ $radius: 5px;
 
 .button--send--animate {
   animation: pulse 0.75s;
+  pointer-events: none;
 }
 
 .button--disabled {
