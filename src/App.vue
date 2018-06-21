@@ -1,6 +1,7 @@
 <template>
   <div class="container--app">
     <search-page />
+    <data-page />
   </div>
 </template>
 
