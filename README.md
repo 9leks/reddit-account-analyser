@@ -16,7 +16,9 @@ npm run build --report
 
 ## App Info
 
-Gives an analysis of any Reddit account. Built with Vue and chart.js.
+Gives an analysis of any Reddit account. 
+
+Built with Vue.
 
 ### Author
 
