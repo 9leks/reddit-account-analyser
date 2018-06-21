@@ -7,17 +7,22 @@
     <div class="search--header header--subtitle">
       get information on your data, activity and favorite subreddits
     </div>
-    <search-searchbar class="search--searchbar" @submit="handleSubmit" />
+    <app-searchbar class="search--searchbar" @submit="handleSubmit" />
+    <a href="https://github.com/alexjondiaz/reddit-account-analyser" 
+       target="_blank" 
+       class="search--github">
+      <img src="@/assets/github.png" alt="github">
+    </a>
   </div>
 </template>
 
 <script>
-import searchSearchbar from '../AppSearchbar'
+import AppSearchbar from '../AppSearchbar'
 
 export default {
   name: 'SearchPage',
   components: {
-    searchSearchbar,
+    AppSearchbar,
   },
   methods: {
     handleSubmit(value) {
@@ -27,39 +32,47 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container--search {
   display: grid;
+  padding: 0.25rem;
+
+  grid-gap: 2rem;
+  grid-template-rows: 0fr 0.25fr 1.25fr 1fr 0fr 0.5fr 1fr;
+  grid-template-areas:
+    '.'
+    'logo'
+    'header'
+    'subtitle'
+    'searchbar'
+    '.'
+    'github';
 }
 
 .search--logo {
-  margin-top: 7.5rem;
-  margin-bottom: 1rem;
   filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 
+  grid-area: logo;
   justify-self: center;
 }
 
 .search--header {
-  padding: 1rem;
   text-align: center;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
 .header--main {
-  margin-bottom: 0.25rem;
   font-weight: 400;
   font-size: 3rem;
-}
 
-.orange {
-  color: rgb(255, 120, 60);
+  grid-area: header;
 }
 
 .header--subtitle {
-  margin-bottom: 4rem;
   font-weight: 200;
   font-size: 2rem;
+
+  grid-area: subtitle;
 }
 
 .search--searchbar {
@@ -67,6 +80,29 @@ export default {
   height: 125%;
   filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 
+  grid-area: searchbar;
   justify-self: center;
+}
+
+.search--github {
+  height: 0;
+  transition: filter 0.25s;
+
+  grid-area: github;
+  justify-self: center;
+
+  &:hover {
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5));
+  }
+}
+
+.orange {
+  color: rgb(255, 120, 60);
+}
+
+@media screen and (min-width: 375px) {
+  .container--search {
+    grid-template-rows: 0.25fr 1fr 1.25fr 1.5fr 0fr 0.5fr 1fr;
+  }
 }
 </style>

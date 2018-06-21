@@ -40,7 +40,7 @@ export default {
 $radius: 5px;
 
 @mixin format {
-  padding: 0.25rem 1.5rem;
+  padding: 0.25rem 1rem;
   border: none;
   transition: background-color 0.25s;
 
@@ -76,7 +76,6 @@ $radius: 5px;
 
 .button--content {
   font-weight: 200;
-  font-size: 2rem;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
@@ -103,12 +102,7 @@ $radius: 5px;
 }
 
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0px rgb(255, 120, 60);
-  }
-
-  100% {
-    box-shadow: 0 0 0 30px rgba(0, 0, 0, 0);
-  }
+  0% { box-shadow: 0 0 0 0px rgb(255, 120, 60); }
+  100% { box-shadow: 0 0 0 30px rgba(0, 0, 0, 0); }
 }
 </style>
