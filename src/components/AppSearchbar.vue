@@ -1,10 +1,12 @@
 <template>
-  <form class="searchbar" @submit.prevent="handleSubmit">
-    <div class="button button--u">
-      <span class="button--content">/u/</span>
+  <form class="searchbar"
+        @submit.prevent="handleSubmit">
+    <div class="button u">
+      <span class="u-content">/u/</span>
     </div>
-    <input ref="input" class="input">
-    <button :class="`button button--send ${pulse}`">
+    <input ref="input"
+           class="input">
+    <button :class="`button send ${pulse}`">
       <i class="fas fa-search" />
     </button>
   </form>
@@ -74,19 +76,19 @@ $radius: 5px;
   @include format;
 }
 
-.button--content {
+.u-content {
   font-weight: 200;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
-.button--u {
+.u {
   display: flex;
   align-items: center;
   border-top-left-radius: $radius;
   border-bottom-left-radius: $radius;
 }
 
-.button--send {
+.send {
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
   cursor: pointer;
@@ -102,7 +104,11 @@ $radius: 5px;
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0px rgb(255, 120, 60); }
-  100% { box-shadow: 0 0 0 30px rgba(0, 0, 0, 0); }
+  0% {
+    box-shadow: 0 0 0 0px rgb(255, 120, 60);
+  }
+  100% {
+    box-shadow: 0 0 0 30px rgba(0, 0, 0, 0);
+  }
 }
 </style>

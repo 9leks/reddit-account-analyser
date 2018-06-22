@@ -1,74 +1,36 @@
-<template>
+<template functional>
   <div class="container">
-    <div class="title">{{ title }}</div>
-    <img v-if="src" :src="src" class="icon" alt="icon">
-    <div ref="content" :class="`content ${minimised}`" @click="toggle">
+    <div class="title">{{ props.title }}</div>
+    <img v-if="props.icon"
+         :src="require(`@/assets/${props.icon}.png`)"
+         class="icon"
+         alt="icon">
+    <div class="content">
       <slot />
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AppCard',
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-    icon: {
-      type: String,
-      default: '',
-    },
-  },
-  data() {
-    return {
-      toggled: true,
-      height: 0,
-    }
-  },
-  computed: {
-    src() {
-      if (this.icon) return require(`@/assets/${this.icon}.png`)
-    },
-    minimised() {
-      return this.height > 80 ? (this.toggled ? 'minimised' : '') : ''
-    },
-  },
-  watch: {
-    'this.$refs.content.clientHeight'() {
-      this.height = this.$refs.content.clientHeight
-    },
-  },
-  mounted() {
-    this.height = this.$refs.content.clientHeight
-  },
-  methods: {
-    toggle() {
-      this.toggled = !this.toggled
-    },
-  },
-}
-</script>
-
 <style lang="scss" scoped>
 .container {
   display: grid;
+  padding: 0.5rem;
+  max-height: 12.5rem;
 
-  grid-template-columns: 0.5fr 1fr;
+  grid-template-columns: 0.25fr 0.5fr;
   grid-template-areas:
-    'icon title'
-    'content content';
+    'icon title .'
+    'content content content';
 }
 
 .content {
-  overflow: hidden;
   padding: 1rem;
-  max-width: 320px;
-  max-height: 100%;
-  border-radius: 3px;
+  min-height: 7rem;
+  border-radius: 5px;
   background-color: rgb(210, 210, 210);
-  transition: background-color 0.25s, max-height 0.4s ease-in-out;
+  text-align: center;
+  font-size: 1.2rem;
+  transition: background-color 0.25s;
 
   grid-area: content;
 
@@ -77,14 +39,11 @@ export default {
   }
 }
 
-.minimised {
-  max-height: 5rem;
-  box-shadow: inset 0 -20px 35px -20px rgb(0, 0, 0);
-}
-
 .title {
+  white-space: nowrap;
   font-size: 2rem;
 
+  justify-self: center;
   grid-area: title;
 }
 
@@ -92,6 +51,26 @@ export default {
   width: 40px;
   height: 40px;
 
+  justify-self: center;
   grid-area: icon;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 0;
+
+    grid-template-columns: 0.25fr 0.25fr 1fr;
+    grid-template-areas:
+      'icon title title'
+      'content content content';
+  }
+
+  .title {
+    justify-self: start;
+  }
+
+  .content {
+    width: 20rem;
+  }
 }
 </style>
