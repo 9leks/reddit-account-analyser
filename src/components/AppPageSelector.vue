@@ -1,11 +1,11 @@
 <template functional>
-  <div class="selector">
-    <ul class="list">
-      <li v-for="({ title, name, active }, index) in props.pages"
-          :key="name">
-        <a :class="`item ${active}`"
-           @click="listeners['set-page'](name, index)">
-          {{ title }}
+  <div class="container--selector">
+    <ul class="selector--list">
+      <li v-for="({ page, active }, index) in props.pages"
+          :key="page">
+        <a :class="`list--item ${active ? 'list--item-active' : ''}`"
+           @click="listeners['set-page'](page, index)">
+          {{ page }}
         </a>
       </li>
     </ul>
@@ -13,27 +13,29 @@
 </template>
 
 <style lang="scss" scoped>
-.selector {
+.container--selector {
   display: none;
+
+  user-select: none;
 }
 
 @media screen and (min-width: 1024px) {
-  .selector {
+  .container--selector {
     display: initial;
   }
 
-  .active {
+  .list--item-active {
     padding: 0 1rem;
     background-color: rgb(255, 120, 60);
     color: rgb(255, 255, 255);
     transition: all 0.25s ease-in-out;
   }
 
-  .list {
+  .selector--list {
     list-style: none;
   }
 
-  .item {
+  .list--item {
     margin: 2rem 0;
     font-weight: 300;
     font-size: 2rem;

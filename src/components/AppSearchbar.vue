@@ -1,42 +1,19 @@
-<template>
-  <form class="searchbar"
-        @submit.prevent="handleSubmit">
-    <div class="button u">
-      <span class="u-content">/u/</span>
-    </div>
-    <input ref="input"
-           class="input">
-    <button :class="`button send ${pulse}`">
-      <i class="fas fa-search" />
-    </button>
-  </form>
+<template functional>
+  <div>
+    <form class="container--searchbar"
+          @submit.prevent="listeners['submit']">
+      <div class="searchbar--button button--u">
+        <span class="u--content">/u/</span>
+      </div>
+      <input class="searchbar--input">
+      <button :class="`searchbar--button 
+                       button--send 
+                       ${props.pulse ? 'pulse': ''}`">
+        <i class="fas fa-search" />
+      </button>
+    </form>
+  </div>
 </template>
-
-<script>
-export default {
-  name: 'AppSearchbar',
-  data() {
-    return {
-      submitted: false,
-    }
-  },
-  computed: {
-    pulse() {
-      return this.submitted ? 'pulse' : ''
-    },
-  },
-  methods: {
-    handleSubmit(event) {
-      const { value } = event.target[0]
-      this.$emit('submit', value)
-
-      this.$refs.input.blur()
-      this.submitted = true
-      setTimeout(() => (this.submitted = false), 750)
-    },
-  },
-}
-</script>
 
 <style lang="scss" scoped>
 $radius: 5px;
@@ -51,13 +28,16 @@ $radius: 5px;
   }
 }
 
-.searchbar {
+.container--searchbar {
   display: flex;
   justify-content: center;
+  padding: 1rem;
+  height: 50%;
+  filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 }
 
-.input {
-  width: inherit;
+.searchbar--input {
+  width: 50%;
   background-color: rgb(235, 235, 235);
   font-size: 2rem;
 
@@ -68,7 +48,7 @@ $radius: 5px;
   }
 }
 
-.button {
+.searchbar--button {
   background-color: rgb(255, 120, 60);
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
@@ -76,19 +56,19 @@ $radius: 5px;
   @include format;
 }
 
-.u-content {
+.u--content {
   font-weight: 200;
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.25));
 }
 
-.u {
+.button--u {
   display: flex;
   align-items: center;
   border-top-left-radius: $radius;
   border-bottom-left-radius: $radius;
 }
 
-.send {
+.button--send {
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
   cursor: pointer;

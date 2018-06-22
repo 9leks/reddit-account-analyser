@@ -1,76 +1,53 @@
 <template functional>
-  <div class="container">
-    <div class="title">{{ props.title }}</div>
-    <img v-if="props.icon"
-         :src="require(`@/assets/${props.icon}.png`)"
-         class="icon"
-         alt="icon">
-    <div class="content">
+  <div class="container--card">
+    <div class="card--header">
+      <img v-if="props.icon"
+           :src="require(`@/assets/${props.icon}.png`)"
+           class="header--icon"
+           alt="icon">
+      <div class="header--title">{{ props.title }}</div>
+    </div>
+    <div class="card--content">
       <slot />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.container {
-  display: grid;
-  padding: 0.5rem;
-  max-height: 12.5rem;
-
-  grid-template-columns: 0.25fr 0.5fr;
-  grid-template-areas:
-    'icon title .'
-    'content content content';
+.container--card {
+  display: flex;
+  flex-direction: column;
 }
 
-.content {
+.card--content {
   padding: 1rem;
   min-height: 7rem;
   border-radius: 5px;
   background-color: rgb(210, 210, 210);
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   transition: background-color 0.25s;
-
-  grid-area: content;
 
   &:hover {
     background-color: rgb(190, 190, 190);
   }
 }
 
-.title {
-  white-space: nowrap;
-  font-size: 2rem;
+.card--header {
+  display: grid;
 
-  justify-self: center;
-  grid-area: title;
+  grid-template-columns: 1fr 2fr;
 }
 
-.icon {
+.header--title {
+  white-space: nowrap;
+  font-size: 2rem;
+}
+
+.header--icon {
   width: 40px;
   height: 40px;
 
   justify-self: center;
-  grid-area: icon;
-}
-
-@media screen and (min-width: 1024px) {
-  .container {
-    padding: 0;
-
-    grid-template-columns: 0.25fr 0.25fr 1fr;
-    grid-template-areas:
-      'icon title title'
-      'content content content';
-  }
-
-  .title {
-    justify-self: start;
-  }
-
-  .content {
-    width: 20rem;
-  }
 }
 </style>

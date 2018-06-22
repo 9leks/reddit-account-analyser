@@ -1,63 +1,92 @@
 <template>
   <div class="app">
-    <search-page class="search"
-                 @submit="handleSubmit" />
-    <app-page-selector :pages="pages"
-                       class="selector"
-                       @set-page="setPage" />
-    <component :is="activePage"
-               class="page" />
+    <app-home :pulse="pulse"
+              @submit="handleSubmit" /> {{ username }}
+    <div class="data">
+      <app-page-selector :pages="pages"
+                         @set-page="setPage" />
+      <app-page :data="data" />
+    </div>
   </div>
 </template>
 
 <script>
+import AppHome from './components/AppHome'
 import AppPageSelector from './components/AppPageSelector'
-import SearchPage from './components/pages/SearchPage'
-import DataPage from './components/pages/DataPage'
-import ActivityPage from './components/pages/ActivityPage'
-import GraphsPage from './components/pages/GraphsPage'
+import AppPage from './components/AppPage'
 
 export default {
   name: 'App',
   components: {
+    AppHome,
     AppPageSelector,
-    SearchPage,
-    DataPage,
-    ActivityPage,
-    GraphsPage,
+    AppPage,
   },
   data() {
     return {
+      username: '',
+      pulse: false,
       pages: [
         {
-          name: 'DataPage',
-          title: 'DATA',
+          page: 'DATA',
           active: 'active',
         },
         {
-          name: 'ActivityPage',
-          title: 'ACTIVITY',
+          page: 'ACTIVITY',
           active: '',
         },
         {
-          name: 'GraphsPage',
-          title: 'GRAPHS',
+          page: 'GRAPHS',
           active: '',
         },
       ],
-      activePage: 'DataPage',
+      data: [
+        {
+          title: 'CAKE DAY',
+          icon: 'cake',
+          content:
+            "This account was created 232 days ago, on May 12th 2012. /u/spez's cake day is in 23 days.",
+        },
+        {
+          title: 'KARMA',
+          icon: 'upvote',
+          content:
+            '/u/spez has 2313 upvotes worth of comment karma and 1324 upvotes worth of link karma for a total 3224 upvotes.',
+        },
+        {
+          title: 'POSTS',
+          icon: 'posts',
+          content:
+            '/u/spez has submitted 23 submissions and 2313 comments for a total 3213 posts.',
+        },
+        {
+          title: 'GILDED',
+          icon: 'gilded',
+          content:
+            '/u/spez has been gilded 23 times from 230 comments and 201 submissions.',
+        },
+      ],
     }
   },
   methods: {
     setPage(page, index) {
-      this.activePage = page
       this.pages = this.pages.map((page, id) => {
-        if (id === index) return { ...page, active: 'active' }
-        return { ...page, active: '' }
+        return id === index
+          ? { ...page, active: true }
+          : { ...page, active: false }
       })
     },
-    handleSubmit(value) {
-      this.$store.dispatch('setUser', value).catch(error => alert(error))
+    handleSubmit(e) {
+      const searchbar = e.target[0]
+      const { value } = searchbar
+      this.username = value
+
+      this.emitPulse()
+      searchbar.blur()
+    },
+    emitPulse() {
+      this.pulse = true
+      setTimeout(() => (this.pulse = false), 750)
     },
   },
 }
@@ -73,7 +102,8 @@ export default {
 
 <style lang="scss" scoped>
 .app {
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
 
 .selector {
@@ -81,24 +111,10 @@ export default {
 }
 
 @media screen and (min-width: 1024px) {
-  .app {
-    grid-template-areas:
-      'search search search search'
-      'selector page page page';
-  }
+  .data {
+    display: grid;
 
-  .search {
-    grid-area: search;
-  }
-
-  .selector {
-    grid-area: selector;
-  }
-
-  .page {
-    margin-bottom: 32.5%;
-
-    grid-area: page;
+    grid-template-columns: 1fr 2fr 1fr;
   }
 }
 </style>
