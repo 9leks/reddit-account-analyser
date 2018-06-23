@@ -5,7 +5,7 @@
           :key="title">
         <a :class="`list--item ${active ? 'list--item-active' : ''}`"
            @click="listeners['set-page'](title, index)">
-          {{ title }}
+          {{ title.toUpperCase() }}
         </a>
       </li>
     </ul>

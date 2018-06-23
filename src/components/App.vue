@@ -4,12 +4,18 @@
               @submit="handleSubmit" />
     <transition name="fade">
       <div v-if="user"
-           class="app--data">
+           class="app--cards">
         <app-page-selector :pages="pages"
+                           class="app--selector"
                            @set-page="setPage" />
-        <app-page v-for="{ title, cards } in pages"
-                  :key="title"
-                  :cards="cards" />
+        <div v-for="{ title, cards } in pages"
+             :key="title"
+             :class="`cards--${title}`">
+          <div :id="title"
+               class="cards--title">{{ title.toUpperCase() }}</div>
+          <hr class="title--underline">
+          <app-page :cards="cards" />
+        </div>
       </div>
     </transition>
   </div>
@@ -35,17 +41,17 @@ export default {
       pulse: false,
       pages: [
         {
-          title: 'DATA',
+          title: 'data',
           cards: [],
           active: true,
         },
         {
-          title: 'ACTIVITY',
+          title: 'activity',
           cards: [],
           active: false,
         },
         {
-          title: 'GRAPHS',
+          title: 'graphs',
           cards: [],
           active: false,
         },
@@ -53,7 +59,10 @@ export default {
     }
   },
   methods: {
-    setPage(page, index) {
+    setPage(title, index) {
+      document
+        .getElementById(title)
+        .scrollIntoView({ block: 'start', behavior: 'smooth' })
       this.pages = this.pages.map((page, id) => {
         return id === index
           ? { ...page, active: true }
@@ -89,6 +98,19 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.cards--title {
+  margin-left: 10%;
+  font-weight: 200;
+  font-size: 2rem;
+}
+
+.title--underline {
+  margin-bottom: 3rem;
+  width: 90%;
+  height: 0.1px;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -99,12 +121,51 @@ export default {
   opacity: 0;
 }
 
+@media screen and (min-width: 768px) {
+  .cards--title {
+    margin-left: 5%;
+  }
+
+  .title--underline {
+    width: 95%;
+  }
+}
+
 @media screen and (min-width: 1024px) {
-  .app--data {
+  .app--cards {
     display: grid;
 
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 2rem 0;
+    justify-self: center;
+    grid-template-columns: 1fr 1fr 4fr 2fr;
     grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+      'selector . data .'
+      'selector . activity .'
+      'selector . graphs .';
+  }
+  .cards--title {
+    margin-left: 0;
+  }
+
+  .title--underline {
+    width: 100%;
+  }
+
+  .app--selector {
+    grid-area: selector;
+  }
+
+  .cards--data {
+    grid-area: data;
+  }
+
+  .cards--activity {
+    grid-area: activity;
+  }
+
+  .cards--graphs {
+    grid-area: graphs;
   }
 }
 </style>

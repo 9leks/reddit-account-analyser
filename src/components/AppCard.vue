@@ -38,10 +38,11 @@
 .card--header {
   display: grid;
 
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .header--title {
+  text-align: center;
   white-space: nowrap;
   font-size: 2rem;
 }
