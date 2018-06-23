@@ -20,6 +20,8 @@
 }
 
 .card--content {
+  display: flex;
+  align-items: center;
   padding: 1rem;
   min-height: 7rem;
   border-radius: 5px;
@@ -45,7 +47,7 @@
 }
 
 .header--icon {
-  width: 40px;
+  width: 35px;
   height: 40px;
 
   justify-self: center;

@@ -1,11 +1,11 @@
 <template functional>
   <div class="container--selector">
     <ul class="selector--list">
-      <li v-for="({ page, active }, index) in props.pages"
-          :key="page">
+      <li v-for="({ title, active }, index) in props.pages"
+          :key="title">
         <a :class="`list--item ${active ? 'list--item-active' : ''}`"
-           @click="listeners['set-page'](page, index)">
-          {{ page }}
+           @click="listeners['set-page'](title, index)">
+          {{ title }}
         </a>
       </li>
     </ul>
@@ -15,13 +15,13 @@
 <style lang="scss" scoped>
 .container--selector {
   display: none;
-
-  user-select: none;
 }
 
 @media screen and (min-width: 1024px) {
   .container--selector {
     display: initial;
+
+    user-select: none;
   }
 
   .list--item-active {

@@ -5,7 +5,8 @@
       <div class="searchbar--button button--u">
         <span class="u--content">/u/</span>
       </div>
-      <input class="searchbar--input">
+      <input autofocus
+             class="searchbar--input">
       <button :class="`searchbar--button 
                        button--send 
                        ${props.pulse ? 'pulse': ''}`">
@@ -32,7 +33,7 @@ $radius: 5px;
   display: flex;
   justify-content: center;
   padding: 1rem;
-  height: 50%;
+  height: 30%;
   filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
 }
 
@@ -44,7 +45,7 @@ $radius: 5px;
   @include format;
 
   &:focus {
-    background-color: rgb(220, 220, 220);
+    background-color: rgb(230, 230, 230);
   }
 }
 
@@ -89,6 +90,18 @@ $radius: 5px;
   }
   100% {
     box-shadow: 0 0 0 30px rgba(0, 0, 0, 0);
+  }
+}
+
+@media screen and (min-width: 375px) {
+  .container--searchbar {
+    height: 30%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container--searchbar {
+    height: 50%;
   }
 }
 </style>

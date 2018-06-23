@@ -42,6 +42,7 @@ export default {
   margin-top: 1rem;
   padding: 0.25rem;
 
+  grid-template-rows: 0.5fr 1fr 1fr 1fr;
   grid-gap: 2rem;
 }
 
@@ -79,13 +80,17 @@ export default {
   height: 30px;
 }
 
-.orange {
-  color: rgb(255, 120, 60);
-}
-
 @media screen and (min-width: 375px) {
   .container--home {
-    grid-template-rows: 0.25fr 1fr 1.25fr 1.5fr 0fr 0.5fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1.5fr;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container--home {
+    margin-top: 5rem;
+
+    grid-template-rows: 0.5fr 1fr 1fr 1.5fr 1fr;
   }
 }
 </style>
