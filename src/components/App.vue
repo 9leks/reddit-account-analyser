@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div>
     <app-home :pulse="pulse"
               @submit="handleSubmit" />
     <transition name="fade">
@@ -89,11 +89,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.app {
-  display: flex;
-  flex-direction: column;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
