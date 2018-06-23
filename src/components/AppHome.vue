@@ -86,7 +86,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1366px) {
   .container--home {
     margin-top: 5rem;
 

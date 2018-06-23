@@ -43,14 +43,25 @@
 
 .header--title {
   text-align: center;
-  white-space: nowrap;
   font-size: 2rem;
 }
 
 .header--icon {
+  align-self: center;
+  margin-bottom: 0.5rem;
   width: 35px;
   height: 40px;
 
   justify-self: center;
+}
+
+@media screen and (min-width: 1366px) {
+  .header--title {
+    white-space: nowrap;
+  }
+
+  .header--icon {
+    align-self: initial;
+  }
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="home">
     <app-home :pulse="pulse"
               @submit="handleSubmit" />
     <transition name="fade">
       <div v-if="user"
            class="app--cards">
-        <app-page-selector :pages="pages"
+        <app-page-selector :pages="selectorRoutes"
                            class="app--selector"
                            @set-page="setPage" />
         <div v-for="{ title, cards } in pages"
@@ -27,6 +27,7 @@ import AppPageSelector from './AppPageSelector'
 import AppPage from './AppPage'
 import getUser from '@/javascript/user.js'
 import getData from '@/javascript/cards/data.js'
+import getActivity from '@/javascript/cards/activity.js'
 
 export default {
   name: 'App',
@@ -43,38 +44,39 @@ export default {
         {
           title: 'data',
           cards: [],
-          active: true,
         },
         {
           title: 'activity',
           cards: [],
-          active: false,
         },
         {
           title: 'graphs',
           cards: [],
-          active: false,
         },
       ],
     }
   },
+  computed: {
+    selectorRoutes() {
+      return [{ title: 'home' }, ...this.pages]
+    },
+  },
   methods: {
-    setPage(title, index) {
-      document
-        .getElementById(title)
-        .scrollIntoView({ block: 'start', behavior: 'smooth' })
-      this.pages = this.pages.map((page, id) => {
-        return id === index
-          ? { ...page, active: true }
-          : { ...page, active: false }
-      })
+    setPage(page) {
+      page === 'home'
+        ? window.scrollTo({ top: 0, behavior: 'smooth' })
+        : document
+            .getElementById(page)
+            .scrollIntoView({ block: 'start', behavior: 'smooth' })
     },
     async handleSubmit(e) {
       const searchbar = e.target[0]
       const { value } = searchbar
       this.pulse = this.togglePulse(searchbar)
       this.user = await getUser(value)
+
       this.pages[0].cards = getData(this.user)
+      this.pages[1].cards = getActivity()
     },
     togglePulse(searchbar) {
       setTimeout(() => (this.pulse = false), 750)
@@ -131,14 +133,13 @@ export default {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1366px) {
   .app--cards {
     display: grid;
 
-    grid-gap: 2rem 0;
+    grid-gap: 5rem 0;
     justify-self: center;
     grid-template-columns: 1fr 1fr 4fr 2fr;
-    grid-template-rows: repeat(3, 1fr);
     grid-template-areas:
       'selector . data .'
       'selector . activity .'

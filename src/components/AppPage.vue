@@ -32,7 +32,7 @@ export default {
   grid-gap: 4rem 0;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1366px) {
   .container--page {
     padding: 0;
 

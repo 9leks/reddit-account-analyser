@@ -1,10 +1,10 @@
 <template functional>
   <div class="container--selector">
     <ul class="selector--list">
-      <li v-for="({ title, active }, index) in props.pages"
+      <li v-for="({ title }) in props.pages"
           :key="title">
-        <a :class="`list--item ${active ? 'list--item-active' : ''}`"
-           @click="listeners['set-page'](title, index)">
+        <a class="list--item"
+           @click="listeners['set-page'](title)">
           {{ title.toUpperCase() }}
         </a>
       </li>
@@ -17,18 +17,14 @@
   display: none;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1366px) {
   .container--selector {
+    position: sticky;
+    top: 0;
     display: initial;
+    margin-top: 20%;
 
     user-select: none;
-  }
-
-  .list--item-active {
-    padding: 0 1rem;
-    background-color: rgb(255, 120, 60);
-    color: rgb(255, 255, 255);
-    transition: all 0.25s ease-in-out;
   }
 
   .selector--list {
@@ -36,10 +32,16 @@
   }
 
   .list--item {
-    margin: 2rem 0;
+    padding: 0 1rem;
     font-weight: 300;
     font-size: 2rem;
     cursor: pointer;
+    transition: background-color 0.25s, color 0.25s ease-in-out;
+
+    &:hover {
+      background-color: rgb(255, 120, 60);
+      color: rgb(255, 255, 255);
+    }
   }
 }
 </style>
