@@ -1,13 +1,16 @@
 <template functional>
   <div class="container--selector">
     <ul class="selector--list">
-      <li v-for="({ title }) in props.pages"
-          :key="title">
-        <a class="list--item"
-           @click="listeners['set-page'](title)">
-          {{ title.toUpperCase() }}
-        </a>
-      </li>
+      <div :style="props.selectorLine"
+           class="selector--line">
+        <li v-for="{ title } in props.pages"
+            :key="title"
+            class="list--item">
+          <a @click="listeners['page-change'](title)">
+            {{ title.toUpperCase() }}
+          </a>
+        </li>
+      </div>
     </ul>
   </div>
 </template>
@@ -22,26 +25,47 @@
     position: sticky;
     top: 0;
     display: initial;
-    margin-top: 20%;
+    margin-right: 2rem;
 
     user-select: none;
   }
-
   .selector--list {
+    position: relative;
+    left: 1rem;
+    padding: 2rem 1rem;
+    height: 13.5rem;
+    background-color: rgb(210, 210, 210);
     list-style: none;
+    filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
+  }
+
+  .selector--line {
+    height: 0;
+    border-left: 3px solid rgb(255, 120, 60);
   }
 
   .list--item {
+    position: relative;
+    left: 0.25rem;
+    margin: 0.5rem 0;
     padding: 0 1rem;
     font-weight: 300;
     font-size: 2rem;
     cursor: pointer;
-    transition: background-color 0.25s, color 0.25s ease-in-out;
+    transition: background-color 0.25s, color 0.25s ease-in-out,
+      left 0.25s ease-in-out;
 
     &:hover {
+      left: 0.75rem;
       background-color: rgb(255, 120, 60);
       color: rgb(255, 255, 255);
     }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container--selector {
+    margin-right: 0;
   }
 }
 </style>

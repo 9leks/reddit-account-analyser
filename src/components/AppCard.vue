@@ -5,10 +5,14 @@
            :src="require(`@/assets/${props.icon}.png`)"
            class="header--icon"
            alt="icon">
-      <div class="header--title">{{ props.title }}</div>
+      <div class="header--title">
+        {{ props.title }}
+      </div>
     </div>
     <div class="card--content">
-      <slot />
+      <span class="card--slot">
+        <slot />
+      </span>
     </div>
   </div>
 </template>
@@ -24,15 +28,19 @@
   align-items: center;
   padding: 1rem;
   min-height: 7rem;
-  border-radius: 5px;
   background-color: rgb(210, 210, 210);
-  text-align: center;
+  word-wrap: break-word;
   font-size: 1.25rem;
+  filter: drop-shadow(0 3px 1.5px rgba(0, 0, 0, 0.5));
   transition: background-color 0.25s;
 
   &:hover {
     background-color: rgb(190, 190, 190);
   }
+}
+
+.card--slot {
+  max-width: 80vw;
 }
 
 .card--header {
@@ -55,7 +63,29 @@
   justify-self: center;
 }
 
+@media screen and (min-width: 375px) {
+  .card--slot {
+    max-width: 82.5vw;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .card--slot {
+    max-width: 85vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .card--slot {
+    max-width: 90vw;
+  }
+}
+
 @media screen and (min-width: 1366px) {
+  .card--slot {
+    max-width: 30rem;
+  }
+
   .header--title {
     white-space: nowrap;
   }

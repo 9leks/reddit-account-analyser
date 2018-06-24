@@ -5,6 +5,7 @@ import {
   getSubmission,
   getSubredditCount,
   getAmountOfCommentsOverTime,
+  getWorstPost,
 } from './api.js'
 
 export default async username => {
@@ -14,7 +15,10 @@ export default async username => {
     submissionCount,
     newComment,
     topComment,
+    worstComment,
+    newSubmission,
     topSubmission,
+    worstSubmission,
     subredditCount,
     commentsOverTime,
   ] = await Promise.all([
@@ -23,7 +27,10 @@ export default async username => {
     getPostCount(username, 'submission'),
     getComment(username, 'new'),
     getComment(username, 'top'),
+    getWorstPost(username, 'submitted'),
+    getSubmission(username, 'new'),
     getSubmission(username, 'top'),
+    getWorstPost(username, 'comments'),
     getSubredditCount(username, 'new', 50),
     getAmountOfCommentsOverTime(username, 50),
   ])
@@ -34,17 +41,12 @@ export default async username => {
     count: commentCount,
     subredditCount,
     commentsOverTime,
-    posts: {
-      new: newComment,
-      top: topComment,
-    },
+    posts: [newComment, topComment, worstComment],
   }
   const submissions = {
     karma: link_karma,
     count: submissionCount,
-    posts: {
-      top: topSubmission,
-    },
+    posts: [newSubmission, topSubmission, worstSubmission],
   }
 
   return { name, created_utc, comments, submissions }

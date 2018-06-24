@@ -1,18 +1,21 @@
 <template>
-  <div id="home">
+  <div @scroll="handleScroll">
     <app-home :pulse="pulse"
               @submit="handleSubmit" />
     <transition name="fade">
       <div v-if="user"
            class="app--cards">
-        <app-page-selector :pages="selectorRoutes"
+        <app-page-selector :selector-line="selectorLine"
+                           :pages="selectorRoutes"
                            class="app--selector"
-                           @set-page="setPage" />
+                           @page-change="handlePageChange" />
         <div v-for="{ title, cards } in pages"
              :key="title"
              :class="`cards--${title}`">
           <div :id="title"
-               class="cards--title">{{ title.toUpperCase() }}</div>
+               class="cards--title">
+            {{ title.toUpperCase() }}
+          </div>
           <hr class="title--underline">
           <app-page :cards="cards" />
         </div>
@@ -40,6 +43,8 @@ export default {
     return {
       user: '',
       pulse: false,
+      selectorLine: '0%',
+      scrolled: false,
       pages: [
         {
           title: 'data',
@@ -61,8 +66,26 @@ export default {
       return [{ title: 'home' }, ...this.pages]
     },
   },
+  created() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
-    setPage(page) {
+    handleScroll() {
+      const scroll =
+        document.body.scrollTop || document.documentElement.scrollTop
+
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight
+
+      const scrolled = Math.round(scroll / height * 100)
+
+      this.selectorLine = `height: ${scrolled}%;`
+    },
+    handlePageChange(page) {
       page === 'home'
         ? window.scrollTo({ top: 0, behavior: 'smooth' })
         : document
@@ -76,7 +99,7 @@ export default {
       this.user = await getUser(value)
 
       this.pages[0].cards = getData(this.user)
-      this.pages[1].cards = getActivity()
+      this.pages[1].cards = getActivity(this.user)
     },
     togglePulse(searchbar) {
       setTimeout(() => (this.pulse = false), 750)

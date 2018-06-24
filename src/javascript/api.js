@@ -54,6 +54,23 @@ export const getPost = async (username, sort, type, limit) => {
   return data ? data : []
 }
 
+export const getWorstPost = async (
+  username,
+  type,
+  posts = [],
+  url = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
+) => {
+  const baseUrl = `https://www.reddit.com/user/${username}/${type}.json`
+  const data = await getData(url)
+  const { after, children } = data.data.data
+  const newPosts = [...posts, ...children]
+  const newUrl = `${baseUrl}?limit=100&after=${after}`
+
+  return after
+    ? getWorstPost(username, type, newPosts, newUrl)
+    : newPosts.reduce((a, b) => (a.data.score > b.data.score ? b : a)).data
+}
+
 /**
  * @param   {string} username The username of a Reddit user.
  * @param   {string} sort     The sorting type: _new_, _hot_, _controversial_,
@@ -142,7 +159,7 @@ export const getAmountOfCommentsOverTime = async (username, limit) => {
 
 /**
  * @param {string}    username The username of a Reddit user to check if valid.
- * @returns {Boolean} Returns (asynchronously) true if valid, else false. 
+ * @returns {Boolean} Returns (asynchronously) true if valid, else false.
  */
 export const isValidUsername = async username => {
   if (!username) return false
