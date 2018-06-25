@@ -1,5 +1,5 @@
 <template functional>
-  <div class="container--card">
+  <div>
     <div class="card--header">
       <img v-if="props.icon"
            :src="require(`@/assets/${props.icon}.png`)"
@@ -9,25 +9,22 @@
         {{ props.title }}
       </div>
     </div>
-    <div class="card--content">
-      <span class="card--slot">
+    <a :href="props.href"
+       target="_blank"
+       class="card--href">
+      <div class="card--content">
         <slot />
-      </span>
-    </div>
+      </div>
+    </a>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.container--card {
-  display: flex;
-  flex-direction: column;
-}
-
 .card--content {
-  display: flex;
-  align-items: center;
+  overflow: scroll;
   padding: 1rem;
-  min-height: 7rem;
+  min-height: 7.5rem;
+  max-height: 7.5rem;
   background-color: rgb(210, 210, 210);
   word-wrap: break-word;
   font-size: 1.25rem;
@@ -39,8 +36,9 @@
   }
 }
 
-.card--slot {
+.card--href {
   max-width: 80vw;
+  color: black;
 }
 
 .card--header {
@@ -64,25 +62,25 @@
 }
 
 @media screen and (min-width: 375px) {
-  .card--slot {
+  .card--href {
     max-width: 82.5vw;
   }
 }
 
 @media screen and (min-width: 425px) {
-  .card--slot {
+  .card--href {
     max-width: 85vw;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .card--slot {
+  .card--href {
     max-width: 90vw;
   }
 }
 
 @media screen and (min-width: 1366px) {
-  .card--slot {
+  .card--href {
     max-width: 30rem;
   }
 

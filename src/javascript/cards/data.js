@@ -1,8 +1,4 @@
-import {
-  timeFromSignup,
-  timeToCakeDay,
-  signupDate,
-} from '../date.js'
+import { timeFromSignup, timeToCakeDay, signupDate } from '../date.js'
 
 export default ({ name, created_utc, submissions, comments }) => [
   {
@@ -31,8 +27,10 @@ export default ({ name, created_utc, submissions, comments }) => [
               ${comments.count} comment${comments.count === 1 ? '' : 's'}
               </span> and <span class="orange">${submissions.count}
               ${submissions === 1 ? 'submission' : 'submissions'}</span> for a
-              total of ${comments.count + submissions.count} 
-              post${comments.count + submissions.count === 1 ? '' : 's'}.`,
+              total of <span class="orange">${comments.count +
+                submissions.count} post${
+      comments.count + submissions.count === 1 ? '' : 's'
+    }.`,
   },
   {
     title: 'GILDED',

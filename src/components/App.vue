@@ -82,7 +82,6 @@ export default {
         document.documentElement.clientHeight
 
       const scrolled = Math.round(scroll / height * 100)
-
       this.selectorLine = `height: ${scrolled}%;`
     },
     handlePageChange(page) {
@@ -164,9 +163,9 @@ export default {
     justify-self: center;
     grid-template-columns: 1fr 1fr 4fr 2fr;
     grid-template-areas:
-      'selector . data .'
+      'selector . data     .'
       'selector . activity .'
-      'selector . graphs .';
+      'selector . graphs   .';
   }
   .cards--title {
     margin-left: 0;

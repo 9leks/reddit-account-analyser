@@ -5,7 +5,6 @@ import {
   getSubmission,
   getSubredditCount,
   getAmountOfCommentsOverTime,
-  getWorstPost,
 } from './api.js'
 
 export default async username => {
@@ -27,10 +26,10 @@ export default async username => {
     getPostCount(username, 'submission'),
     getComment(username, 'new'),
     getComment(username, 'top'),
-    getWorstPost(username, 'submitted'),
+    getComment(username, 'worst'),
     getSubmission(username, 'new'),
     getSubmission(username, 'top'),
-    getWorstPost(username, 'comments'),
+    getSubmission(username, 'worst'),
     getSubredditCount(username, 'new', 50),
     getAmountOfCommentsOverTime(username, 50),
   ])
