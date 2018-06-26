@@ -63,20 +63,16 @@ const getWorstPost = async (
   username,
   type,
   posts = [],
-  url = `https://api.pushshift.io/reddit/search/` +
-    `${type}/?author=${username}&size=1000`
+  url = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
 ) => {
-  const baseURL =
-    `https://api.pushshift.io/reddit/search/` +
-    `${type}/?author=${username}&size=1000`
+  const baseURL = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
   const res = await getData(url)
-  const { data } = res.data
-  const { created_utc } = data[data.length - 1]
-  const newPosts = [...posts, ...data]
-  const newURL = `${baseURL}&before=${created_utc}`
-  return data.length === 1000
+  const { after, children } = res.data.data
+  const newPosts = [...posts, ...children]
+  const newURL = `${baseURL}&after=${after}`
+  return after
     ? await getWorstPost(username, type, newPosts, newURL)
-    : newPosts.reduce((a, b) => (a.score > b.score ? b : a))
+    : newPosts.reduce((a, b) => (a.data.score > b.data.score ? b : a)).data
 }
 
 /**
@@ -98,7 +94,7 @@ export const getComments = async (username, sort, limit) => {
  * @returns {object} Returns metadata of a single comment based on sort filter.
  */
 export const getComment = async (username, sort) => {
-  if (sort === 'worst') return getWorstPost(username, 'comment')
+  if (sort === 'worst') return getWorstPost(username, 'comments')
   const res = await getComments(username, sort, 1)
   if (!res.length) return
 
@@ -114,7 +110,7 @@ export const getComment = async (username, sort) => {
  * @returns {object} Returns submission, sorted by specified filter.
  */
 export const getSubmission = async (username, sort) => {
-  if (sort === 'worst') return getWorstPost(username, 'submission')
+  if (sort === 'worst') return getWorstPost(username, 'submitted')
 
   const res = await getPost(username, sort, 'submitted', 5)
   if (!res.length) return

@@ -1,11 +1,12 @@
 <template functional>
   <div class="container--page">
-    <div v-for="{ title, icon, content, href } in props.cards"
+    <div v-for="{ title, icon, content, href, metadata } in props.cards"
          :key="title">
       <component :is="injections.components.AppCard"
                  :icon="icon"
                  :title="title"
-                 :href="href">
+                 :href="href"
+                 :metadata="metadata">
         <span v-html="content" />
       </component>
     </div>

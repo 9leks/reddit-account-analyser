@@ -1,5 +1,12 @@
 <template functional>
   <div class="container--home">
+    <transition name="fade">
+      <div v-if="props.loading"
+           class="container--spinner">
+        <div class="spinner" />
+        <span class="spinner--text">Hang on, this might take a sec.</span>
+      </div>
+    </transition>
     <img src="@/assets/logo.png"
          alt="logo"
          class="home--logo">
@@ -37,6 +44,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .container--home {
   display: grid;
   margin-top: 1rem;
@@ -78,6 +95,50 @@ export default {
 .home--github-icon {
   width: 30px;
   height: 30px;
+}
+
+.container--spinner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.spinner--text {
+  color: rgb(255, 120, 60);
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 2rem;
+  filter: drop-shadow(2.5px 2.5px 5px rgba(0, 0, 0, 0.5));
+}
+
+.spinner {
+  align-self: center;
+  width: 4rem;
+  height: 4rem;
+  border-top: 2px solid rgb(255, 120, 60);
+  border-top: 2px solid rgb(255, 120, 60);
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1.5s ease-in-out infinite;
+
+  justify-self: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (min-width: 375px) {

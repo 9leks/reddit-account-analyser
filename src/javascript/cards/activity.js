@@ -1,4 +1,5 @@
 import { markdown } from 'snudown-js'
+import { timeFrom } from '../date.js'
 import sanitize from 'sanitize-html'
 
 const parse = text => {
@@ -41,6 +42,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'comment',
     },
     {
@@ -48,6 +50,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'submission',
     },
     {
@@ -55,6 +58,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'comment',
     },
     {
@@ -62,31 +66,42 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'submission',
     },
     {
-      title: 'MOST DOWNVOTED COMMENT',
+      title: 'LEAST UPVOTED COMMENT',
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'comment',
     },
     {
-      title: 'MOST DOWNVOTED SUBMISSION',
+      title: 'LEAST UPVOTED SUBMISSION',
       icon: 'quotes',
       content: '',
       href: '',
+      metadata: {},
       type: 'submission',
     },
   ]
 
   return cards.map((card, index) => {
+    const { score, created_utc, subreddit } = posts[index]
+    const metadata = {
+      score,
+      created: timeFrom(created_utc),
+      created_utc: created_utc * 1000,
+      subreddit,
+    }
     const href = link(posts[index])
     const content = `${parse(posts[index].body || posts[index].title)}`
 
     return {
       ...card,
       content,
+      metadata,
       href,
     }
   })

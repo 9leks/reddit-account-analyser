@@ -1,9 +1,10 @@
 <template>
   <div @scroll="handleScroll">
     <app-home :pulse="pulse"
+              :loading="loading"
               @submit="handleSubmit" />
     <transition name="fade">
-      <div v-if="user"
+      <div v-if="user && !loading"
            class="app--cards">
         <app-page-selector :selector-line="selectorLine"
                            :pages="selectorRoutes"
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
       user: '',
+      loading: false,
       pulse: false,
       selectorLine: '0%',
       scrolled: false,
@@ -94,11 +96,34 @@ export default {
     async handleSubmit(e) {
       const searchbar = e.target[0]
       const { value } = searchbar
-      this.pulse = this.togglePulse(searchbar)
-      this.user = await getUser(value)
 
-      this.pages[0].cards = getData(this.user)
-      this.pages[1].cards = getActivity(this.user)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      this.loading = true
+      this.pulse = this.togglePulse(searchbar)
+      await this.setUser(value)
+      setTimeout(() => (this.loading = false), 1000)
+    },
+
+    async setUser(user) {
+      try {
+        this.user = await getUser(user)
+        this.pages = this.getPages(this.user)
+      } catch (error) {
+        setTimeout(
+          () =>
+            this.$toasted.error(`${user} does not exist!`, {
+              theme: 'bubble',
+              position: 'bottom-center',
+              duration: 2500,
+            }),
+          1000
+        )
+      }
+    },
+
+    getPages(user) {
+      const cards = [getData(user), getActivity(user)]
+      return this.pages.map((page, index) => ({ ...page, cards: cards[index] }))
     },
     togglePulse(searchbar) {
       setTimeout(() => (this.pulse = false), 750)
@@ -122,6 +147,16 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0.25;
+}
+
 .cards--title {
   margin-left: 10%;
   font-weight: 200;
@@ -133,16 +168,6 @@ export default {
   width: 90%;
   height: 0.1px;
   border-color: rgba(0, 0, 0, 0.25);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 
 @media screen and (min-width: 768px) {

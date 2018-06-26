@@ -10,8 +10,8 @@ export const signupDate = created_utc => {
   return format(date, 'MMM Do, YYYY')
 }
 
-export const timeFromSignup = created_utc => {
-  const date = new Date(created_utc * 1000)
+export const timeFrom = utc_time => {
+  const date = new Date(utc_time * 1000)
   const year = date.getFullYear()
   const month = date.getMonth()
   const day = date.getDate()

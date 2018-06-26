@@ -1,4 +1,4 @@
-import { timeFromSignup, timeToCakeDay, signupDate } from '../date.js'
+import { timeFrom, timeToCakeDay, signupDate } from '../date.js'
 
 export default ({ name, created_utc, submissions, comments }) => [
   {
@@ -6,7 +6,7 @@ export default ({ name, created_utc, submissions, comments }) => [
     icon: 'cake',
     content: `/u/${name} was created 
               <span title="${new Date(created_utc * 1000)}">
-              ${timeFromSignup(created_utc)} ago</span>, on<span class="orange">
+              ${timeFrom(created_utc)} ago</span>, on<span class="orange">
               ${signupDate(created_utc)}</span>, meaning /u/${name}'s
               <span class="orange">cake day</span> is
               ${timeToCakeDay(created_utc)}`,
