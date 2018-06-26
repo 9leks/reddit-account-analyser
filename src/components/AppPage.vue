@@ -1,13 +1,12 @@
 <template functional>
   <div class="container--page">
-    <div v-for="{ title, icon, content, href, metadata } in props.cards"
-         :key="title">
+    <div v-for="card in props.cards"
+         :key="card.title">
       <component :is="injections.components.AppCard"
-                 :icon="icon"
-                 :title="title"
-                 :href="href"
-                 :metadata="metadata">
-        <span v-html="content" />
+                 :card="card">
+        <span v-if="card.content"
+              v-html="card.content" />
+        <span v-else>Hmm... /u/{{ card.username }} has not posted any {{ card.type }}s!</span>
       </component>
     </div>
   </div>

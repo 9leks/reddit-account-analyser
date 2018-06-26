@@ -68,6 +68,7 @@ const getWorstPost = async (
   const baseURL = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
   const res = await getData(url)
   const { after, children } = res.data.data
+  if (!children.length) return []
   const newPosts = [...posts, ...children]
   const newURL = `${baseURL}&after=${after}`
   return after
@@ -96,11 +97,10 @@ export const getComments = async (username, sort, limit) => {
 export const getComment = async (username, sort) => {
   if (sort === 'worst') return getWorstPost(username, 'comments')
   const res = await getComments(username, sort, 1)
-  if (!res.length) return
+  if (!res.length) return {}
 
   const post = res[0].data
-  const link = `https://www.reddit.com${post.permalink}`
-  return { ...post, link }
+  return post
 }
 
 /**
@@ -113,11 +113,10 @@ export const getSubmission = async (username, sort) => {
   if (sort === 'worst') return getWorstPost(username, 'submitted')
 
   const res = await getPost(username, sort, 'submitted', 5)
-  if (!res.length) return
+  if (!res.length) return {}
 
   const post = res.find(submission => submission.data.pinned !== true).data
-  const link = `https://www.reddit.com${post.permalink}`
-  return { ...post, link }
+  return post
 }
 
 /**

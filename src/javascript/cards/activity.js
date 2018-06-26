@@ -25,72 +25,81 @@ export default user => {
 
   const cards = [
     {
+      user: '',
       title: 'MOST RECENT COMMENT',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'comment',
     },
     {
+      user: '',
       title: 'MOST RECENT SUBMISSION',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'submission',
     },
     {
+      user: '',
       title: 'MOST UPVOTED COMMENT',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'comment',
     },
     {
+      user: '',
       title: 'MOST UPVOTED SUBMISSION',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'submission',
     },
     {
+      user: '',
       title: 'LEAST UPVOTED COMMENT',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'comment',
     },
     {
+      user: '',
       title: 'LEAST UPVOTED SUBMISSION',
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: {},
+      metadata: true,
       type: 'submission',
     },
   ]
 
   return cards.map((card, index) => {
-    const { score, created_utc, subreddit, permalink } = posts[index]
+    const { score, created_utc, subreddit, permalink } = posts[(user, index)]
+    const content = `${parse(posts[index].body || posts[index].title)}`
+    const href = `https://reddit.com${permalink}`
 
-    const metadata = {
+    if (!content)
+      return {
+        ...card,
+        username: user.name,
+        metadata: false,
+      }
+
+    return {
+      ...card,
+      username: user.name,
       score,
       created: timeFrom(created_utc),
       created_utc: created_utc * 1000,
       subreddit,
-    }
-
-    const content = `${parse(posts[index].body || posts[index].title)}`
-    const href = `https://reddit.com${permalink}`
-
-    return {
-      ...card,
       content,
-      metadata,
       href,
     }
   })

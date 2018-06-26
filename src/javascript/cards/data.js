@@ -35,6 +35,6 @@ export default ({ name, created_utc, submissions, comments }) => [
   {
     title: 'GILDED',
     icon: 'gilded',
-    content: ``,
+    content: `/u/${name} has not been gilded nor given any gold.`,
   },
 ]

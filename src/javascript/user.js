@@ -47,6 +47,5 @@ export default async username => {
     count: submissionCount,
     posts: [newSubmission, topSubmission, worstSubmission],
   }
-
   return { name, created_utc, comments, submissions }
 }

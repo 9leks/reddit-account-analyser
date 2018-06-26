@@ -1,29 +1,29 @@
 <template functional>
   <div>
     <div class="card--header">
-      <img v-if="props.icon"
-           :src="require(`@/assets/${props.icon}.png`)"
+      <img v-if="props.card.icon"
+           :src="require(`@/assets/${props.card.icon}.png`)"
            class="header--icon"
            alt="icon">
       <div class="header--title">
-        {{ props.title }}
+        {{ props.card.title }}
       </div>
     </div>
     <div class="card--content">
-      <div v-if="props.metadata"
+      <div v-if="props.card.metadata"
            class="content--metadata">
-        {{ props.metadata.score }} point{{ Math.abs(props.metadata.score) === 1 ? '' : 's' }},
-        <span :title="new Date(props.metadata.created_utc)">
-          {{ props.metadata.created }} ago
+        {{ props.card.score }} point{{ Math.abs(props.card.score) === 1 ? '' : 's' }},
+        <span :title="new Date(props.card.created_utc)">
+          {{ props.card.created }} ago
         </span><br>
-        <a :href="`https://reddit.com/r/${props.metadata.subreddit}`"
+        <a :href="`https://reddit.com/r/${props.card.subreddit}`"
            target="_blank"
            class="orange">
-          /r/{{ props.metadata.subreddit }}
+          /r/{{ props.card.subreddit }}
         </a>
       </div>
-      <a v-if="props.href"
-         :href="props.href"
+      <a v-if="props.card.href"
+         :href="props.card.href"
          target="_blank"
          class="card--href">
         <img src="@/assets/link.png"
