@@ -13,19 +13,6 @@ const parse = text => {
   )
 }
 
-const link = post => {
-  const { full_link, permalink, id, subreddit, link_id } = post
-  const domain = 'https://reddit.com'
-
-  if (full_link) return full_link
-  if (permalink) return `${domain}${permalink}`
-
-  const linkId = link_id.substring(3)
-  return id
-    ? `${domain}/r/${subreddit}/comments/${linkId}/_/${id}`
-    : `${domain}/r/${subreddit}/comments/${linkId}/`
-}
-
 export default user => {
   const posts = [
     user.comments.posts[0],
@@ -88,15 +75,17 @@ export default user => {
   ]
 
   return cards.map((card, index) => {
-    const { score, created_utc, subreddit } = posts[index]
+    const { score, created_utc, subreddit, permalink } = posts[index]
+
     const metadata = {
       score,
       created: timeFrom(created_utc),
       created_utc: created_utc * 1000,
       subreddit,
     }
-    const href = link(posts[index])
+
     const content = `${parse(posts[index].body || posts[index].title)}`
+    const href = `https://reddit.com${permalink}`
 
     return {
       ...card,
