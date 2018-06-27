@@ -23,25 +23,11 @@
     <div class="home--header home--subtitle">
       get information on your data, activity and favorite subreddits
     </div>
-    <component :is="injections.components.AppSearchbar"
+    <component :is="props.appSearchbar"
                :pulse="props.pulse"
                @submit="listeners['submit']" />
   </div>
 </template>
-
-<script>
-import AppSearchbar from './AppSearchbar'
-
-export default {
-  inject: {
-    components: {
-      default: {
-        AppSearchbar,
-      },
-    },
-  },
-}
-</script>
 
 <style lang="scss" scoped>
 .fade-enter-active,

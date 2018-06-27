@@ -12,7 +12,12 @@
     <div class="card--content">
       <div v-if="props.card.metadata"
            class="content--metadata">
-        {{ props.card.score }} point{{ Math.abs(props.card.score) === 1 ? '' : 's' }},
+        <span v-if="props.card.score_hidden">
+          <i>score hidden</i>,
+        </span>
+        <span v-else>
+          {{ props.card.score }} point{{ Math.abs(props.card.score) === 1 ? '' : 's' }},
+        </span>
         <span :title="new Date(props.card.created_utc)">
           {{ props.card.created }} ago
         </span><br>
@@ -30,7 +35,12 @@
              class="href--icon"
              alt="link">
       </a>
-      <div class="card--text">
+      <div v-if="props.card.content"
+           class="card--text">
+        <slot />
+      </div>
+      <div v-else
+           class="card--graph">
         <slot />
       </div>
     </div>
@@ -93,10 +103,15 @@
   grid-area: text;
 }
 
+.card--graph {
+  padding: 0.75rem;
+  width: 75vw;
+
+  justify-self: center;
+}
+
 .card--header {
   display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
 }
 
 .header--title {
@@ -132,6 +147,10 @@
 }
 
 @media screen and (min-width: 1366px) {
+  .card--graph {
+    width: 20vw;
+  }
+
   .card--text {
     max-width: 30rem;
   }

@@ -1,40 +1,148 @@
-import {
-  timeFromSignup,
-  timeToCakeDay,
-  signupDate,
-} from '../javascript/date.js'
+import DoughnutGraph from '@/components/graphs/DoughnutGraph'
+import LineGraph from '@/components/graphs/LineGraph'
 
-export default ({ name, created_utc, submissions, comments }) => [
-  {
-    title: 'CAKE DAY',
-    icon: 'cake',
-    content: `/u/${name} was created 
-              <span :title="${new Date(created_utc * 1000)}">
-              ${timeFromSignup(created_utc)} ago</span>, on<span class="orange">
-              ${signupDate(created_utc)}</span>, meaning /u/${name}'s
-              <span class="orange">cake day</span> is
-              ${timeToCakeDay(created_utc)}`,
+const randomColor = () => {
+  const num = Math.round(0xffffff * Math.random())
+  const r = num >> 16
+  const g = (num >> 8) & 255
+  const b = num & 255
+  return `rgba(${r}, ${g}, ${b}, 0.5)`
+}
+
+const randomColors = amount =>
+  new Array(amount).fill('').map(() => randomColor())
+
+const setGraphs = user => ({
+  doughnut: {
+    chartData: {
+      labels: user.comments.subredditCount
+        .slice(0, 15)
+        .map(comment => comment.subreddit),
+      datasets: [
+        {
+          data: user.comments.subredditCount
+            .slice(0, 15)
+            .map(comment => comment.count),
+          backgroundColor: randomColors(
+            user.comments.subredditCount.slice(0, 15).length
+          ),
+        },
+      ],
+    },
+    options: {
+      elements: {
+        arc: {
+          borderWidth: 0,
+        },
+      },
+      legend: {
+        labels: {
+          fontColor: 'rgba(0, 0, 0, 0.75)',
+          fontFamily: 'Poppins',
+          fontStyle: '400',
+          fontSize: 12.5,
+        },
+      },
+    },
   },
-  {
-    title: 'KARMA',
-    icon: 'upvote',
-    content: `/u/${name} has a net worth of
-              <span class="orange">${comments.karma} comment karma</span> 
-              and <span class="orange">${submissions.karma}
-              link karma</span> for a total of <span class="orange">
-              ${comments.karma + submissions.karma} karma</span>.`,
+  line: {
+    chartData: {
+      labels: user.comments.subredditCount
+        .slice(0, 15)
+        .map(comment => comment.subreddit),
+      datasets: [
+        {
+          data: user.comments.subredditCount
+            .slice(0, 15)
+            .map(comment => comment.count),
+          backgroundColor: randomColors(
+            user.comments.subredditCount.slice(0, 15).length
+          ),
+        },
+      ],
+    },
+    options: {
+      legend: {
+        display: false,
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              suggestedMax: 5,
+              beginAtZero: true,
+              callback(value) {
+                if (Number.isInteger(value)) return value
+              },
+            },
+            scaleLabel: {
+              display: true,
+              labelString: '# of comments',
+              fontColor: 'rgba(0, 0, 0, 0.75)',
+              fontFamily: 'Poppins',
+              fontStyle: '400',
+              fontSize: 16,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: 'Date',
+              fontColor: 'rgba(0, 0, 0, 0.75)',
+              fontFamily: 'Poppins',
+              fontStyle: '400',
+              fontSize: 16,
+            },
+          },
+        ],
+      },
+    },
   },
-  {
-    title: 'POSTS',
-    icon: 'posts',
-    content: `/u/${name} has posted <span class="orange">
-              ${comments.count} comment${comments.count === 1 ? '' : 's'}
-              </span> and <span class="orange">${submissions.count}
-              ${submissions === 1 ? 'submission' : 'submissions'}</span>.`,
+})
+
+const standardOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  tooltips: {
+    enabled: true,
+    mode: 'single',
+    callbacks: {
+      label(tooltipItem, data) {
+        if (tooltipItem.yLabel) {
+          const label = tooltipItem.yLabel
+          return `${label} comment${label === 1 ? '' : 's'}`
+        }
+        const label = data.labels[tooltipItem.index]
+        const value = data.datasets[0].data[tooltipItem.index]
+        return `${label}: ${value} comment${value === 1 ? '' : 's'}`
+      },
+    },
   },
-  {
-    title: 'GILDED',
-    icon: 'gilded',
-    content: ``,
-  },
-]
+}
+
+export default user => {
+  const graphs = setGraphs(user)
+
+  return [
+    {
+      username: user.name,
+      graph: true,
+      title: 'COMMENTS BY SUBREDDIT',
+      icon: 'commentsbysubreddit',
+      options: { ...standardOptions, ...graphs.doughnut.options },
+      component: DoughnutGraph,
+      chartData: graphs.doughnut.chartData,
+    },
+    {
+      username: user.name,
+      graph: true,
+      title: 'COMMENTS BY TIME',
+      icon: 'commentsbytime',
+      options: { ...standardOptions, ...graphs.line.options },
+      component: LineGraph,
+      chartData: graphs.line.chartData,
+    },
+  ]
+}

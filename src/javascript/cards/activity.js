@@ -30,7 +30,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'comment',
     },
     {
@@ -39,7 +39,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'submission',
     },
     {
@@ -48,7 +48,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'comment',
     },
     {
@@ -57,7 +57,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'submission',
     },
     {
@@ -66,7 +66,7 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'comment',
     },
     {
@@ -75,26 +75,30 @@ export default user => {
       icon: 'quotes',
       content: '',
       href: '',
-      metadata: true,
+      metadata: false,
       type: 'submission',
     },
   ]
 
   return cards.map((card, index) => {
-    const { score, created_utc, subreddit, permalink } = posts[(user, index)]
     const content = `${parse(posts[index].body || posts[index].title)}`
-    const href = `https://reddit.com${permalink}`
 
     if (!content)
       return {
         ...card,
         username: user.name,
-        metadata: false,
       }
+
+    const { score, score_hidden, created_utc, subreddit, permalink } = posts[
+      (user, index)
+    ]
+    const href = `https://reddit.com${permalink}`
 
     return {
       ...card,
+      metadata: true,
       username: user.name,
+      score_hidden,
       score,
       created: timeFrom(created_utc),
       created_utc: created_utc * 1000,

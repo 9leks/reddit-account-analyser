@@ -1,7 +1,9 @@
 <template>
-  <div @scroll="handleScroll">
+  <div id="top"
+       @scroll="handleScroll">
     <app-home :pulse="pulse"
               :loading="loading"
+              :app-searchbar="AppSearchbar"
               @submit="handleSubmit" />
     <transition name="fade">
       <div v-if="user && !loading"
@@ -9,7 +11,7 @@
         <app-page-selector :selector-line="selectorLine"
                            :pages="selectorRoutes"
                            class="app--selector"
-                           @page-change="handlePageChange" />
+                           @page-change="setPage" />
         <div v-for="{ title, cards } in pages"
              :key="title"
              :class="`cards--${title}`">
@@ -18,7 +20,8 @@
             {{ title.toUpperCase() }}
           </div>
           <hr class="title--underline">
-          <app-page :cards="cards" />
+          <app-page :cards="cards"
+                    :app-card="AppCard" />
         </div>
       </div>
     </transition>
@@ -29,9 +32,12 @@
 import AppHome from './AppHome'
 import AppPageSelector from './AppPageSelector'
 import AppPage from './AppPage'
-import getUser from '@/javascript/user.js'
-import getData from '@/javascript/cards/data.js'
-import getActivity from '@/javascript/cards/activity.js'
+import AppCard from './AppCard'
+import AppSearchbar from './AppSearchbar'
+import getUser from '../javascript/user.js'
+import getData from '../javascript/cards/data.js'
+import getActivity from '../javascript/cards/activity.js'
+import getGraphs from '../javascript/cards/graphs.js'
 
 export default {
   name: 'App',
@@ -42,6 +48,8 @@ export default {
   },
   data() {
     return {
+      AppCard,
+      AppSearchbar,
       user: '',
       loading: false,
       pulse: false,
@@ -68,12 +76,26 @@ export default {
       return [{ title: 'home' }, ...this.pages]
     },
   },
+  watch: {
+    async '$route.params.username'() {
+      const username = this.$route.params.username
+      if (username) {
+        this.$scrollTo('#top', 500, { offset: -120 })
+        await this.setUser(username)
+      }
+    },
+  },
   created() {
     window.addEventListener('scroll', this.handleScroll)
+  },
+  async mounted() {
+    const username = this.$route.params.username
+    if (username) await this.setUser(username)
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   },
+
   methods: {
     handleScroll() {
       const scroll =
@@ -86,7 +108,7 @@ export default {
       const scrolled = Math.round(scroll / height * 100)
       this.selectorLine = `height: ${scrolled}%;`
     },
-    handlePageChange(page) {
+    setPage(page) {
       page === 'home'
         ? window.scrollTo({ top: 0, behavior: 'smooth' })
         : document
@@ -98,16 +120,15 @@ export default {
       const { value } = searchbar
 
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      this.loading = true
-      this.pulse = this.togglePulse(searchbar)
+      this.togglePulse(searchbar)
       await this.setUser(value)
-      setTimeout(() => (this.loading = false), 1000)
     },
-
     async setUser(user) {
       try {
+        this.loading = true
         this.user = await getUser(user)
         this.pages = this.getPages(this.user)
+        this.$router.push(`/${user}`)
       } catch (error) {
         setTimeout(
           () =>
@@ -119,16 +140,16 @@ export default {
           1000
         )
       }
+      setTimeout(() => (this.loading = false), 1000)
     },
-
     getPages(user) {
-      const cards = [getData(user), getActivity(user)]
+      const cards = [getData(user), getActivity(user), getGraphs(user)]
       return this.pages.map((page, index) => ({ ...page, cards: cards[index] }))
     },
     togglePulse(searchbar) {
+      this.pulse = true
       setTimeout(() => (this.pulse = false), 750)
       searchbar.blur()
-      return true
     },
   },
 }

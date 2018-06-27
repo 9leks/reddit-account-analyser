@@ -2,29 +2,19 @@
   <div class="container--page">
     <div v-for="card in props.cards"
          :key="card.title">
-      <component :is="injections.components.AppCard"
+      <component :is="props.appCard"
                  :card="card">
-        <span v-if="card.content"
+        <component v-if="card.graph"
+                   :is="card.component"
+                   :chart-data="card.chartData"
+                   :options="card.options" />
+        <span v-else-if="card.content"
               v-html="card.content" />
         <span v-else>Hmm... /u/{{ card.username }} has not posted any {{ card.type }}s!</span>
       </component>
     </div>
   </div>
 </template>
-
-<script>
-import AppCard from './AppCard'
-
-export default {
-  inject: {
-    components: {
-      default: {
-        AppCard,
-      },
-    },
-  },
-}
-</script>
 
 <style scoped>
 .container--page {
@@ -36,11 +26,10 @@ export default {
 
 @media screen and (min-width: 1366px) {
   .container--page {
-    padding: 0;
+    padding: auto 0;
 
     grid-gap: 5rem;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
