@@ -118,10 +118,11 @@ export default {
     async handleSubmit(e) {
       const searchbar = e.target[0]
       const { value } = searchbar
-
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      this.togglePulse(searchbar)
-      await this.setUser(value)
+      if (value) {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        this.togglePulse(searchbar)
+        await this.setUser(value)
+      }
     },
     async setUser(user) {
       try {
