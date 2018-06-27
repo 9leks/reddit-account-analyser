@@ -4,7 +4,7 @@
          :key="card.title">
       <component :is="props.appCard"
                  :card="card">
-        <component v-if="card.graph"
+        <component v-if="card.chartData"
                    :is="card.component"
                    :chart-data="card.chartData"
                    :options="card.options" />

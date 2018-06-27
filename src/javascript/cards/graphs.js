@@ -47,17 +47,11 @@ const setGraphs = user => ({
   },
   line: {
     chartData: {
-      labels: user.comments.subredditCount
-        .slice(0, 15)
-        .map(comment => comment.subreddit),
+      labels: user.comments.commentsOverTime.map(comment => comment.date),
       datasets: [
         {
-          data: user.comments.subredditCount
-            .slice(0, 15)
-            .map(comment => comment.count),
-          backgroundColor: randomColors(
-            user.comments.subredditCount.slice(0, 15).length
-          ),
+          data: user.comments.commentsOverTime.map(comment => comment.count),
+          backgroundColor: randomColors(user.comments.commentsOverTime.length),
         },
       ],
     },
@@ -133,7 +127,10 @@ export default user => {
       icon: 'commentsbysubreddit',
       options: { ...standardOptions, ...graphs.doughnut.options },
       component: DoughnutGraph,
-      chartData: graphs.doughnut.chartData,
+      chartData: user.comments.subredditCount.length
+        ? graphs.doughnut.chartData
+        : false,
+      type: 'comment',
     },
     {
       username: user.name,
@@ -142,7 +139,10 @@ export default user => {
       icon: 'commentsbytime',
       options: { ...standardOptions, ...graphs.line.options },
       component: LineGraph,
-      chartData: graphs.line.chartData,
+      chartData: user.comments.commentsOverTime.length
+        ? graphs.line.chartData
+        : false,
+      type: 'comment',
     },
   ]
 }
