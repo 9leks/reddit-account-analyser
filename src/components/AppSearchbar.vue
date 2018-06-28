@@ -54,6 +54,7 @@ $radius: 5px;
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
 
+  user-select: none;
   @include format;
 }
 
