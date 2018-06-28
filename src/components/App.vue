@@ -98,7 +98,6 @@ export default {
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   },
-
   methods: {
     handleScroll() {
       const scroll =
