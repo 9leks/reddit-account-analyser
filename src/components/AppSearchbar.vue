@@ -10,7 +10,7 @@
       <button :class="`searchbar--button 
                        button--send 
                        ${props.pulse ? 'pulse': ''}`">
-        <i class="fas fa-search" />
+        🔍
       </button>
     </form>
   </div>
@@ -73,6 +73,7 @@ $radius: 5px;
   border-top-right-radius: $radius;
   border-bottom-right-radius: $radius;
   cursor: pointer;
+  transition: background-color 0.125s ease-in-out;
 
   &:hover {
     background-color: rgb(255, 77, 0);

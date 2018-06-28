@@ -3,11 +3,15 @@
     <ul class="selector--list">
       <div :style="props.selectorLine"
            class="selector--line">
-        <li v-for="{ title } in props.pages"
+        <li v-for="{ title, icon } in props.pages"
             :key="title"
             class="list--item">
           <a @click="listeners['page-change'](title)">
-            {{ title.toUpperCase() }}
+            <span class="item--content">
+              <span class="content--icon">
+                {{ icon }}
+              </span> {{ title.toUpperCase() }}
+            </span>
           </a>
         </li>
       </div>
@@ -44,9 +48,10 @@
     border-left: 3px solid rgb(255, 120, 60);
   }
 
-  .list--item {
+  .item--content {
     position: relative;
     left: 0.25rem;
+    display: grid;
     margin: 0.5rem 0;
     padding: 0 1rem;
     font-weight: 300;
@@ -55,12 +60,19 @@
     transition: background-color 0.25s, color 0.25s ease-in-out,
       left 0.25s ease-in-out;
 
+    grid-template-columns: 0.5fr 2fr;
+
     &:hover {
       left: 0.75rem;
       background-color: rgb(255, 120, 60);
       color: rgb(255, 255, 255);
     }
   }
+}
+
+.content--icon {
+  align-self: center;
+  font-size: 1.25rem;
 }
 
 @media screen and (min-width: 1440px) {

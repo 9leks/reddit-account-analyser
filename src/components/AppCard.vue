@@ -1,10 +1,11 @@
 <template functional>
   <div>
     <div class="card--header">
-      <img v-if="props.card.icon"
-           :src="require(`@/assets/${props.card.icon}.png`)"
+      <div v-if="props.card.icon"
            class="header--icon"
            alt="icon">
+        {{ props.card.icon }}
+      </div>
       <div class="header--title">
         {{ props.card.title }}
       </div>
@@ -31,9 +32,10 @@
          :href="props.card.href"
          target="_blank"
          class="card--href">
-        <img src="@/assets/link.png"
-             class="href--icon"
-             alt="link">
+        <span class="href--icon"
+              alt="link">
+          🔗
+        </span>
       </a>
       <div v-if="props.card.content"
            class="card--text">
@@ -66,6 +68,7 @@
 }
 
 .content--metadata {
+  font-weight: 300;
   font-size: 0.85rem;
 
   grid-area: data;
@@ -81,8 +84,6 @@
 }
 
 .href--icon {
-  width: 20px;
-  height: 20px;
   opacity: 0.5;
   transition: opacity 0.25s;
 
@@ -116,14 +117,14 @@
 
 .header--title {
   text-align: center;
+  font-weight: 300;
   font-size: 2rem;
 }
 
 .header--icon {
   align-self: center;
   margin-bottom: 0.5rem;
-  width: 35px;
-  height: 40px;
+  font-size: 2rem;
 
   justify-self: center;
 }

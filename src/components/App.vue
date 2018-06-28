@@ -58,14 +58,17 @@ export default {
       pages: [
         {
           title: 'data',
+          icon: '💾',
           cards: [],
         },
         {
           title: 'activity',
+          icon: '✉️',
           cards: [],
         },
         {
           title: 'graphs',
+          icon: '📊',
           cards: [],
         },
       ],
@@ -73,7 +76,7 @@ export default {
   },
   computed: {
     selectorRoutes() {
-      return [{ title: 'home' }, ...this.pages]
+      return [{ title: 'home', icon: '🏠' }, ...this.pages]
     },
   },
   watch: {

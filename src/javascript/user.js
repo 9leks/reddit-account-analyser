@@ -34,7 +34,7 @@ export default async username => {
     getAmountOfCommentsOverTime(username, 50),
   ])
 
-  const { name, created_utc, comment_karma, link_karma } = about
+  const { name, created_utc, comment_karma, link_karma, is_gold } = about
   const comments = {
     karma: comment_karma,
     count: commentCount,
@@ -47,5 +47,5 @@ export default async username => {
     count: submissionCount,
     posts: [newSubmission, topSubmission, worstSubmission],
   }
-  return { name, created_utc, comments, submissions }
+  return { name, created_utc, is_gold, comments, submissions }
 }

@@ -4,7 +4,9 @@
       <div v-if="props.loading"
            class="container--spinner">
         <div class="spinner" />
-        <span class="spinner--text">Hang on, this might take a sec.</span>
+        <span class="spinner--text">
+          Hang on, this might take a sec ...
+        </span>
       </div>
     </transition>
     <img src="@/assets/logo.png"
@@ -97,11 +99,15 @@
 }
 
 .spinner--text {
-  color: rgb(255, 120, 60);
+  position: relative;
+  bottom: 2rem;
   padding: 0.5rem;
+  color: rgb(255, 120, 60);
   text-align: center;
+  font-weight: 200;
   font-size: 2rem;
   filter: drop-shadow(2.5px 2.5px 5px rgba(0, 0, 0, 0.5));
+  animation: blink 3s ease-in-out infinite;
 }
 
 .spinner {
@@ -109,13 +115,25 @@
   width: 4rem;
   height: 4rem;
   border-top: 2px solid rgb(255, 120, 60);
-  border-top: 2px solid rgb(255, 120, 60);
   border-right: 2px solid transparent;
+  border-bottom: 2px solid rgb(255, 120, 60);
   border-left: 2px solid transparent;
   border-radius: 50%;
   animation: spin 1.5s ease-in-out infinite;
 
   justify-self: center;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes spin {

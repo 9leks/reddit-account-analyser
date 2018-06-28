@@ -1,9 +1,9 @@
 import { timeFrom, timeToCakeDay, signupDate } from '../date.js'
 
-export default ({ name, created_utc, submissions, comments }) => [
+export default ({ name, created_utc, submissions, comments, is_gold }) => [
   {
     title: 'CAKE DAY',
-    icon: 'cake',
+    icon: '🎂',
     content: `/u/${name} was created 
               <span title="${new Date(created_utc * 1000)}">
               ${timeFrom(created_utc)} ago</span>, on<span class="orange">
@@ -13,7 +13,7 @@ export default ({ name, created_utc, submissions, comments }) => [
   },
   {
     title: 'KARMA',
-    icon: 'upvote',
+    icon: '👍',
     content: `/u/${name} has a net worth of
               <span class="orange">${comments.karma} comment karma</span> 
               and <span class="orange">${submissions.karma}
@@ -22,7 +22,7 @@ export default ({ name, created_utc, submissions, comments }) => [
   },
   {
     title: 'POSTS',
-    icon: 'posts',
+    icon: '✉️',
     content: `/u/${name} has posted <span class="orange">
               ${comments.count} comment${comments.count === 1 ? '' : 's'}
               </span> and <span class="orange">${submissions.count}
@@ -34,7 +34,9 @@ export default ({ name, created_utc, submissions, comments }) => [
   },
   {
     title: 'GILDED',
-    icon: 'gilded',
-    content: `/u/${name} has not been gilded nor given any gold.`,
+    icon: '🥇',
+    content: is_gold
+      ? `/u/${name} currently has <span class="orange">Reddit Gold</span>! Neat 🏆`
+      : `/u/${name} does not currently have <span class="orange">Reddit Gold</span> 😔`,
   },
 ]

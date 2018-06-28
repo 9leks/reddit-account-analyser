@@ -123,8 +123,8 @@ export default user => {
     {
       username: user.name,
       graph: true,
-      title: 'COMMENTS BY SUBREDDIT',
-      icon: 'commentsbysubreddit',
+      title: 'COMMENTS / SUBREDDIT',
+      icon: '🍩',
       options: { ...standardOptions, ...graphs.doughnut.options },
       component: DoughnutGraph,
       chartData: user.comments.subredditCount.length
@@ -135,8 +135,8 @@ export default user => {
     {
       username: user.name,
       graph: true,
-      title: 'COMMENTS BY TIME',
-      icon: 'commentsbytime',
+      title: 'COMMENTS / TIME',
+      icon: '⌚',
       options: { ...standardOptions, ...graphs.line.options },
       component: LineGraph,
       chartData: user.comments.commentsOverTime.length

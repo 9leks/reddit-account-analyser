@@ -27,7 +27,7 @@ export default user => {
     {
       user: '',
       title: 'MOST RECENT COMMENT',
-      icon: 'quotes',
+      icon: '🆕✍️',
       content: '',
       href: '',
       metadata: false,
@@ -36,7 +36,7 @@ export default user => {
     {
       user: '',
       title: 'MOST RECENT SUBMISSION',
-      icon: 'quotes',
+      icon: '🆕📜',
       content: '',
       href: '',
       metadata: false,
@@ -45,7 +45,7 @@ export default user => {
     {
       user: '',
       title: 'MOST UPVOTED COMMENT',
-      icon: 'quotes',
+      icon: '🔥✍️',
       content: '',
       href: '',
       metadata: false,
@@ -54,7 +54,7 @@ export default user => {
     {
       user: '',
       title: 'MOST UPVOTED SUBMISSION',
-      icon: 'quotes',
+      icon: '🔥📜',
       content: '',
       href: '',
       metadata: false,
@@ -63,7 +63,7 @@ export default user => {
     {
       user: '',
       title: 'LEAST UPVOTED COMMENT',
-      icon: 'quotes',
+      icon: '😭✍️',
       content: '',
       href: '',
       metadata: false,
@@ -72,7 +72,7 @@ export default user => {
     {
       user: '',
       title: 'LEAST UPVOTED SUBMISSION',
-      icon: 'quotes',
+      icon: '😭📜',
       content: '',
       href: '',
       metadata: false,
