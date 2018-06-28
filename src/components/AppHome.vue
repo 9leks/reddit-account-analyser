@@ -100,8 +100,8 @@
 
 .spinner--text {
   position: relative;
-  bottom: 2rem;
-  padding: 0.5rem;
+  bottom: 6rem;
+  padding: 1rem;
   color: rgb(255, 120, 60);
   text-align: center;
   font-weight: 200;
@@ -119,7 +119,7 @@
   border-bottom: 2px solid rgb(255, 120, 60);
   border-left: 2px solid transparent;
   border-radius: 50%;
-  animation: spin 1.5s ease-in-out infinite;
+  animation: spin 1.5s ease-in-out infinite, blink 3s ease-in-out infinite;
 
   justify-self: center;
 }

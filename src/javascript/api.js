@@ -63,16 +63,17 @@ const getWorstPost = async (
   username,
   type,
   posts = [],
-  url = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
+  url = `https://www.reddit.com/user/${username}/${type}.json?limit=100`,
+  first = true,
 ) => {
   const baseURL = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
   const res = await getData(url)
   const { after, children } = res.data.data
-  if (!children.length) return []
+  if (!children.length && first) return []
   const newPosts = [...posts, ...children]
   const newURL = `${baseURL}&after=${after}`
   return after
-    ? await getWorstPost(username, type, newPosts, newURL)
+    ? await getWorstPost(username, type, newPosts, newURL, false)
     : newPosts.reduce((a, b) => (a.data.score > b.data.score ? b : a)).data
 }
 
