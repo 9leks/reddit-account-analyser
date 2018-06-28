@@ -36,7 +36,7 @@ export default ({ name, created_utc, submissions, comments, is_gold }) => [
     title: 'GILDED',
     icon: '🥇',
     content: is_gold
-      ? `/u/${name} currently has <span class="orange">Reddit Gold</span>! Neat 🏆`
-      : `/u/${name} does not currently have <span class="orange">Reddit Gold</span> 😔`,
+      ? `/u/${name} has <span class="orange">Reddit Gold</span>! Neat 🏆`
+      : `/u/${name} does not have <span class="orange">Reddit Gold</span> 😔`,
   },
 ]
