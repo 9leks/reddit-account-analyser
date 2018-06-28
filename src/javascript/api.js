@@ -24,7 +24,7 @@ export const getAbout = async username => {
 
 /**
  * @param   {string} username The username of a Reddit user.
- * @param   {string} type     The type of post: _comments_ or _submissions_
+ * @param   {string} type     The type of post: _comment_ or _submission_
  * @returns {number} Returns amount of comments or submissions made by user.
  */
 export const getPostCount = async (username, type) => {
@@ -56,6 +56,29 @@ export const getPost = async (username, sort, type, limit) => {
 
 /**
  * @param   {string} username The username of a Reddit user.
+ * @param   {string} type     The type of post: _comment_ or _submission_
+ * @returns {Object} Returns worst comment or submission made by user.
+ */
+const getWorstPost = async (
+  username,
+  type,
+  posts = [],
+  url = `https://www.reddit.com/user/${username}/${type}.json?limit=100`,
+  first = true,
+) => {
+  const baseURL = `https://www.reddit.com/user/${username}/${type}.json?limit=100`
+  const res = await getData(url)
+  const { after, children } = res.data.data
+  if (!children.length && first) return []
+  const newPosts = [...posts, ...children]
+  const newURL = `${baseURL}&after=${after}`
+  return after
+    ? await getWorstPost(username, type, newPosts, newURL, false)
+    : newPosts.reduce((a, b) => (a.data.score > b.data.score ? b : a)).data
+}
+
+/**
+ * @param   {string} username The username of a Reddit user.
  * @param   {string} sort     The sorting type: _new_, _hot_, _controversial_,
  *                            or _top_.
  * @param   {number} limit    Amount of comments (max 1000).
@@ -73,12 +96,12 @@ export const getComments = async (username, sort, limit) => {
  * @returns {object} Returns metadata of a single comment based on sort filter.
  */
 export const getComment = async (username, sort) => {
+  if (sort === 'worst') return getWorstPost(username, 'comments')
   const res = await getComments(username, sort, 1)
-  if (!res.length) return
+  if (!res.length) return {}
 
   const post = res[0].data
-  const link = `https://www.reddit.com${post.permalink}`
-  return { ...post, link }
+  return post
 }
 
 /**
@@ -88,12 +111,13 @@ export const getComment = async (username, sort) => {
  * @returns {object} Returns submission, sorted by specified filter.
  */
 export const getSubmission = async (username, sort) => {
+  if (sort === 'worst') return getWorstPost(username, 'submitted')
+
   const res = await getPost(username, sort, 'submitted', 5)
-  if (!res.length) return
+  if (!res.length) return {}
 
   const post = res.find(submission => submission.data.pinned !== true).data
-  const link = `https://www.reddit.com${post.permalink}`
-  return { ...post, link }
+  return post
 }
 
 /**
@@ -142,7 +166,7 @@ export const getAmountOfCommentsOverTime = async (username, limit) => {
 
 /**
  * @param {string}    username The username of a Reddit user to check if valid.
- * @returns {Boolean} Returns (asynchronously) true if valid, else false. 
+ * @returns {Boolean} Returns (asynchronously) true if valid, else false.
  */
 export const isValidUsername = async username => {
   if (!username) return false
