@@ -1,22 +1,6 @@
-## Build Setup
-
-```bash
-## Install dependencies
-npm install
-
-## Serve on localhost:8080
-npm run dev
-
-## Build for production with minification
-npm run build
-
-## Build for production and view the bundle analyzer report
-npm run build --report
-```
-
 ## App Info
 
-Gives an analysis of any Reddit account. 
+Gives an analysis of any Reddit account. Gifs at the bottom.
 
 Built with Vue.
 
@@ -24,10 +8,17 @@ Built with Vue.
 
 Alex Diaz
 
-### Version
+## Version
 
-2.0.0
+2.0
 
-### License
+## License
 
 This project is licensed under the MIT License
+
+# Gifs
+## Desktop
+![Desktop view](https://thumbs.gfycat.com/FastSpiritedGerbil-size_restricted.gif) 
+## Mobile
+![Phone view](https://im4.ezgif.com/tmp/ezgif-4-86928b806c.gif) 
+
