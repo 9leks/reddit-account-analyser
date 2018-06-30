@@ -18,7 +18,7 @@ This project is licensed under the MIT License
 
 # Gifs
 ## Desktop
-![Desktop view](https://thumbs.gfycat.com/FastSpiritedGerbil-size_restricted.gif) 
+![Desktop view](./pics/finished/desktop.gif) 
 ## Mobile
-![Phone view](https://im4.ezgif.com/tmp/ezgif-4-86928b806c.gif) 
+![Mobile view](./pics/finished/mobile.gif) 
 
