@@ -4,6 +4,8 @@ Gives an analysis of any Reddit account. Pictures at the bottom.
 
 Built with Vue.
 
+https://redditaccountanalyser.firebaseapp.com/
+
 ### Author
 
 Alex Diaz
